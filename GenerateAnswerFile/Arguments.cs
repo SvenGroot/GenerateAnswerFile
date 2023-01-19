@@ -49,7 +49,6 @@ class Arguments
     [CommandLineArgument]
     [Description("Disable Windows Defender after installation.")]
     [Alias("d")]
-    [ValidateEnumValue]
     public bool DisableDefender { get; set; }
 
     [CommandLineArgument]
