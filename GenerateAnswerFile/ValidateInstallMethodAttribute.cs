@@ -1,10 +1,6 @@
 ﻿using Ookii.CommandLine;
 using Ookii.CommandLine.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GenerateAnswerFile;
 class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
@@ -13,6 +9,11 @@ class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
 
     public ValidateInstallMethodAttribute(params InstallMethod[] methods)
     { 
+        if (methods.Length == 0)
+        {
+            throw new ArgumentException("Need at least one method.", nameof(methods));
+        }
+
         _methods = methods;
     }
 
@@ -25,9 +26,22 @@ class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
         return _methods.Contains(method);
     }
 
-    protected override string GetUsageHelpCore(CommandLineArgument argument)
-        => $"May only be used if -Install is set to {string.Join(", ", _methods)}.";
-
     public override string GetErrorMessage(CommandLineArgument argument, object? value)
-        => $"The '{argument.ArgumentName}' argument may only be used if -Install is set to {string.Join(", ", _methods)}.";
+        => $"The '{argument.ArgumentName}' argument may only be used if -Install is set to {GetMethodList()}.";
+
+    protected override string GetUsageHelpCore(CommandLineArgument argument)
+        => $"May only be used if -Install is set to {GetMethodList()}.";
+
+    private string GetMethodList()
+    {
+        if (_methods.Length == 1)
+        {
+            return _methods[0].ToString();
+        }
+
+        var result = new StringBuilder();
+        result.AppendJoin(", ", _methods.Take(_methods.Length - 1));
+        result.Append($", or {_methods.Last()}");
+        return result.ToString();
+    }
 }

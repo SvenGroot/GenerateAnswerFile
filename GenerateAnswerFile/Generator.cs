@@ -57,7 +57,7 @@ class Generator : IDisposable
         _writer.WriteEmptyElement("assemblyIdentity", new
         {
             name = "Microsoft-Windows-Foundation-Package",
-            version = _arguments.Version,
+            version = _arguments.WindowsVersion,
             processorArchitecture = _arguments.ProcessorArchitecture,
             publicKeyToken = PublicKeyToken,
             language = ""

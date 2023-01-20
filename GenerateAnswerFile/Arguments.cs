@@ -5,6 +5,7 @@ using System.Drawing;
 
 namespace GenerateAnswerFile;
 
+[ApplicationFriendlyName("Answer File Generator")]
 class Arguments
 {
     [CommandLineArgument(IsRequired = true, Position = 0, ValueDescription = "Path")]
@@ -15,7 +16,7 @@ class Arguments
     [CommandLineArgument]
     [Description("Version and build number (e.g. 10.0.22000.1) of the OS being installed. This argument is only used when -Component is specified.")]
     [Alias("v")]
-    public Version? Version { get; set; }
+    public Version? WindowsVersion { get; set; }
 
     [CommandLineArgument]
     [Description("Name of the domain to join.")]
@@ -105,7 +106,8 @@ class Arguments
     [CommandLineArgument("Component")]
     [Description("The feature name of an optional component to install. Can be specified more than once.")]
     [Alias("c")]
-    [Requires(nameof(Version))]
+    [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanBios, InstallMethod.CleanEfi, InstallMethod.Manual)]
+    [Requires(nameof(WindowsVersion))]
     public string[]? Components { get; set; }
 
     [CommandLineArgument(DefaultValue = InstallMethod.PreInstalled)]
