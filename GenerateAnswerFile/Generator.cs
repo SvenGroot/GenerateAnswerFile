@@ -142,7 +142,7 @@ public class Generator : IDisposable
             if (_arguments.ProductKey != null)
             {
                 // This one activates Windows.
-                _writer.WriteElementString("ProduceKey", _arguments.ProductKey);
+                _writer.WriteElementString("ProductKey", _arguments.ProductKey);
             }
         }
 

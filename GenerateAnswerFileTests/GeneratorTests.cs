@@ -17,7 +17,18 @@ namespace GenerateAnswerFileTests
         public void TestGeneratePreInstalled()
         {
             var (actualPath, expectedPath) = GetPaths();
-            string[] args = new[] { actualPath, "-ComputerName", "test-machine", "-WindowsVersion", "10.0.22000.1", "-LocalAccount", "MyAccount,Password", "-AutoLogonCount", "9999", "-DisableCloud", "-SetupScript", "\\\\machine\\shared\\script.ps1 -Arg", "-JoinDomain", "somedomain", "-JoinDomainUser", "domainuser", "-JoinDomainPassword", "DomainPassword", "-DomainAccount", "domainuser2", "-AutoLogonUser", "somedomain\\domainuser2", "-AutoLogonPassword", "DomainPassword2", "-OUPath", "OU=SomeOU,DC=somedomain", "-DisplayResolution", "1280,1024" };
+            var args = new[] { actualPath, "-ComputerName", "test-machine", "-WindowsVersion", "10.0.22000.1", "-LocalAccount", "MyAccount,Password", "-AutoLogonCount", "9999", "-DisableCloud", "-SetupScript", "\\\\machine\\shared\\script.ps1 -Arg", "-JoinDomain", "somedomain", "-JoinDomainUser", "domainuser", "-JoinDomainPassword", "DomainPassword", "-DomainAccount", "domainuser2", "-AutoLogonUser", "somedomain\\domainuser2", "-AutoLogonPassword", "DomainPassword2", "-OUPath", "OU=SomeOU,DC=somedomain", "-DisplayResolution", "1280,1024" };
+            var arguments = CommandLineParser.Parse<Arguments>(args);
+            Assert.IsNotNull(arguments);
+            Generator.Generate(arguments);
+            CheckFilesEqual(expectedPath, actualPath);
+        }
+
+        [TestMethod]
+        public void TestGenerateCleanEfi()
+        {
+            var (actualPath, expectedPath) = GetPaths();
+            var args = new[] { actualPath, "-WindowsVersion", "10.0.22621.1", "-Install", "CleanEfi", "-EnableRemoteDesktop", "-LocalAccount", "MyUser,Password", "-AutoLogonCount", "1", "-AutoLogonUser", "MyUser", "-AutoLogonPassword", "Password", "-component", "Microsoft-Windows-Subsystem-Linux", "-component", "VirtualMachinePlatform", "-ProductKey", "ABCDE-12345-ABCDE-12345-ABCDE" };
             var arguments = CommandLineParser.Parse<Arguments>(args);
             Assert.IsNotNull(arguments);
             Generator.Generate(arguments);
