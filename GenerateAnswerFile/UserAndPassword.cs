@@ -1,6 +1,6 @@
 ﻿namespace GenerateAnswerFile;
 
-record class UserAndPassword(string UserName, string Password)
+public record class UserAndPassword(string UserName, string Password)
 {
     public static UserAndPassword Parse(string value)
     {

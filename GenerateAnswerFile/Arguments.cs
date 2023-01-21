@@ -6,7 +6,7 @@ using System.Drawing;
 namespace GenerateAnswerFile;
 
 [ApplicationFriendlyName("Answer File Generator")]
-class Arguments
+public class Arguments
 {
     [CommandLineArgument(IsRequired = true, Position = 0, ValueDescription = "Path")]
     [Description("The path and file name to write the answer file to.")]

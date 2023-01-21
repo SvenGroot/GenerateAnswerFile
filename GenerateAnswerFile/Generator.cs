@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace GenerateAnswerFile;
 
-class Generator : IDisposable
+public class Generator : IDisposable
 {
     private readonly Arguments _arguments;
     private readonly XmlWriter _writer;
@@ -34,10 +34,17 @@ class Generator : IDisposable
 
     public void Generate()
     {
-        using var unattend = _writer.WriteAutoCloseElement("unattend");
+        _writer.WriteStartElement("unattend", "urn:schemas-microsoft-com:unattend");
+        _writer.WriteAttributes(new
+        {
+            xmlns_wcm = "http://schemas.microsoft.com/WMIConfig/2002/State",
+            xmlns_xsi = "http://www.w3.org/2001/XMLSchema-instance"
+        });
         GenerateServicing();
         GenerateWindowsPePass();
         GenerateSpecializePass();
+        GenerateOobePass();
+        _writer.WriteEndElement();
     }
 
     public void Dispose()
@@ -111,7 +118,7 @@ class Generator : IDisposable
             {
                 Identification = new
                 {
-                    UnsecureJoin = false,
+                    UnsecureJoin = "false",
                     Credentials = new
                     {
                         Domain = _arguments.JoinDomain,
@@ -164,7 +171,7 @@ class Generator : IDisposable
                             wcm_action = "add",
                             wcm_keyValue = "rd1"
                         },
-                        Active = true,
+                        Active = "true",
                         Group = "Remote Desktop",
                         Profile = "all"
                     }
@@ -175,7 +182,7 @@ class Generator : IDisposable
         if (_arguments.DisableCloud)
         {
             using var deployment = WriteComponentStart("Microsoft-Windows-Deployment");
-            using var runSynchronous = WriteComponentStart("RunSynchronous");
+            using var runSynchronous = _writer.WriteAutoCloseElement("RunSynchronous");
             WriteRunSynchronousCommand(@"reg add HKLM\Software\Policies\Microsoft\Windows\CloudContent /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1", "Disable cloud consumer features", 1);
         }
     }
@@ -201,7 +208,7 @@ class Generator : IDisposable
                             Password = new
                             {
                                 Value = Convert.ToBase64String(Encoding.Unicode.GetBytes(account.Password + "Password")),
-                                PlainText = false,
+                                PlainText = "false",
                             },
                             Description = account.UserName,
                             DisplayName = account.UserName,
@@ -211,25 +218,26 @@ class Generator : IDisposable
                     });
                 }
             }
-        }
 
-        if (_arguments.JoinDomain != null && _arguments.DomainAccounts?.Length > 0)
-        {
-            using var domainAccounts = _writer.WriteAutoCloseElement("DomainAccounts");
-            using var domainAccountList = _writer.WriteAutoCloseElement("DomainAccountList", new { wcm_action = "add" });
-            foreach (var account in _arguments.DomainAccounts)
+            if (_arguments.JoinDomain != null && _arguments.DomainAccounts?.Length > 0)
             {
-                _writer.WriteElements(new
+                using var domainAccounts = _writer.WriteAutoCloseElement("DomainAccounts");
+                using var domainAccountList = _writer.WriteAutoCloseElement("DomainAccountList", new { wcm_action = "add" });
+                foreach (var account in _arguments.DomainAccounts)
                 {
-                    DomainAccount = new
+                    _writer.WriteElements(new
                     {
-                        Name = account,
-                        Group = "Administrators",
-                    }
-                });
-            }
+                        DomainAccount = new
+                        {
+                            _attributes = new { wcm_action = "add" },
+                            Name = account,
+                            Group = "Administrators",
+                        }
+                    });
+                }
 
-            _writer.WriteElementString("Domain", _arguments.JoinDomain);
+                _writer.WriteElementString("Domain", _arguments.JoinDomain);
+            }
         }
 
         _writer.WriteElements(new
@@ -237,11 +245,11 @@ class Generator : IDisposable
             OOBE = new
             {
                 ProtectYourPC = 1,
-                HideEULAPage = true,
-                HideLocalAccountScreen = true,
-                HideOEMRegistrationScreen = true,
-                HideOnlineAccountScreens = true,
-                HideWirelessSetupInOOBE = true
+                HideEULAPage = "true",
+                HideLocalAccountScreen = "true",
+                HideOEMRegistrationScreen = "true",
+                HideOnlineAccountScreens = "true",
+                HideWirelessSetupInOOBE = "true"
             }
         });
 
@@ -252,7 +260,7 @@ class Generator : IDisposable
             {
                 AutoLogon = new
                 {
-                    Enabled = true,
+                    Enabled = "true",
                     LogonCount = _arguments.AutoLogonCount,
                     _arguments.AutoLogonUser.Domain,
                     Username = _arguments.AutoLogonUser.UserName,
@@ -390,8 +398,6 @@ class Generator : IDisposable
             publicKeyToken = PublicKeyToken,
             language = "neutral",
             versionScope = "nonSxS",
-            xmlns_wcm = "http://schemas.microsoft.com/WMIConfig/2002/State",
-            xmlns_xsi = "http://www.w3.org/2001/XMLSchema-instance"
         });
     }
 

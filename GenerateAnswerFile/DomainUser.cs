@@ -1,6 +1,6 @@
 ﻿namespace GenerateAnswerFile;
 
-record class DomainUser(string? Domain, string UserName)
+public record class DomainUser(string? Domain, string UserName)
 {
     public static DomainUser Parse(string value)
     {

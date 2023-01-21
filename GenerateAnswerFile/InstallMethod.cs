@@ -1,6 +1,6 @@
 ﻿namespace GenerateAnswerFile;
 
-enum InstallMethod
+public enum InstallMethod
 {
     PreInstalled,
     ExistingPartition,
