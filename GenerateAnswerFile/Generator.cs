@@ -434,7 +434,7 @@ public class Generator : IDisposable
                 Order = order,
                 Size = size,
                 Type = type,
-                extend = size.HasValue ? null : "true",
+                Extend = size.HasValue ? null : "true",
             }
         });
     }

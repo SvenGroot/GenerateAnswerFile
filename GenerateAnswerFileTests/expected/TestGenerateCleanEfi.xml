@@ -41,7 +41,7 @@
             <CreatePartition wcm:action="add">
               <Order>3</Order>
               <Type>Primary</Type>
-              <extend>true</extend>
+              <Extend>true</Extend>
             </CreatePartition>
           </CreatePartitions>
           <ModifyPartitions>
