@@ -6,7 +6,8 @@ using System.Drawing;
 
 namespace GenerateAnswerFile;
 
-[ApplicationFriendlyName("Answer File Generator")]
+[ApplicationFriendlyName("Windows Answer File Generator")]
+[Description("Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation.")]
 class Arguments
 {
     [CommandLineArgument(IsRequired = true, Position = 0, ValueDescription = "Path")]
@@ -15,7 +16,7 @@ class Arguments
     public FileInfo OutputFile { get; set; } = default!;
 
     [CommandLineArgument]
-    [Description("Version and build number (e.g. 10.0.22000.1) of the OS being installed. This argument is only used when -Component is specified.")]
+    [Description("Version and build number (e.g. 10.0.22000.1) of the OS being installed. This argument is only used when -Feature is specified.")]
     [Alias("v")]
     public Version? WindowsVersion { get; set; }
 
@@ -23,29 +24,34 @@ class Arguments
     [Description("Name of the domain to join.")]
     [Requires(nameof(JoinDomainUser), nameof(JoinDomainPassword))]
     [Alias("jd")]
+    [ValidateNotWhiteSpace]
     public string? JoinDomain { get; set; }
 
     [CommandLineArgument]
     [Description("Name of a user with permission to join the domain. Must be a member of the domain specified with -JoinDomain.")]
     [Alias("jdu")]
     [Requires(nameof(JoinDomain))]
+    [ValidateNotWhiteSpace]
     public string? JoinDomainUser { get; set; }
 
     [CommandLineArgument]
     [Description("Password of the user used to join the domain. Will be stored in plain text.")]
     [Alias("jdp")]
     [Requires(nameof(JoinDomain))]
+    [ValidateNotWhiteSpace]
     public string? JoinDomainPassword { get; set; }
 
     [CommandLineArgument]
     [Description("The organizational unit to use when joining the domain.")]
     [Alias("ou")]
     [Requires(nameof(JoinDomain))]
+    [ValidateNotWhiteSpace]
     public string? OUPath { get; set; }
 
     [CommandLineArgument]
     [Description("The network name for the computer.")]
     [Alias("n")]
+    [ValidateNotWhiteSpace]
     public string? ComputerName { get; set; }
 
     [CommandLineArgument]
@@ -62,6 +68,7 @@ class Arguments
     [Description("The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can have multiple values.")]
     [Alias("da")]
     [Requires(nameof(JoinDomain))]
+    [ValidateNotWhiteSpace]
     [MultiValueSeparator]
     public string[]? DomainAccounts { get; set; }
 
@@ -75,12 +82,14 @@ class Arguments
     [Description("The name of the user (in the format 'domain\\user', or just 'user' for local users) to automatically log on.")]
     [Alias("alu")]
     [Requires(nameof(AutoLogonPassword))]
+    [ValidateNotWhiteSpace]
     public DomainUser? AutoLogonUser { get; set; }
 
     [CommandLineArgument]
     [Description("The password of the user to automatically log on.")]
     [Alias("alp")]
     [Requires(nameof(AutoLogonUser))]
+    [ValidateNotWhiteSpace]
     public string? AutoLogonPassword { get; set; }
 
     [CommandLineArgument(DefaultValue = 1)]
@@ -94,25 +103,29 @@ class Arguments
     [Description("The default user used to access the network, in 'domain\\user' format.")]
     [Alias("cku")]
     [Requires(nameof(CmdKeyPassword))]
+    [ValidateNotWhiteSpace]
     public DomainUser? CmdKeyUser { get; set; }
 
     [CommandLineArgument]
     [Description("The password of the user used to access the network.")]
     [Alias("ckp")]
     [Requires(nameof(CmdKeyUser))]
+    [ValidateNotWhiteSpace]
     public string? CmdKeyPassword { get; set; }
 
     [CommandLineArgument("SetupScript")]
     [Alias("s")]
     [Description("The full path of a Windows PowerShell script to run during first logon. Can have multiple values.")]
+    [ValidateNotWhiteSpace]
     [MultiValueSeparator]
     public string[]? SetupScripts { get; set; }
 
     [CommandLineArgument("Feature")]
-    [Description("The feature name of an optional component to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.")]
+    [Description("The feature name of an optional feature to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.")]
     [Alias("c")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanBios, InstallMethod.CleanEfi, InstallMethod.Manual)]
     [Requires(nameof(WindowsVersion))]
+    [ValidateNotWhiteSpace]
     [MultiValueSeparator]
     public string[]? Features { get; set; }
 
@@ -137,7 +150,7 @@ class Arguments
     public int InstallToPartition { get; set; } = 3;
 
     [CommandLineArgument]
-    [Description("The WIM image index to install. Use this for editions not installed using a product key such as Enterprise or Server. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.")]
+    [Description("The WIM image index to install. Use this for editions not installed using a product key such as volume license editions. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.")]
     [Alias("wim")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanEfi, InstallMethod.CleanBios)]
     public int ImageIndex { get; set; }

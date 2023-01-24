@@ -1,10 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>ookii.snk</AssemblyOriginatorKeyFile>
+    <Description>A library for generating answer files (unattend.xml and autounattend.xml) for unattended Windows installation.</Description>
+    <PackageProjectUrl>https://github.com/SvenGroot/GenerateAnswerFile</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SvenGroot/GenerateAnswerFile</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>unattended answer windows unattend unattend.xml autounattend autounattend.xml install installation</PackageTags>
+    <PackageReleaseNotes>For details, see https://www.ookii.org/Link/GenerateAnswerFileVersionHistory</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
 </Project>
