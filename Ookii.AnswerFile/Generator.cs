@@ -6,6 +6,10 @@ using System.Xml;
 
 namespace Ookii.AnswerFile;
 
+/// <summary>
+/// A generator for Windows unattended installation files.
+/// </summary>
+/// <seealso cref="GeneratorOptions"/>
 public class Generator
 {
     internal const string PublicKeyToken = "31bf3856ad364e35";
@@ -23,29 +27,58 @@ public class Generator
         Options = options;
     }
 
+    /// <summary>
+    /// Gets the options used for this generator.
+    /// </summary>
+    /// <value>
+    /// An instance of the <see cref="GeneratorOptions"/> class.
+    /// </value>
     public GeneratorOptions Options { get; }
 
+    /// <summary>
+    /// Gets the <see cref="XmlWriter"/> that output is written to.
+    /// </summary>
+    /// <value>
+    /// An instance of a class derived from the <see cref="XmlWriter"/> class.
+    /// </value>
     public XmlWriter Writer { get; }
 
+    /// <summary>
+    /// Generates an unattended installation answer file and writes it to the specified
+    /// <see cref="XmlWriter"/>.
+    /// </summary>
+    /// <param name="writer">The <see cref="XmlWriter"/> to write to.</param>
+    /// <param name="options">The options for the unattended installation.</param>
     public static void Generate(XmlWriter writer, GeneratorOptions options)
     {
         var generator = new Generator(writer, options);
         generator.Generate();
     }
 
+    /// <summary>
+    /// Generates an unattended installation answer file and writes it to the specified file.
+    /// </summary>
+    /// <param name="outputPath">The path of the file to write to.</param>
+    /// <param name="options">The options for the unattended installation.</param>
     public static void Generate(string outputPath, GeneratorOptions options)
     {
         using var writer = XmlWriter.Create(outputPath, XmlSettings);
         Generate(writer, options);
     }
 
+    /// <summary>
+    /// Generates an unattended installation answer file and writes it to the specified
+    /// <see cref="TextWriter"/>.
+    /// </summary>
+    /// <param name="writer">The <see cref="TextWriter"/> to write to.</param>
+    /// <param name="options">The options for the unattended installation.</param>
     public static void Generate(TextWriter writer, GeneratorOptions options)
     {
         using var xmlWriter = XmlWriter.Create(writer, XmlSettings);
         Generate(xmlWriter, options);
     }
 
-    public void Generate()
+    private void Generate()
     {
         Writer.WriteStartElement("unattend", "urn:schemas-microsoft-com:unattend");
         Writer.WriteAttributes(new
@@ -58,11 +91,6 @@ public class Generator
         GenerateSpecializePass();
         GenerateOobePass();
         Writer.WriteEndElement();
-    }
-
-    public void Dispose()
-    {
-        Writer.Dispose();
     }
 
     private void GenerateServicing()

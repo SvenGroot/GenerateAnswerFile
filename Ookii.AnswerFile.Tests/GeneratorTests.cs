@@ -51,7 +51,7 @@ namespace GenerateAnswerFileTests
                 {
                     OptionalFeatures = new OptionalFeatures(new Version(10, 0, 22621, 1))
                     {
-                        Components = { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }
+                        Features = { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }
                     }
                 },
                 EnableRemoteDesktop = true,

@@ -59,14 +59,16 @@ class Arguments
     public bool DisableCloud { get; set; }
 
     [CommandLineArgument("DomainAccount")]
-    [Description("The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can be specified more than once.")]
+    [Description("The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can have multiple values.")]
     [Alias("da")]
     [Requires(nameof(JoinDomain))]
+    [MultiValueSeparator]
     public string[]? DomainAccounts { get; set; }
 
     [CommandLineArgument("LocalAccount", ValueDescription = "Name,Password")]
-    [Description("A local account to add, using the format 'name,password'. Can be specified more than once.")]
+    [Description("A local account to add, using the format 'name,password'. Can have multiple values.")]
     [Alias("a")]
+    [MultiValueSeparator]
     public LocalCredential[]? LocalAccounts { get; set; }
 
     [CommandLineArgument]
@@ -102,15 +104,17 @@ class Arguments
 
     [CommandLineArgument("SetupScript")]
     [Alias("s")]
-    [Description("The full path of a Windows PowerShell script to run during first logon. Can be specified more than once.")]
+    [Description("The full path of a Windows PowerShell script to run during first logon. Can have multiple values.")]
+    [MultiValueSeparator]
     public string[]? SetupScripts { get; set; }
 
-    [CommandLineArgument("Component")]
-    [Description("The feature name of an optional component to install. Can be specified more than once.")]
+    [CommandLineArgument("Feature")]
+    [Description("The feature name of an optional component to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.")]
     [Alias("c")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanBios, InstallMethod.CleanEfi, InstallMethod.Manual)]
     [Requires(nameof(WindowsVersion))]
-    public string[]? Components { get; set; }
+    [MultiValueSeparator]
+    public string[]? Features { get; set; }
 
     [CommandLineArgument(DefaultValue = InstallMethod.PreInstalled)]
     [Description("The install method used.")]
@@ -133,7 +137,7 @@ class Arguments
     public int InstallToPartition { get; set; } = 3;
 
     [CommandLineArgument]
-    [Description("The WIM image index to install.")]
+    [Description("The WIM image index to install. Use this for editions not installed using a product key such as Enterprise or Server. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.")]
     [Alias("wim")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanEfi, InstallMethod.CleanBios)]
     public int ImageIndex { get; set; }
@@ -241,10 +245,10 @@ class Arguments
             _ => null,
         };
 
-        if (options != null && Components?.Length > 0)
+        if (options != null && Features?.Length > 0)
         {
             options.OptionalFeatures = new OptionalFeatures(WindowsVersion!);
-            options.OptionalFeatures.Components.AddRange(Components);
+            options.OptionalFeatures.Features.AddRange(Features);
         }
 
         return options;
