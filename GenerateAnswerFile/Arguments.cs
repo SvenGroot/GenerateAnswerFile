@@ -167,7 +167,7 @@ class Arguments
     public string ProcessorArchitecture { get; set; } = default!;
 
     [CommandLineArgument(DefaultValue = "Pacific Standard Time")]
-    [Description("The time zone that Windows will use.")]
+    [Description("The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.")]
     [ValidateNotWhiteSpace]
     public string TimeZone { get; set; } = default!;
 

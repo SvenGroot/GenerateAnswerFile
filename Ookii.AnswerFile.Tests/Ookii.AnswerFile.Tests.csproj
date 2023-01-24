@@ -9,11 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="expected\TestGenerateCleanBios.xml" />
     <None Remove="expected\TestGenerateCleanEfi.xml" />
+    <None Remove="expected\TestGenerateExistingPartition.xml" />
     <None Remove="expected\TestGeneratePreInstalled.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="expected\TestGenerateExistingPartition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="expected\TestGenerateCleanBios.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="expected\TestGenerateCleanEfi.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

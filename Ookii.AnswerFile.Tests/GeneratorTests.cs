@@ -64,6 +64,47 @@ namespace GenerateAnswerFileTests
             CheckFilesEqual(expectedPath, actualPath);
         }
 
+        [TestMethod]
+        public void TestGenerateCleanBios()
+        {
+            var (actualPath, expectedPath) = GetPaths();
+            var options = new GeneratorOptions()
+            {
+                InstallOptions = new CleanBiosOptions()
+                {
+                    DiskId = 1,
+                    ImageIndex = 2,
+                },
+                EnableDefender = false,
+                LocalAccounts = { new LocalCredential("MyUser", "Password") },
+                ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
+                ProcessorArchitecture = "x86"
+            };
+
+            Generator.Generate(actualPath, options);
+            CheckFilesEqual(expectedPath, actualPath);
+        }
+
+        [TestMethod]
+        public void TestGenerateExistingPartition()
+        {
+            var (actualPath, expectedPath) = GetPaths();
+            var options = new GeneratorOptions()
+            {
+                InstallOptions = new ExistingPartitionOptions()
+                {
+                    DiskId = 1,
+                    PartitionId = 5,
+                },
+                ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
+                TimeZone = "UTC"
+            };
+
+            Generator.Generate(actualPath, options);
+            CheckFilesEqual(expectedPath, actualPath);
+        }
+
+
         private static void CheckFilesEqual(string expectedPath, string actualPath)
         {
             var expected = File.ReadAllText(expectedPath);
