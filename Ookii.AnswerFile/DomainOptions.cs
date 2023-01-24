@@ -6,9 +6,9 @@ namespace Ookii.AnswerFile;
 /// Provides options for joining a domain.
 /// </summary>
 /// <remarks>
-/// <warning>
+/// <note type="security">
 ///   The password of the account used to join the domain is stored in plain text.
-/// </warning>
+/// </note>
 /// </remarks>
 public class DomainOptions
 {
@@ -18,9 +18,9 @@ public class DomainOptions
     /// <param name="domain">The domain to join.</param>
     /// <param name="credential">The credentials of a domain account that has permission to join the domain.</param>
     /// <remarks>
-    /// <warning>
+    /// <note type="security">
     ///   The password of the account used to join the domain is stored in plain text.
-    /// </warning>
+    /// </note>
     /// </remarks>
     /// <exception cref="ArgumentNullException">
     ///   <paramref name="domain"/> or <paramref name="credential"/> is <see langword="null"/>.

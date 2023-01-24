@@ -4,10 +4,10 @@
 /// Provides credentials for a local user account.
 /// </summary>
 /// <remarks>
-/// <warning>
+/// <note type="security">
 ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
 ///   at best. Do not store generated files with sensitive passwords in public locations.
-/// </warning>
+/// </note>
 /// </remarks>
 public class LocalCredential
 {
@@ -17,10 +17,10 @@ public class LocalCredential
     /// <param name="userName">The user name of the account.</param>
     /// <param name="password">The password of the account.</param>
     /// <remarks>
-    /// <warning>
+    /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
     ///   at best. Do not store generated files with sensitive passwords in public locations.
-    /// </warning>
+    /// </note>
     /// </remarks>
     /// <exception cref="ArgumentNullException">
     ///   <paramref name="userName"/> or <paramref name="password"/> is <see langword="null"/>.
@@ -48,10 +48,10 @@ public class LocalCredential
     /// The password.
     /// </value>
     /// <remarks>
-    /// <warning>
+    /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
     ///   at best. Do not store generated files with sensitive passwords in public locations.
-    /// </warning>
+    /// </note>
     /// </remarks>
     public string Password { get; }
 

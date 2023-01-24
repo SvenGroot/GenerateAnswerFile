@@ -4,10 +4,10 @@
 /// Represents a credential for a domain or local user.
 /// </summary>
 /// <remarks>
-/// <warning>
+/// <note type="security">
 ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
 ///   at best. Do not store generated files with sensitive passwords in public locations.
-/// </warning>
+/// </note>
 /// </remarks>
 public class DomainCredential
 {
@@ -17,10 +17,10 @@ public class DomainCredential
     /// <param name="userAccount">The domain or local user account.</param>
     /// <param name="password">The password.</param>
     /// <remarks>
-    /// <warning>
+    /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
     ///   at best. Do not store generated files with sensitive passwords in public locations.
-    /// </warning>
+    /// </note>
     /// </remarks>
     /// <exception cref="ArgumentNullException">
     ///   <paramref name="userAccount"/> or <paramref name="password"/> is <see langword="null"/>.
@@ -48,10 +48,10 @@ public class DomainCredential
     /// The password.
     /// </value>
     /// <remarks>
-    /// <warning>
+    /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
     ///   at best. Do not store generated files with sensitive passwords in public locations.
-    /// </warning>
+    /// </note>
     /// </remarks>
     public string Password { get; }
 }

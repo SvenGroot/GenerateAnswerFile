@@ -24,7 +24,7 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     ///   A wim or esd image file can contain multiple images, typically used for different SKUs
     ///   such as Home or Professional. Normally, the <see cref="GeneratorOptions.ProductKey"/> is
     ///   used to determine which image to install. However, for editions that are not necessarily
-    ///   activated using a product key (such as Enterprise or Server editions), you can use the
+    ///   activated using a product key (such as volume licensed editions), you can use the
     ///   image index to select which edition to install.
     /// </para>
     /// <para>

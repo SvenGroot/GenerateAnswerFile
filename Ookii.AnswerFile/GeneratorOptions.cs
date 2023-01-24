@@ -29,9 +29,9 @@ public class GeneratorOptions
     /// a domain. The default value is <see langword="null"/>.
     /// </value>
     /// <remarks>
-    /// <warning>
+    /// <note type="security">
     ///   The password of the account used to join the domain is stored in plain text.
-    /// </warning>
+    /// </note>
     /// </remarks>
     public DomainOptions? JoinDomain { get; set; }
 
@@ -79,10 +79,10 @@ public class GeneratorOptions
     /// A collection with the local user accounts.
     /// </value>
     /// <remarks>
-    /// <warning>
+    /// <note type="security">
     ///   The passwords for the local accounts are stored using base64 encoding. They are not
     ///   encrypted.
-    /// </warning>
+    /// </note>
     /// </remarks>
     public Collection<LocalCredential> LocalAccounts { get; } = new();
 
@@ -109,9 +109,9 @@ public class GeneratorOptions
     ///   account for all network destinations. Using this is not very secure and should only be
     ///   done in test environments.
     /// </para>
-    /// <warning>
+    /// <note type="security">
     ///   The password of the cmdkey account is stored in plain text.
-    /// </warning>
+    /// </note>
     /// </remarks>
     public DomainCredential? CmdKeyAccount { get; set; }
 
@@ -143,7 +143,8 @@ public class GeneratorOptions
     ///   The product key is used to select a Windows edition, and to activate Windows.
     /// </para>
     /// <para>
-    ///   Depending on the edition being installed, a product key may or may not be required.
+    ///   Depending on the edition being installed and the installation method used, a product key
+    ///   may or may not be required.
     /// </para>
     /// </remarks>
     public string? ProductKey { get; set; }
