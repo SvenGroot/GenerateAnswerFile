@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateAnswerFile", "GenerateAnswerFile\GenerateAnswerFile.csproj", "{4CBB27C8-570D-4055-BC59-4E2F3F0A8E83}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateAnswerFileTests", "GenerateAnswerFileTests\GenerateAnswerFileTests.csproj", "{8538CFA5-9063-4FE0-93A1-8D1FC8A0DCFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ookii.AnswerFile.Tests", "Ookii.AnswerFile.Tests\Ookii.AnswerFile.Tests.csproj", "{8538CFA5-9063-4FE0-93A1-8D1FC8A0DCFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ookii.AnswerFile", "Ookii.AnswerFile\Ookii.AnswerFile.csproj", "{32CCDA2E-B7CC-4943-B2BF-74559FF6A283}"
 EndProject

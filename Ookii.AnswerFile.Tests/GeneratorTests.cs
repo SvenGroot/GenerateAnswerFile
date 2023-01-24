@@ -23,20 +23,20 @@ namespace GenerateAnswerFileTests
                 JoinDomain = new DomainOptions("somedomain",
                     new DomainCredential(new DomainUser("somedomain", "domainuser"), "DomainPassword"))
                 {
-                    OUPath = "OU=SomeOU,DC=somedomain"
+                    OUPath = "OU=SomeOU,DC=somedomain",
+                    DomainAccounts = { "domainuser2" }
                 },
                 AutoLogon = new AutoLogonOptions(new DomainUser("somedomain", "domainuser2"), "DomainPassword2")
                 {
                     Count = 9999,
                 },
+                LocalAccounts = { new LocalCredential("MyAccount", "Password") },
+                SetupScripts = { "\\\\machine\\shared\\script.ps1 -Arg" },
                 ComputerName = "test-machine",
                 EnableCloud = false,
                 DisplayResolution = new Size(1280, 1024)
             };
 
-            options.LocalAccounts.Add(new LocalCredential("MyAccount", "Password"));
-            options.SetupScripts.Add("\\\\machine\\shared\\script.ps1 -Arg");
-            options.JoinDomain.DomainAccounts.Add("domainuser2");
             Generator.Generate(actualPath, options);
             CheckFilesEqual(expectedPath, actualPath);
         }
