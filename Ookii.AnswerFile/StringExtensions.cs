@@ -1,4 +1,4 @@
-﻿namespace GenerateAnswerFile;
+﻿namespace Ookii.AnswerFile;
 
 static class StringExtensions
 {

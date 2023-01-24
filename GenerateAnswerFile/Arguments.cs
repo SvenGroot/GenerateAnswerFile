@@ -1,4 +1,5 @@
-﻿using Ookii.CommandLine;
+﻿using Ookii.AnswerFile;
+using Ookii.CommandLine;
 using Ookii.CommandLine.Validation;
 using System.ComponentModel;
 using System.Drawing;
@@ -6,7 +7,7 @@ using System.Drawing;
 namespace GenerateAnswerFile;
 
 [ApplicationFriendlyName("Answer File Generator")]
-public class Arguments
+class Arguments
 {
     [CommandLineArgument(IsRequired = true, Position = 0, ValueDescription = "Path")]
     [Description("The path and file name to write the answer file to.")]
@@ -60,12 +61,13 @@ public class Arguments
     [CommandLineArgument("DomainAccount")]
     [Description("The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can be specified more than once.")]
     [Alias("da")]
+    [Requires(nameof(JoinDomain))]
     public string[]? DomainAccounts { get; set; }
 
     [CommandLineArgument("LocalAccount", ValueDescription = "Name,Password")]
     [Description("A local account to add, using the format 'name,password'. Can be specified more than once.")]
     [Alias("a")]
-    public UserAndPassword[]? LocalAccounts { get; set; }
+    public LocalCredential[]? LocalAccounts { get; set; }
 
     [CommandLineArgument]
     [Description("The name of the user (in the format 'domain\\user', or just 'user' for local users) to automatically log on.")]
@@ -150,7 +152,7 @@ public class Arguments
     [Description("The language used for the UI language and the input, system and user locales.")]
     [Alias("lang")]
     [ValidateNotWhiteSpace]
-    public string? Language { get; set; }
+    public string Language { get; set; } = default!;
 
     [CommandLineArgument]
     [Description("The product key used to select what edition to install and to activate Windows.")]
@@ -162,7 +164,7 @@ public class Arguments
     [Description("The processor architecture of the Windows edition you're installing. Use amd64 for 64 bit, and x86 for 32 bit.")]
     [Alias("arch")]
     [ValidateNotWhiteSpace]
-    public string? ProcessorArchitecture { get; set; }
+    public string ProcessorArchitecture { get; set; } = default!;
 
     [CommandLineArgument(DefaultValue = "Pacific Standard Time")]
     [Description("The time zone that Windows will use.")]
@@ -181,5 +183,113 @@ public class Arguments
         };
 
         return CommandLineParser.Parse<Arguments>(options);
+    }
+
+    public GeneratorOptions ToOptions()
+    {
+        var options = new GeneratorOptions()
+        {
+            InstallOptions = ToInstallOptions(),
+            JoinDomain = ToDomainOptions(),
+            ComputerName = ComputerName,
+            EnableDefender = !DisableDefender,
+            EnableCloud = !DisableCloud,
+            EnableRemoteDesktop = EnableRemoteDesktop,
+            AutoLogon = ToAutoLogonOptions(),
+            CmdKeyAccount = ToCmdKeyOptions(),
+            DisplayResolution = DisplayResolution,
+            Language = Language,
+            ProductKey = ProductKey,
+            ProcessorArchitecture = ProcessorArchitecture,
+            TimeZone = TimeZone,
+        };
+
+        if (LocalAccounts != null)
+        {
+            options.LocalAccounts.AddRange(LocalAccounts);
+        }
+
+        if (SetupScripts != null)
+        {
+            options.SetupScripts.AddRange(SetupScripts);
+        }
+
+        return options;
+    }
+
+    private InstallOptionsBase? ToInstallOptions()
+    {
+        InstallOptionsBase? options = Install switch
+        {
+            InstallMethod.ExistingPartition => new ExistingPartitionOptions()
+            {
+                DiskId = InstallToDisk,
+                PartitionId = InstallToPartition,
+                ImageIndex = ImageIndex,
+            },
+            InstallMethod.CleanEfi => new CleanEfiOptions()
+            {
+                DiskId = InstallToDisk,
+                ImageIndex = ImageIndex,
+            },
+            InstallMethod.CleanBios => new CleanBiosOptions()
+            {
+                DiskId = InstallToDisk,
+                ImageIndex = ImageIndex,
+            },
+            InstallMethod.Manual => new ManualInstallOptions(),
+            _ => null,
+        };
+
+        if (options != null && Components?.Length > 0)
+        {
+            options.OptionalFeatures = new OptionalFeatures(WindowsVersion!);
+            options.OptionalFeatures.Components.AddRange(Components);
+        }
+
+        return options;
+    }
+
+    private DomainOptions? ToDomainOptions()
+    {
+        if (JoinDomain == null)
+        {
+            return null;
+        }
+
+        var options = new DomainOptions(JoinDomain, new DomainCredential(new DomainUser(JoinDomain, JoinDomainUser!), JoinDomainPassword!))
+        {
+            OUPath = OUPath,
+        };
+
+        if (DomainAccounts != null)
+        {
+            options.DomainAccounts.AddRange(DomainAccounts);
+        }
+
+        return options;
+    }
+
+    private AutoLogonOptions? ToAutoLogonOptions()
+    {
+        if (AutoLogonUser == null)
+        {
+            return null;
+        }
+
+        return new AutoLogonOptions(AutoLogonUser, AutoLogonPassword!)
+        {
+            Count = AutoLogonCount,
+        };
+    }
+
+    private DomainCredential? ToCmdKeyOptions()
+    {
+        if (CmdKeyUser == null)
+        {
+            return null;
+        }
+
+        return new DomainCredential(CmdKeyUser, CmdKeyPassword!);
     }
 }

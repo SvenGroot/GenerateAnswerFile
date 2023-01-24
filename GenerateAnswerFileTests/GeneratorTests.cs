@@ -1,5 +1,6 @@
-using GenerateAnswerFile;
-using Ookii.CommandLine;
+using Ookii.AnswerFile;
+using System.Drawing;
+using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
 
 namespace GenerateAnswerFileTests
@@ -17,10 +18,26 @@ namespace GenerateAnswerFileTests
         public void TestGeneratePreInstalled()
         {
             var (actualPath, expectedPath) = GetPaths();
-            var args = new[] { actualPath, "-ComputerName", "test-machine", "-WindowsVersion", "10.0.22000.1", "-LocalAccount", "MyAccount,Password", "-AutoLogonCount", "9999", "-DisableCloud", "-SetupScript", "\\\\machine\\shared\\script.ps1 -Arg", "-JoinDomain", "somedomain", "-JoinDomainUser", "domainuser", "-JoinDomainPassword", "DomainPassword", "-DomainAccount", "domainuser2", "-AutoLogonUser", "somedomain\\domainuser2", "-AutoLogonPassword", "DomainPassword2", "-OUPath", "OU=SomeOU,DC=somedomain", "-DisplayResolution", "1280,1024" };
-            var arguments = CommandLineParser.Parse<Arguments>(args);
-            Assert.IsNotNull(arguments);
-            Generator.Generate(arguments);
+            var options = new GeneratorOptions()
+            {
+                JoinDomain = new DomainOptions("somedomain",
+                    new DomainCredential(new DomainUser("somedomain", "domainuser"), "DomainPassword"))
+                {
+                    OUPath = "OU=SomeOU,DC=somedomain"
+                },
+                AutoLogon = new AutoLogonOptions(new DomainUser("somedomain", "domainuser2"), "DomainPassword2")
+                {
+                    Count = 9999,
+                },
+                ComputerName = "test-machine",
+                EnableCloud = false,
+                DisplayResolution = new Size(1280, 1024)
+            };
+
+            options.LocalAccounts.Add(new LocalCredential("MyAccount", "Password"));
+            options.SetupScripts.Add("\\\\machine\\shared\\script.ps1 -Arg");
+            options.JoinDomain.DomainAccounts.Add("domainuser2");
+            Generator.Generate(actualPath, options);
             CheckFilesEqual(expectedPath, actualPath);
         }
 
@@ -28,10 +45,22 @@ namespace GenerateAnswerFileTests
         public void TestGenerateCleanEfi()
         {
             var (actualPath, expectedPath) = GetPaths();
-            var args = new[] { actualPath, "-WindowsVersion", "10.0.22621.1", "-Install", "CleanEfi", "-EnableRemoteDesktop", "-LocalAccount", "MyUser,Password", "-AutoLogonCount", "1", "-AutoLogonUser", "MyUser", "-AutoLogonPassword", "Password", "-component", "Microsoft-Windows-Subsystem-Linux", "-component", "VirtualMachinePlatform", "-ProductKey", "ABCDE-12345-ABCDE-12345-ABCDE" };
-            var arguments = CommandLineParser.Parse<Arguments>(args);
-            Assert.IsNotNull(arguments);
-            Generator.Generate(arguments);
+            var options = new GeneratorOptions()
+            {
+                InstallOptions = new CleanEfiOptions()
+                {
+                    OptionalFeatures = new OptionalFeatures(new Version(10, 0, 22621, 1))
+                    {
+                        Components = { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }
+                    }
+                },
+                EnableRemoteDesktop = true,
+                LocalAccounts = { new LocalCredential("MyUser", "Password") },
+                AutoLogon = new AutoLogonOptions(new DomainUser(null, "MyUser"), "Password"),
+                ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE"
+            };
+
+            Generator.Generate(actualPath, options);
             CheckFilesEqual(expectedPath, actualPath);
         }
 

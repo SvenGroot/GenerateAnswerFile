@@ -7,5 +7,5 @@ if (arguments == null)
 }
 
 // TODO: Handle exceptions.
-Generator.Generate(arguments);
+Ookii.AnswerFile.Generator.Generate(arguments.OutputFile.FullName, arguments.ToOptions());
 return 0;

@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace GenerateAnswerFile;
+namespace Ookii.AnswerFile;
 
 class AutoCloseElement : IDisposable
 {

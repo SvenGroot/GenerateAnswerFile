@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GenerateAnswerFile\GenerateAnswerFile.csproj" />
+    <ProjectReference Include="..\Ookii.AnswerFile\Ookii.AnswerFile.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace GenerateAnswerFile;
+﻿namespace Ookii.AnswerFile;
 
 public record class DomainUser(string? Domain, string UserName)
 {
