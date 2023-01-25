@@ -114,7 +114,7 @@ This creates a user named "John" with the password "Password" (don't do this, ob
 in with that user automatically on first boot. To log in automatically more than once, use the
 `-AutoLogonCount` argument.
 
-The `-LocalAccount` argument takes multiple values if you want to create more than once account.
+The `-LocalAccount` argument takes multiple values if you want to create more than one account.
 
 ### Joining a domain
 
