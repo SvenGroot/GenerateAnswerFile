@@ -104,6 +104,18 @@ namespace GenerateAnswerFileTests
             CheckFilesEqual(expectedPath, actualPath);
         }
 
+        [TestMethod]
+        public void TestGenerateManual()
+        {
+            var (actualPath, expectedPath) = GetPaths();
+            var options = new GeneratorOptions()
+            {
+                InstallOptions = new ManualInstallOptions(),
+            };
+
+            Generator.Generate(actualPath, options);
+            CheckFilesEqual(expectedPath, actualPath);
+        }
 
         private static void CheckFilesEqual(string expectedPath, string actualPath)
         {
