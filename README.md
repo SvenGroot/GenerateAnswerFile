@@ -127,7 +127,8 @@ supplied credentials. It also adds the account "domainuser" to the local adminis
 logs in using that account automatically on first boot.
 
 This sample does not use the `-Install` argument, so it creates an answer file suitable for
-pre-installed Windows images, such as those created using sysprep.
+pre-installed Windows images, such as those created using sysprep. The `-JoinDomain` argument can
+be used with any install method, however.
 
 ### Optional features
 
