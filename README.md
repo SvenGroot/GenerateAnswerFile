@@ -153,7 +153,7 @@ PowerShell command.
 
 ## Using an answer file
 
-Please refer to the [official Microsoft documentation](https://learn.microsoft.com/windows-hardware/manufacture/desktop/automate-windows-setup) to see how to use an answer file during Windows setup.
+Please refer to the [official Microsoft documentation](https://learn.microsoft.com/windows-hardware/manufacture/desktop/windows-setup-automation-overview) to see how to use an answer file during Windows setup.
 
 ## Ookii.AnswerFile library [![NuGet](https://img.shields.io/nuget/v/Ookii.AnswerFile)](https://www.nuget.org/packages/Ookii.AnswerFile/)
 
