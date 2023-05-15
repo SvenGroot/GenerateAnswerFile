@@ -55,6 +55,7 @@ namespace GenerateAnswerFileTests
                     }
                 },
                 EnableRemoteDesktop = true,
+                EnableServerManager = false,
                 LocalAccounts = { new LocalCredential("MyUser", "Password") },
                 AutoLogon = new AutoLogonOptions(new DomainUser(null, "MyUser"), "Password"),
                 ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE"

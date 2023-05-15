@@ -64,6 +64,11 @@ class Arguments
     [Alias("dc")]
     public bool DisableCloud { get; set; }
 
+    [CommandLineArgument]
+    [Description("Disable Server Manager from starting at first logon (Windows Server only).")]
+    [Alias("dsm")]
+    public bool DisableServerManager { get; set; }
+
     [CommandLineArgument("DomainAccount")]
     [Description("The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can have multiple values.")]
     [Alias("da")]
@@ -212,6 +217,7 @@ class Arguments
             EnableDefender = !DisableDefender,
             EnableCloud = !DisableCloud,
             EnableRemoteDesktop = EnableRemoteDesktop,
+            EnableServerManager = !DisableServerManager,
             AutoLogon = ToAutoLogonOptions(),
             CmdKeyAccount = ToCmdKeyOptions(),
             DisplayResolution = DisplayResolution,

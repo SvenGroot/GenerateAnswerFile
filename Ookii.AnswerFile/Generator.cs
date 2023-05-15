@@ -181,6 +181,12 @@ public class Generator
             using var runSynchronous = Writer.WriteAutoCloseElement("RunSynchronous");
             WriteRunSynchronousCommand(@"reg add HKLM\Software\Policies\Microsoft\Windows\CloudContent /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1", "Disable cloud consumer features", 1);
         }
+
+        if (!Options.EnableServerManager)
+        {
+            using var serverManager = WriteComponentStart("Microsoft-Windows-ServerManager-SvrMgrNc");
+            Writer.WriteElementString("DoNotOpenServerManagerAtLogon", "true");
+        }
     }
 
     private void GenerateOobePass()

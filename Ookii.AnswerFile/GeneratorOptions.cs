@@ -63,7 +63,7 @@ public class GeneratorOptions
     public bool EnableCloud { get; set; } = true;
 
     /// <summary>
-    /// Gets or sets a value which indicates whether remote desktop accepts incomding connections
+    /// Gets or sets a value which indicates whether remote desktop accepts incoming connections
     /// after installation.
     /// </summary>
     /// <value>
@@ -71,6 +71,21 @@ public class GeneratorOptions
     /// default value is <see langword="false"/>.
     /// </value>
     public bool EnableRemoteDesktop { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value which indicates whether server manager will be launched on logon on
+    /// Windows Server installation.
+    /// </summary>
+    /// <value>
+    /// <see langword="true"/> to enable server manager; otherwise, <see langword="false"/>. the
+    /// default value is <see langword="true"/>.
+    /// </value>
+    /// <remarks>
+    /// <para>
+    ///   This property has no effect on Windows installation that are not a Server SKU.
+    /// </para>
+    /// </remarks>
+    public bool EnableServerManager { get; set; } = true;
 
     /// <summary>
     /// Gets a collection of local administrator accounts to create.
