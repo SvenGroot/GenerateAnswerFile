@@ -5,6 +5,11 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "main"
+    groups:
+       # Group all dependencies in one PR.
+       all-dependencies:
+          patterns:
+             - "*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
