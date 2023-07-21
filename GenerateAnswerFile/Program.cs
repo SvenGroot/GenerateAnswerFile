@@ -3,7 +3,15 @@ using Ookii.AnswerFile;
 using Ookii.CommandLine;
 using Ookii.CommandLine.Terminal;
 
-var arguments = Arguments.Parse();
+var options = new ParseOptions
+{
+    UsageWriter = new UsageWriter()
+    {
+        UseAbbreviatedSyntax = true,
+    }
+};
+
+var arguments = Arguments.Parse(options);
 if (arguments == null)
 {
     return 1;

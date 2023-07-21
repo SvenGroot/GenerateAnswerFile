@@ -1,17 +1,20 @@
 ﻿using Ookii.AnswerFile;
 using Ookii.CommandLine;
+using Ookii.CommandLine.Conversion;
 using Ookii.CommandLine.Validation;
 using System.ComponentModel;
 using System.Drawing;
 
 namespace GenerateAnswerFile;
 
+[GeneratedParser]
 [ApplicationFriendlyName("Windows Answer File Generator")]
 [Description("Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation.")]
-class Arguments
+partial class Arguments
 {
-    [CommandLineArgument(IsRequired = true, Position = 0, ValueDescription = "Path")]
+    [CommandLineArgument(IsRequired = true, Position = 0)]
     [Description("The path and file name to write the answer file to.")]
+    [ValueDescription("Path")]
     [Alias("o")]
     public FileInfo OutputFile { get; set; } = default!;
 
@@ -77,8 +80,9 @@ class Arguments
     [MultiValueSeparator]
     public string[]? DomainAccounts { get; set; }
 
-    [CommandLineArgument("LocalAccount", ValueDescription = "Name,Password")]
+    [CommandLineArgument("LocalAccount")]
     [Description("A local account to add, using the format 'name,password'. Can have multiple values.")]
+    [ValueDescription("Name,Password")]
     [Alias("a")]
     [MultiValueSeparator]
     public LocalCredential[]? LocalAccounts { get; set; }
@@ -168,6 +172,7 @@ class Arguments
     [CommandLineArgument]
     [Description("The display resolution, in the format 'width,height'. For example, '1280,1024'. If not specified, the default resolution is determined by Windows.")]
     [Alias("res")]
+    [ArgumentConverter(typeof(WrappedDefaultTypeConverter<Size>))]
     public Size? DisplayResolution { get; set; }
 
     [CommandLineArgument(DefaultValue = "en-US")]
@@ -192,20 +197,6 @@ class Arguments
     [Description("The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.")]
     [ValidateNotWhiteSpace]
     public string TimeZone { get; set; } = default!;
-
-    public static Arguments? Parse()
-    {
-        var options = new ParseOptions
-        {
-            ShowUsageOnError = UsageHelpRequest.SyntaxOnly,
-            UsageWriter = new UsageWriter()
-            {
-                UseAbbreviatedSyntax = true,
-            }
-        };
-
-        return CommandLineParser.Parse<Arguments>(options);
-    }
 
     public GeneratorOptions ToOptions()
     {
