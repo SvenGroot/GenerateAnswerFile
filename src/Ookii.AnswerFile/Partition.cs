@@ -45,21 +45,103 @@ public class Partition : ISpanParsable<Partition>
     /// </value>
     public string? FileSystem { get; set; }
 
+    /// <summary>
+    /// Parses a span of characters into a <see cref="Partition"/> class.
+    /// </summary>
+    /// <param name="s">The span of characters to parse.</param>
+    /// <param name="provider">
+    /// An object that provides culture-specific formatting information about <paramref name="s"/>.
+    /// </param>
+    /// <returns>The result of parsing <paramref name="s"/>.</returns>
+    /// <exception cref="FormatException">
+    /// <paramref name="s"/> is not in the correct format.
+    /// </exception>
+    /// <exception cref="OverflowException">
+    /// <paramref name="s"/> contains a partition size that is not representable as a <see cref="BinarySize"/>.
+    /// </exception>
+    /// <remarks>
+    /// <inheritdoc cref="Parse(string, IFormatProvider?)"/>
+    /// </remarks>
     public static Partition Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
     {
         ParseHelper(s, provider, true, out var result);
         return result!;
     }
 
+    /// <summary>
+    /// Parses a string into a <see cref="Partition"/> class.
+    /// </summary>
+    /// <param name="s">The string to parse.</param>
+    /// <param name="provider">
+    /// An object that provides culture-specific formatting information about <paramref name="s"/>.
+    /// </param>
+    /// <returns>The result of parsing <paramref name="s"/>.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="s"/> is <see langword="null"/>.
+    /// </exception>
+    /// <exception cref="FormatException">
+    /// <paramref name="s"/> is not in the correct format.
+    /// </exception>
+    /// <exception cref="OverflowException">
+    /// <paramref name="s"/> contains a partition size that is not representable as a <see cref="BinarySize"/>.
+    /// </exception>
+    /// <remarks>
+    /// <para>
+    ///   The input must use the format "size", "label:size", "size[fs]" or "label:size[fs]", where
+    ///   "label" is the volume label, "size" is a value using multiple-byte units, and "fs" is the
+    ///   name of a supported file system such as "FAT32" or "NTFS". An example value is
+    ///   "Windows:128GB" or "Data:16GB[FAT32]"
+    /// </para>
+    /// <para>
+    ///   Instead of an explicit size, you can use "*" for the size to indicate the partition
+    ///   should be extended to fill the remaining space on the disk.
+    /// </para>
+    /// </remarks>
     public static Partition Parse(string s, IFormatProvider? provider)
     {
         ArgumentNullException.ThrowIfNull(s);
         return Parse(s.AsSpan(), provider);
     }
 
+    /// <summary>
+    /// Tries to parse a span of characters into a <see cref="Partition"/> class.
+    /// </summary>
+    /// <param name="s">The span of characters to parse.</param>
+    /// <param name="provider">
+    /// An object that provides culture-specific formatting information about <paramref name="s"/>.
+    /// </param>
+    /// <param name="result">
+    /// When this method returns, contains the result of successfully parsing <paramref name="s"/>,
+    /// or an undefined value on failure.
+    /// </param>
+    /// <returns>
+    /// <see langword="true"/> if <paramref name="s"/> was successfully parsed; otherwise,
+    /// <see langword="false"/>.
+    /// </returns>
+    /// <remarks>
+    /// <inheritdoc cref="Parse(string, IFormatProvider?)"/>
+    /// </remarks>
     public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, [MaybeNullWhen(false)] out Partition result)
         => ParseHelper(s, provider, false, out result);
 
+    /// <summary>
+    /// Tries to parse a string into a <see cref="Partition"/> class.
+    /// </summary>
+    /// <param name="s">The string to parse.</param>
+    /// <param name="provider">
+    /// An object that provides culture-specific formatting information about <paramref name="s"/>.
+    /// </param>
+    /// <param name="result">
+    /// When this method returns, contains the result of successfully parsing <paramref name="s"/>,
+    /// or an undefined value on failure.
+    /// </param>
+    /// <returns>
+    /// <see langword="true"/> if <paramref name="s"/> was successfully parsed; otherwise,
+    /// <see langword="false"/>.
+    /// </returns>
+    /// <remarks>
+    /// <inheritdoc cref="Parse(string, IFormatProvider?)"/>
+    /// </remarks>
     public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Partition result)
     {
         if (s == null)
@@ -73,17 +155,23 @@ public class Partition : ISpanParsable<Partition>
 
     private static bool ParseHelper(ReadOnlySpan<char> s, IFormatProvider? provider, bool throwOnError, [MaybeNullWhen(false)] out Partition result)
     {
-        var index = s.LastIndexOf(':');
-        var label = index < 0 ? null : s[0..index].ToString();
-        var size = index < 0 ? s : s[(index + 1)..];
-        string? fileSystem = null;
-        if (size.Length > 0 && size[size.Length - 1] == ']')
+        var (hasSeparator, left, right) = s.SplitOnceLast(':');
+        ReadOnlySpan<char> size = s;
+        string? label = null;
+        if (hasSeparator)
         {
-            index = size.LastIndexOf('[');
-            if (index >= 0)
+            label = left.ToString();
+            size = right;
+        }
+
+        string? fileSystem = null;
+        if (size.Last() == ']')
+        {
+            (hasSeparator, left, right) = size.SplitOnceLast('[');
+            if (hasSeparator)
             {
-                fileSystem = size[(index + 1)..(size.Length - 1)].ToString();
-                size = size[0..index];
+                fileSystem = right[..(right.Length - 1)].ToString();
+                size = left;
             }
         }
 
