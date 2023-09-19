@@ -30,7 +30,15 @@ catch (Exception ex)
         writer.Write(TextFormat.ForegroundRed);
     }
 
-    writer.Write(ex.Message);
+    if (arguments.Debug)
+    {
+        writer.Write(ex.ToString());
+    }
+    else
+    {
+        writer.Write(ex.Message);
+    }
+
     if (support.IsSupported)
     {
         writer.Write(TextFormat.Default);

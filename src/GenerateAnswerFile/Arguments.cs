@@ -209,11 +209,15 @@ partial class Arguments
     [ValidateNotWhiteSpace]
     public string TimeZone { get; set; } = "Pacific Standard Time";
 
+    // Shows detailed information if an exception occurs.
+    [CommandLineArgument(IsHidden = true)]
+    public bool Debug { get; set; }
+
     [CommandLineArgument]
     [Alias("oh")]
     [Alias("??")]
     [ResourceDescription(nameof(Properties.Resources.OnlineHelpDescription))]
-    public static CancelMode OnlineHelp()
+    public static CancelMode OnlineHelp(CommandLineParser parser)
     {
         try
         {
@@ -224,8 +228,13 @@ partial class Arguments
 
             Process.Start(info);
         }
-        catch
+        catch (Exception ex)
         {
+            if ((bool?)parser.GetArgument(nameof(Debug))!.Value ?? false)
+            {
+                Console.Error.WriteLine(ex.ToString());
+            }
+
             Console.WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat,
                 CommandLineParser.GetExecutableName()));
         }
