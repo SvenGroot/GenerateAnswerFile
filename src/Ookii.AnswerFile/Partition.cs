@@ -96,6 +96,14 @@ public class Partition : ISpanParsable<Partition>
     ///   Instead of an explicit size, you can use "*" for the size to indicate the partition
     ///   should be extended to fill the remaining space on the disk.
     /// </para>
+    /// <para>
+    ///   Certain volume labels are treated specially, and can be used to create special partition
+    ///   types. "System" creates a partition with <see cref="PartitionType.System" qualifyHint="true"/>,
+    ///   "MSR" with <see cref="PartitionType.Msr" qualifyHint="true"/>, and "WinRE" and "Recovery"
+    ///   with <see cref="PartitionType.Utility" qualifyHint="true"/>. This check is case
+    ///   insensitive, and all other volume labels create a partition with
+    ///   <see cref="PartitionType.Normal" qualifyHint="true"/>.
+    /// </para>
     /// </remarks>
     public static Partition Parse(string s, IFormatProvider? provider)
     {

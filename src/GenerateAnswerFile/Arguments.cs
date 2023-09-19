@@ -155,9 +155,17 @@ partial class Arguments
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.InstallToPartitionDescription))]
     [Alias("part")]
-    [ValidateInstallMethod(InstallMethod.ExistingPartition)]
+    [ValidateInstallMethod(InstallMethod.CleanEfi, InstallMethod.CleanBios, InstallMethod.ExistingPartition)]
     [ValidateRange(1, null)]
-    public int InstallToPartition { get; set; } = 3;
+    public int? InstallToPartition { get; set; }
+
+    [CommandLineArgument("Partition")]
+    [ResourceDescription(nameof(Properties.Resources.PartitionsDescription))]
+    [ResourceValueDescription(nameof(Properties.Resources.PartitionsValueDescription))]
+    [Alias("p")]
+    [ValidateInstallMethod(InstallMethod.CleanEfi, InstallMethod.CleanBios)]
+    [MultiValueSeparator]
+    public Partition[]? Partitions { get; set; }
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.ImageIndexDescription))]
@@ -239,18 +247,20 @@ partial class Arguments
             InstallMethod.ExistingPartition => new ExistingPartitionOptions()
             {
                 DiskId = InstallToDisk,
-                PartitionId = InstallToPartition,
+                PartitionId = InstallToPartition ?? 3,
                 ImageIndex = ImageIndex,
             },
             InstallMethod.CleanEfi => new CleanEfiOptions()
             {
                 DiskId = InstallToDisk,
                 ImageIndex = ImageIndex,
+                CustomTargetPartitionId = InstallToPartition,
             },
             InstallMethod.CleanBios => new CleanBiosOptions()
             {
                 DiskId = InstallToDisk,
                 ImageIndex = ImageIndex,
+                CustomTargetPartitionId = InstallToPartition,
             },
             InstallMethod.Manual => new ManualInstallOptions(),
             _ => null,
@@ -260,6 +270,11 @@ partial class Arguments
         {
             options.OptionalFeatures = new OptionalFeatures(WindowsVersion!);
             options.OptionalFeatures.Features.AddRange(Features);
+        }
+
+        if (options is CleanOptionsBase cleanOptions && Partitions?.Length > 0)
+        {
+            cleanOptions.Partitions.AddRange(Partitions);
         }
 
         return options;

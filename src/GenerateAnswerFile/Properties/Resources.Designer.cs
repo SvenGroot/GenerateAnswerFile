@@ -169,7 +169,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to domain\user.
+        ///   Looks up a localized string similar to Domain\User.
         /// </summary>
         internal static string DomainUserValueDescription {
             get {
@@ -223,7 +223,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The partition to install to. The default value is 3, which is appropriate for UEFI systems with the default partition layout..
+        ///   Looks up a localized string similar to The one-based ID of the partition to install to on the disk specified by -InstallToDisk. If not specified and -Install is CleanEfi or CleanBios, Windows will be installed on the first regular data partition. If -Install is ExistingPartition, the default value is 3, which is appropriate for UEFI systems with the default partition layout..
         /// </summary>
         internal static string InstallToPartitionDescription {
             get {
@@ -295,7 +295,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [domain\]user.
+        ///   Looks up a localized string similar to [Domain\]User.
         /// </summary>
         internal static string OptionalDomainUserValueDescription {
             get {
@@ -318,6 +318,27 @@ namespace GenerateAnswerFile.Properties {
         internal static string OutputFileDescription {
             get {
                 return ResourceManager.GetString("OutputFileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A partition to create on the disk specified by -InstallToDisk.
+        ///Use the format &apos;label:size&apos; or &apos;label:size[fs]&apos;, where label is the volume label, size is the size of the partition and can use multiple-byte units such as GB, and fs is an optional file system like FAT32 or NTFS. For example &apos;System:100MB&apos;, &apos;Windows:128GB&apos;, or &apos;Data:16GB[FAT32]&apos;. Sizes will be truncated to whole megabytes.
+        ///Use &apos;*&apos; for the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windows:*&apos;).
+        ///Use the following lab [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PartitionsDescription {
+            get {
+                return ResourceManager.GetString("PartitionsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label:Size.
+        /// </summary>
+        internal static string PartitionsValueDescription {
+            get {
+                return ResourceManager.GetString("PartitionsValueDescription", resourceCulture);
             }
         }
         

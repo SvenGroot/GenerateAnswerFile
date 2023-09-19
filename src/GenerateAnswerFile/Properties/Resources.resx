@@ -154,7 +154,7 @@
     <value>The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can have multiple values.</value>
   </data>
   <data name="DomainUserValueDescription" xml:space="preserve">
-    <value>domain\user</value>
+    <value>Domain\User</value>
   </data>
   <data name="EnableRemoteDesktopDescriptoin" xml:space="preserve">
     <value>Turn on remote desktop and allow it through the firewall.</value>
@@ -172,7 +172,7 @@
     <value>The zero-based ID of the disk to install to.</value>
   </data>
   <data name="InstallToPartitionDescription" xml:space="preserve">
-    <value>The partition to install to. The default value is 3, which is appropriate for UEFI systems with the default partition layout.</value>
+    <value>The one-based ID of the partition to install to on the disk specified by -InstallToDisk. If not specified and -Install is CleanEfi or CleanBios, Windows will be installed on the first regular data partition. If -Install is ExistingPartition, the default value is 3, which is appropriate for UEFI systems with the default partition layout.</value>
   </data>
   <data name="InvalidMethodCount" xml:space="preserve">
     <value>Need at least one method.</value>
@@ -196,13 +196,23 @@
     <value>Name,Password</value>
   </data>
   <data name="OptionalDomainUserValueDescription" xml:space="preserve">
-    <value>[domain\]user</value>
+    <value>[Domain\]User</value>
   </data>
   <data name="OUPathDescription" xml:space="preserve">
     <value>The organizational unit to use when joining the domain.</value>
   </data>
   <data name="OutputFileDescription" xml:space="preserve">
     <value>The path and file name to write the answer file to.</value>
+  </data>
+  <data name="PartitionsDescription" xml:space="preserve">
+    <value>A partition to create on the disk specified by -InstallToDisk.
+Use the format 'label:size' or 'label:size[fs]', where label is the volume label, size is the size of the partition and can use multiple-byte units such as GB, and fs is an optional file system like FAT32 or NTFS. For example 'System:100MB', 'Windows:128GB', or 'Data:16GB[FAT32]'. Sizes will be truncated to whole megabytes.
+Use '*' for the size to extend the partition to fill the remainder of the disk (e.g. 'Windows:*').
+Use the following labels to create special partitions: 'System', 'MSR', 'WinRE', and 'Recovery'.
+If not specified, the default partition layout for the method specified by -Install is used.</value>
+  </data>
+  <data name="PartitionsValueDescription" xml:space="preserve">
+    <value>Label:Size</value>
   </data>
   <data name="PathValueDescription" xml:space="preserve">
     <value>Path</value>
