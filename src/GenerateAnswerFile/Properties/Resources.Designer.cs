@@ -214,7 +214,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The zero-based ID of the disk to install to..
+        ///   Looks up a localized string similar to The zero-based ID of the disk to install to. This disk will be wiped and repartitioned according to -Partition, or using the default layout if -Partition is not specified..
         /// </summary>
         internal static string InstallToDiskDescription {
             get {
@@ -295,6 +295,24 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shows additional help in your web browser..
+        /// </summary>
+        internal static string OnlineHelpDescription {
+            get {
+                return ResourceManager.GetString("OnlineHelpDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/SvenGroot/GenerateAnswerFile.
+        /// </summary>
+        internal static string OnlineHelpUrl {
+            get {
+                return ResourceManager.GetString("OnlineHelpUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Domain\]User.
         /// </summary>
         internal static string OptionalDomainUserValueDescription {
@@ -322,10 +340,9 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A partition to create on the disk specified by -InstallToDisk.
+        ///   Looks up a localized string similar to A partition to create on the disk specified by -InstallToDisk. Can have multiple values.
         ///Use the format &apos;label:size&apos; or &apos;label:size[fs]&apos;, where label is the volume label, size is the size of the partition and can use multiple-byte units such as GB, and fs is an optional file system like FAT32 or NTFS. For example &apos;System:100MB&apos;, &apos;Windows:128GB&apos;, or &apos;Data:16GB[FAT32]&apos;. Sizes will be truncated to whole megabytes.
-        ///Use &apos;*&apos; for the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windows:*&apos;).
-        ///Use the following lab [rest of string was truncated]&quot;;.
+        ///Use &apos;*&apos; for the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windows:* [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PartitionsDescription {
             get {
@@ -388,11 +405,11 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For more information, as well as usage examples, see: https://github.com/SvenGroot/GenerateAnswerFile.
+        ///   Looks up a localized string similar to For more information, as well as usage examples, run &apos;{0} -OnlineHelp&apos;, or see: https://github.com/SvenGroot/GenerateAnswerFile.
         /// </summary>
-        internal static string UsageHelpFooter {
+        internal static string UsageHelpFooterFormat {
             get {
-                return ResourceManager.GetString("UsageHelpFooter", resourceCulture);
+                return ResourceManager.GetString("UsageHelpFooterFormat", resourceCulture);
             }
         }
         

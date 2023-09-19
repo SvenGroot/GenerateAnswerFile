@@ -1,4 +1,5 @@
 ﻿using Ookii.CommandLine;
+using System.Globalization;
 
 namespace GenerateAnswerFile;
 
@@ -9,7 +10,7 @@ class CustomUsageWriter : UsageWriter
         base.WriteParserUsageCore(request);
         if (request == UsageHelpRequest.Full)
         {
-            Write(Properties.Resources.UsageHelpFooter);
+            Write(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat, ExecutableName));
             WriteLine();
             WriteLine();
         }

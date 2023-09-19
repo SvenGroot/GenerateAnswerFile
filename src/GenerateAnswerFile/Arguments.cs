@@ -3,7 +3,9 @@ using Ookii.CommandLine;
 using Ookii.CommandLine.Conversion;
 using Ookii.CommandLine.Validation;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 
 namespace GenerateAnswerFile;
 
@@ -206,6 +208,28 @@ partial class Arguments
     [ResourceDescription(nameof(Properties.Resources.TimeZoneDescription))]
     [ValidateNotWhiteSpace]
     public string TimeZone { get; set; } = "Pacific Standard Time";
+
+    [CommandLineArgument]
+    [Description(nameof(Properties.Resources.OnlineHelpDescription))]
+    public static CancelMode OnlineHelp()
+    {
+        try
+        {
+            var info = new ProcessStartInfo(Properties.Resources.OnlineHelpUrl)
+            {
+                UseShellExecute = true,
+            };
+
+            Process.Start(info);
+        }
+        catch
+        {
+            Console.WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat,
+                CommandLineParser.GetExecutableName()));
+        }
+
+        return CancelMode.Abort;
+    }
 
     public GeneratorOptions ToOptions()
     {
