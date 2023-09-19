@@ -210,7 +210,9 @@ partial class Arguments
     public string TimeZone { get; set; } = "Pacific Standard Time";
 
     [CommandLineArgument]
-    [Description(nameof(Properties.Resources.OnlineHelpDescription))]
+    [Alias("oh")]
+    [Alias("??")]
+    [ResourceDescription(nameof(Properties.Resources.OnlineHelpDescription))]
     public static CancelMode OnlineHelp()
     {
         try
