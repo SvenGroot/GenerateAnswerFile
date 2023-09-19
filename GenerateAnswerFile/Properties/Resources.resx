@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationDescription" xml:space="preserve">
+    <value>Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation.</value>
+  </data>
+  <data name="AutoLogonCountDescription" xml:space="preserve">
+    <value>The number of times the user will be automatically logged in.</value>
+  </data>
+  <data name="AutoLogonPasswordDescription" xml:space="preserve">
+    <value>The password of the user to automatically log on.</value>
+  </data>
+  <data name="AutoLogonUserDescription" xml:space="preserve">
+    <value>The name of the user (in the format 'domain\user', or just 'user' for local users) to automatically log on.</value>
+  </data>
+  <data name="CmdKeyPasswordDescription" xml:space="preserve">
+    <value>The password of the user used to access the network.</value>
+  </data>
+  <data name="CmdKeyUserDescription" xml:space="preserve">
+    <value>The default user used to access the network, in 'domain\user' format.</value>
+  </data>
+  <data name="ComputerNameDescription" xml:space="preserve">
+    <value>The network name for the computer.</value>
+  </data>
+  <data name="DisableCloudDescription" xml:space="preserve">
+    <value>Disable Windows cloud consumer features. This prevents auto-installation of recommended store apps.</value>
+  </data>
+  <data name="DisableDefenderDesciption" xml:space="preserve">
+    <value>Disable Windows Defender after installation.</value>
+  </data>
+  <data name="DisableServerManagerDescription" xml:space="preserve">
+    <value>Disable Server Manager from starting at first logon (Windows Server only).</value>
+  </data>
+  <data name="DisplayResolutionDescription" xml:space="preserve">
+    <value>The display resolution, in the format 'width,height'. For example, '1280,1024'. If not specified, the default resolution is determined by Windows.</value>
+  </data>
+  <data name="DomainAccountsDescription" xml:space="preserve">
+    <value>The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can have multiple values.</value>
+  </data>
+  <data name="DomainUserValueDescription" xml:space="preserve">
+    <value>domain\user</value>
+  </data>
+  <data name="EnableRemoteDesktopDescriptoin" xml:space="preserve">
+    <value>Turn on remote desktop and allow it through the firewall.</value>
+  </data>
+  <data name="FeaturesDescription" xml:space="preserve">
+    <value>The feature name of an optional feature to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.</value>
+  </data>
+  <data name="ImageIndexDescription" xml:space="preserve">
+    <value>The WIM image index to install. Use this for editions not installed using a product key such as volume license editions. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.</value>
+  </data>
+  <data name="InstallDescription" xml:space="preserve">
+    <value>The install method to use.</value>
+  </data>
+  <data name="InstallToDiskDescription" xml:space="preserve">
+    <value>The zero-based ID of the disk to install to.</value>
+  </data>
+  <data name="InstallToPartitionDescription" xml:space="preserve">
+    <value>The partition to install to. The default value is 3, which is appropriate for UEFI systems with the default partition layout.</value>
+  </data>
+  <data name="InvalidMethodCount" xml:space="preserve">
+    <value>Need at least one method.</value>
+  </data>
+  <data name="JoinDomainDescription" xml:space="preserve">
+    <value>Name of the domain to join.</value>
+  </data>
+  <data name="JoinDomainPasswordDescription" xml:space="preserve">
+    <value>Password of the user used to join the domain. Will be stored in plain text.</value>
+  </data>
+  <data name="JoinDomainUserDescription" xml:space="preserve">
+    <value>Name of a user with permission to join the domain. Must be a member of the domain specified with -JoinDomain.</value>
+  </data>
+  <data name="LanguageDescription" xml:space="preserve">
+    <value>The language used for the UI language and the input, system and user locales.</value>
+  </data>
+  <data name="LocalAccountsDescription" xml:space="preserve">
+    <value>A local account to add, using the format 'name,password'. Can have multiple values.</value>
+  </data>
+  <data name="LocalCredentialValueDescription" xml:space="preserve">
+    <value>Name,Password</value>
+  </data>
+  <data name="OptionalDomainUserValueDescription" xml:space="preserve">
+    <value>[domain\]user</value>
+  </data>
+  <data name="OUPathDescription" xml:space="preserve">
+    <value>The organizational unit to use when joining the domain.</value>
+  </data>
+  <data name="OutputFileDescription" xml:space="preserve">
+    <value>The path and file name to write the answer file to.</value>
+  </data>
+  <data name="PathValueDescription" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="ProcessorArchitectureDescription" xml:space="preserve">
+    <value>The processor architecture of the Windows edition you're installing. Use amd64 for 64 bit, and x86 for 32 bit.</value>
+  </data>
+  <data name="ProductKeyDescription" xml:space="preserve">
+    <value>The product key used to select what edition to install and to activate Windows.</value>
+  </data>
+  <data name="SetupScriptsDescription" xml:space="preserve">
+    <value>The full path of a Windows PowerShell script to run during first logon. Can have multiple values.</value>
+  </data>
+  <data name="TimeZoneDescription" xml:space="preserve">
+    <value>The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.</value>
+  </data>
+  <data name="ValidateInstallMethodErrorFormat" xml:space="preserve">
+    <value>The '{0}' argument may only be used if -Install is set to {1}.</value>
+  </data>
+  <data name="ValidateInstallMethodUsageFormat" xml:space="preserve">
+    <value>May only be used if -Install is set to {0}.</value>
+  </data>
+  <data name="WindowsVersionDescription" xml:space="preserve">
+    <value>Version and build number (e.g. 10.0.22000.1) of the OS being installed. This argument is only used when -Feature is specified.</value>
+  </data>
+</root>

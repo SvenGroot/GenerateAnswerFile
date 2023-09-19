@@ -1,5 +1,6 @@
 ﻿using Ookii.CommandLine;
 using Ookii.CommandLine.Validation;
+using System.Globalization;
 using System.Text;
 
 namespace GenerateAnswerFile;
@@ -11,7 +12,7 @@ class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
     { 
         if (methods.Length == 0)
         {
-            throw new ArgumentException("Need at least one method.", nameof(methods));
+            throw new ArgumentException(Properties.Resources.InvalidMethodCount, nameof(methods));
         }
 
         _methods = methods;
@@ -27,10 +28,10 @@ class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
     }
 
     public override string GetErrorMessage(CommandLineArgument argument, object? value)
-        => $"The '{argument.ArgumentName}' argument may only be used if -Install is set to {GetMethodList()}.";
+        => string.Format(CultureInfo.CurrentCulture, Properties.Resources.ValidateInstallMethodErrorFormat, argument.ArgumentName, GetMethodList());
 
     protected override string GetUsageHelpCore(CommandLineArgument argument)
-        => $"May only be used if -Install is set to {GetMethodList()}.";
+        => string.Format(CultureInfo.CurrentCulture, Properties.Resources.ValidateInstallMethodUsageFormat, GetMethodList());
 
     private string GetMethodList()
     {

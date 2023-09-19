@@ -8,72 +8,71 @@ using System.Drawing;
 namespace GenerateAnswerFile;
 
 [GeneratedParser]
-[ApplicationFriendlyName("Windows Answer File Generator")]
-[Description("Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation.")]
+[ResourceDescription(nameof(Properties.Resources.ApplicationDescription))]
 partial class Arguments
 {
-    [CommandLineArgument(IsRequired = true, Position = 0)]
-    [Description("The path and file name to write the answer file to.")]
-    [ValueDescription("Path")]
+    [CommandLineArgument(IsPositional = true)]
+    [ResourceDescription(nameof(Properties.Resources.OutputFileDescription))]
+    [ResourceValueDescription(nameof(Properties.Resources.PathValueDescription))]
     [Alias("o")]
-    public FileInfo OutputFile { get; set; } = default!;
+    public required FileInfo OutputFile { get; set; }
 
     [CommandLineArgument]
-    [Description("Version and build number (e.g. 10.0.22000.1) of the OS being installed. This argument is only used when -Feature is specified.")]
+    [ResourceDescription(nameof(Properties.Resources.WindowsVersionDescription))]
     [Alias("v")]
     public Version? WindowsVersion { get; set; }
 
     [CommandLineArgument]
-    [Description("Name of the domain to join.")]
+    [ResourceDescription(nameof(Properties.Resources.JoinDomainDescription))]
     [Requires(nameof(JoinDomainUser), nameof(JoinDomainPassword))]
     [Alias("jd")]
     [ValidateNotWhiteSpace]
     public string? JoinDomain { get; set; }
 
     [CommandLineArgument]
-    [Description("Name of a user with permission to join the domain. Must be a member of the domain specified with -JoinDomain.")]
+    [ResourceDescription(nameof(Properties.Resources.JoinDomainUserDescription))]
     [Alias("jdu")]
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
     public string? JoinDomainUser { get; set; }
 
     [CommandLineArgument]
-    [Description("Password of the user used to join the domain. Will be stored in plain text.")]
+    [ResourceDescription(nameof(Properties.Resources.JoinDomainPasswordDescription))]
     [Alias("jdp")]
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
     public string? JoinDomainPassword { get; set; }
 
     [CommandLineArgument]
-    [Description("The organizational unit to use when joining the domain.")]
+    [ResourceDescription(nameof(Properties.Resources.OUPathDescription))]
     [Alias("ou")]
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
     public string? OUPath { get; set; }
 
     [CommandLineArgument]
-    [Description("The network name for the computer.")]
+    [ResourceDescription(nameof(Properties.Resources.ComputerNameDescription))]
     [Alias("n")]
     [ValidateNotWhiteSpace]
     public string? ComputerName { get; set; }
 
     [CommandLineArgument]
-    [Description("Disable Windows Defender after installation.")]
+    [ResourceDescription(nameof(Properties.Resources.DisableDefenderDesciption))]
     [Alias("d")]
     public bool DisableDefender { get; set; }
 
     [CommandLineArgument]
-    [Description("Disable Windows cloud consumer features. This prevents auto-installation of recommended store apps.")]
+    [ResourceDescription(nameof(Properties.Resources.DisableCloudDescription))]
     [Alias("dc")]
     public bool DisableCloud { get; set; }
 
     [CommandLineArgument]
-    [Description("Disable Server Manager from starting at first logon (Windows Server only).")]
+    [ResourceDescription(nameof(Properties.Resources.DisableServerManagerDescription))]
     [Alias("dsm")]
     public bool DisableServerManager { get; set; }
 
     [CommandLineArgument("DomainAccount")]
-    [Description("The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can have multiple values.")]
+    [ResourceDescription(nameof(Properties.Resources.DomainAccountsDescription))]
     [Alias("da")]
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
@@ -81,56 +80,58 @@ partial class Arguments
     public string[]? DomainAccounts { get; set; }
 
     [CommandLineArgument("LocalAccount")]
-    [Description("A local account to add, using the format 'name,password'. Can have multiple values.")]
-    [ValueDescription("Name,Password")]
+    [ResourceDescription(nameof(Properties.Resources.LocalAccountsDescription))]
+    [ResourceValueDescription(nameof(Properties.Resources.LocalCredentialValueDescription))]
     [Alias("a")]
     [MultiValueSeparator]
     public LocalCredential[]? LocalAccounts { get; set; }
 
     [CommandLineArgument]
-    [Description("The name of the user (in the format 'domain\\user', or just 'user' for local users) to automatically log on.")]
+    [ResourceDescription(nameof(Properties.Resources.AutoLogonUserDescription))]
+    [ResourceValueDescription(nameof(Properties.Resources.OptionalDomainUserValueDescription))]
     [Alias("alu")]
     [Requires(nameof(AutoLogonPassword))]
     [ValidateNotWhiteSpace]
     public DomainUser? AutoLogonUser { get; set; }
 
     [CommandLineArgument]
-    [Description("The password of the user to automatically log on.")]
+    [ResourceDescription(nameof(Properties.Resources.AutoLogonPasswordDescription))]
     [Alias("alp")]
     [Requires(nameof(AutoLogonUser))]
     [ValidateNotWhiteSpace]
     public string? AutoLogonPassword { get; set; }
 
-    [CommandLineArgument(DefaultValue = 1)]
-    [Description("The number of times the user will be automatically logged in.")]
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.AutoLogonCountDescription))]
     [Alias("alc")]
     [Requires(nameof(AutoLogonUser))]
     [ValidateRange(1, null)]
-    public int AutoLogonCount { get; set; }
+    public int AutoLogonCount { get; set; } = 1;
 
     [CommandLineArgument]
-    [Description("The default user used to access the network, in 'domain\\user' format.")]
+    [ResourceDescription(nameof(Properties.Resources.CmdKeyUserDescription))]
+    [ResourceValueDescription(nameof(Properties.Resources.DomainUserValueDescription))]
     [Alias("cku")]
     [Requires(nameof(CmdKeyPassword))]
     [ValidateNotWhiteSpace]
     public DomainUser? CmdKeyUser { get; set; }
 
     [CommandLineArgument]
-    [Description("The password of the user used to access the network.")]
+    [ResourceDescription(nameof(Properties.Resources.CmdKeyPasswordDescription))]
     [Alias("ckp")]
     [Requires(nameof(CmdKeyUser))]
     [ValidateNotWhiteSpace]
     public string? CmdKeyPassword { get; set; }
 
     [CommandLineArgument("SetupScript")]
+    [ResourceDescription(nameof(Properties.Resources.SetupScriptsDescription))]
     [Alias("s")]
-    [Description("The full path of a Windows PowerShell script to run during first logon. Can have multiple values.")]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]
     public string[]? SetupScripts { get; set; }
 
     [CommandLineArgument("Feature")]
-    [Description("The feature name of an optional feature to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.")]
+    [ResourceDescription(nameof(Properties.Resources.FeaturesDescription))]
     [Alias("c")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanBios, InstallMethod.CleanEfi, InstallMethod.Manual)]
     [Requires(nameof(WindowsVersion))]
@@ -138,65 +139,65 @@ partial class Arguments
     [MultiValueSeparator]
     public string[]? Features { get; set; }
 
-    [CommandLineArgument(DefaultValue = InstallMethod.PreInstalled)]
-    [Description("The install method used.")]
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.InstallDescription))]
     [Alias("i")]
     [ValidateEnumValue]
-    public InstallMethod Install { get; set; }
+    public InstallMethod Install { get; set; } = InstallMethod.PreInstalled;
 
-    [CommandLineArgument(DefaultValue = 0)]
-    [Description("The zero-based ID of the disk to install to.")]
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.InstallToDiskDescription))]
     [Alias("disk")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanEfi, InstallMethod.CleanBios)]
     [ValidateRange(0, null)]
-    public int InstallToDisk { get; set; }
+    public int InstallToDisk { get; set; } = 0;
 
     [CommandLineArgument]
-    [Description("The partition to install to. The default value is 3, which is appropriate for UEFI systems with the default partition layout.")]
+    [ResourceDescription(nameof(Properties.Resources.InstallToPartitionDescription))]
     [Alias("part")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition)]
     [ValidateRange(1, null)]
     public int InstallToPartition { get; set; } = 3;
 
     [CommandLineArgument]
-    [Description("The WIM image index to install. Use this for editions not installed using a product key such as volume license editions. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.")]
+    [ResourceDescription(nameof(Properties.Resources.ImageIndexDescription))]
     [Alias("wim")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanEfi, InstallMethod.CleanBios)]
     public int ImageIndex { get; set; }
 
     [CommandLineArgument]
-    [Description("Turn on remote desktop and allow it through the firewall.")]
+    [ResourceDescription(nameof(Properties.Resources.EnableRemoteDesktopDescriptoin))]
     [Alias("rdp")]
     public bool EnableRemoteDesktop { get; set; }
 
     [CommandLineArgument]
-    [Description("The display resolution, in the format 'width,height'. For example, '1280,1024'. If not specified, the default resolution is determined by Windows.")]
+    [ResourceDescription(nameof(Properties.Resources.DisplayResolutionDescription))]
     [Alias("res")]
     [ArgumentConverter(typeof(WrappedDefaultTypeConverter<Size>))]
     public Size? DisplayResolution { get; set; }
 
-    [CommandLineArgument(DefaultValue = "en-US")]
-    [Description("The language used for the UI language and the input, system and user locales.")]
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.LanguageDescription))]
     [Alias("lang")]
     [ValidateNotWhiteSpace]
-    public string Language { get; set; } = default!;
+    public string Language { get; set; } = "en-US";
 
     [CommandLineArgument]
-    [Description("The product key used to select what edition to install and to activate Windows.")]
+    [ResourceDescription(nameof(Properties.Resources.ProductKeyDescription))]
     [Alias("key")]
     [ValidateNotWhiteSpace]
     public string? ProductKey { get; set; }
 
-    [CommandLineArgument(DefaultValue = "amd64")]
-    [Description("The processor architecture of the Windows edition you're installing. Use amd64 for 64 bit, and x86 for 32 bit.")]
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.ProcessorArchitectureDescription))]
     [Alias("arch")]
     [ValidateNotWhiteSpace]
-    public string ProcessorArchitecture { get; set; } = default!;
+    public string ProcessorArchitecture { get; set; } = "amd64";
 
-    [CommandLineArgument(DefaultValue = "Pacific Standard Time")]
-    [Description("The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.")]
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.TimeZoneDescription))]
     [ValidateNotWhiteSpace]
-    public string TimeZone { get; set; } = default!;
+    public string TimeZone { get; set; } = "Pacific Standard Time";
 
     public GeneratorOptions ToOptions()
     {
