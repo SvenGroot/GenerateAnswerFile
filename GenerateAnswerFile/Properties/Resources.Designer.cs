@@ -367,6 +367,15 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to For more information, as well as usage examples, see: https://github.com/SvenGroot/GenerateAnswerFile.
+        /// </summary>
+        internal static string UsageHelpFooter {
+            get {
+                return ResourceManager.GetString("UsageHelpFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The &apos;{0}&apos; argument may only be used if -Install is set to {1}..
         /// </summary>
         internal static string ValidateInstallMethodErrorFormat {

@@ -5,7 +5,7 @@ using Ookii.CommandLine.Terminal;
 
 var options = new ParseOptions
 {
-    UsageWriter = new UsageWriter()
+    UsageWriter = new CustomUsageWriter()
     {
         UseAbbreviatedSyntax = true,
     }

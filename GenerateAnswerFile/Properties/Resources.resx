@@ -219,6 +219,9 @@
   <data name="TimeZoneDescription" xml:space="preserve">
     <value>The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.</value>
   </data>
+  <data name="UsageHelpFooter" xml:space="preserve">
+    <value>For more information, as well as usage examples, see: https://github.com/SvenGroot/GenerateAnswerFile</value>
+  </data>
   <data name="ValidateInstallMethodErrorFormat" xml:space="preserve">
     <value>The '{0}' argument may only be used if -Install is set to {1}.</value>
   </data>
