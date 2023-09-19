@@ -88,7 +88,7 @@ public class Partition : ISpanParsable<Partition>
         }
 
         BinarySize? partitionSize = null;
-        if (size.Length != 0 && size != "*")
+        if (size.Length != 0 && !size.Equals("*", StringComparison.Ordinal))
         {
             if (throwOnError)
             {

@@ -31,6 +31,18 @@ public class PartitionTests
         Assert.AreEqual("Foo[Bar", partition.Label);
         Assert.AreEqual(BinarySize.FromGibi(64), partition.Size);
         Assert.AreEqual("FAT32", partition.FileSystem);
+
+        partition = Partition.Parse("Foo:", CultureInfo.InvariantCulture);
+        Assert.AreEqual(PartitionType.Normal, partition.Type);
+        Assert.AreEqual("Foo", partition.Label);
+        Assert.IsNull(partition.Size);
+        Assert.IsNull(partition.FileSystem);
+
+        partition = Partition.Parse("Foo:*", CultureInfo.InvariantCulture);
+        Assert.AreEqual(PartitionType.Normal, partition.Type);
+        Assert.AreEqual("Foo", partition.Label);
+        Assert.IsNull(partition.Size);
+        Assert.IsNull(partition.FileSystem);
     }
 
     [TestMethod]
