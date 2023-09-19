@@ -114,7 +114,7 @@ public class Generator
             {
                 Identification = new
                 {
-                    UnsecureJoin = "false",
+                    UnsecureJoin = false,
                     Credentials = new
                     {
                         domainOptions.Credential.UserAccount.Domain,
@@ -167,7 +167,7 @@ public class Generator
                             wcm_action = "add",
                             wcm_keyValue = "rd1"
                         },
-                        Active = "true",
+                        Active = true,
                         Group = "Remote Desktop",
                         Profile = "all"
                     }
@@ -210,7 +210,7 @@ public class Generator
                             Password = new
                             {
                                 Value = Convert.ToBase64String(Encoding.Unicode.GetBytes(account.Password + "Password")),
-                                PlainText = "false",
+                                PlainText = false,
                             },
                             Description = account.UserName,
                             DisplayName = account.UserName,
@@ -247,11 +247,11 @@ public class Generator
             OOBE = new
             {
                 ProtectYourPC = 1,
-                HideEULAPage = "true",
-                HideLocalAccountScreen = "true",
-                HideOEMRegistrationScreen = "true",
-                HideOnlineAccountScreens = "true",
-                HideWirelessSetupInOOBE = "true"
+                HideEULAPage = true,
+                HideLocalAccountScreen = true,
+                HideOEMRegistrationScreen = true,
+                HideOnlineAccountScreens = true,
+                HideWirelessSetupInOOBE = true
             }
         });
 
@@ -262,14 +262,14 @@ public class Generator
             {
                 AutoLogon = new
                 {
-                    Enabled = "true",
+                    Enabled = true,
                     LogonCount = autoLogonOptions.Count,
                     autoLogonOptions.Credential.UserAccount.Domain,
                     Username = autoLogonOptions.Credential.UserAccount.UserName,
                     Password = new
                     {
                         Value = Convert.ToBase64String(Encoding.Unicode.GetBytes(autoLogonOptions.Credential.Password + "Password")),
-                        PlainText = "false"
+                        PlainText = false
                     }
                 }
             });
@@ -356,12 +356,12 @@ public class Generator
                 Order = order,
                 Size = size,
                 Type = type,
-                Extend = size.HasValue ? null : "true",
+                Extend = size.HasValue ? (bool?)null : true,
             }
         });
     }
 
-    internal void WriteModifyPartition(int order, int partitionId, string? format = null, string? label = null, char? letter = null)
+    internal void WriteModifyPartition(int order, int partitionId, string? format = null, string? label = null, char? letter = null, bool? extend = null, bool? active = null, string? typeId = null)
     {
         Writer.WriteElements(new
         {
@@ -372,7 +372,10 @@ public class Generator
                 PartitionId = partitionId,
                 Format = format,
                 Label = label,
-                Letter = letter
+                Letter = letter,
+                Extend = extend,
+                Active = active,
+                TypeID = typeId,
             }
         });
     }

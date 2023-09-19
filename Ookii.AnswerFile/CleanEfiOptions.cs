@@ -1,41 +1,68 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Collections.ObjectModel;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides options for a clean installation on EFI or UEFI-based systems.
 /// </summary>
 /// <remarks>
-/// When using this installation method, the disk specified by <see
-/// cref="TargetedInstallOptionsBase.DiskId"/> will be wiped, and two partitions will be created: a
-/// 100MB EFI partition, a 128MB MSR partition, and an OS partition with the remaining size of the
-/// disk. Windows will be installed on the third partition.
+/// <para>
+///   When using this installation method, the disk specified by <see cref="TargetedInstallOptionsBase.DiskId"/>
+///   will be wiped, with partitions created according to the <see cref="CleanOptionsBase.Partitions"/>
+///   property.
+/// </para>
+/// <para>
+///   If the <see cref="CleanOptionsBase.Partitions"/> property is an empty list, the default layout
+///   will be used: a 100MB EFI partition, a 128MB MSR partition, and an OS partition with the
+///   remaining size of the disk. Windows will be installed on the third partition.
+/// </para>
 /// </remarks>
-public class CleanEfiOptions : TargetedInstallOptionsBase
+public class CleanEfiOptions : CleanOptionsBase
 {
     /// <summary>
-    /// Gets the ID of the partition to install to.
+    /// Gets the partition type to use for the system partition.
     /// </summary>
     /// <value>
-    /// This property returns 3 for clean EFI-based installations.
+    /// The value "EFI".
     /// </value>
-    protected override int TargetPartitionId => 3;
+    protected override string SystemPartitionType => "EFI";
 
     /// <summary>
-    /// Writes the disk configuration for this installation method.
+    /// Gets the file system to use for the system partition.
     /// </summary>
-    /// <param name="generator">The generator creating the answer file.</param>
-    protected override void WriteDiskConfiguration(Generator generator)
-    {
-        generator.Writer.WriteElementString("WillWipeDisk", "true");
-        using (var createPartitions = generator.Writer.WriteAutoCloseElement("CreatePartitions"))
-        {
-            generator.WriteCreatePartition(1, "EFI", 100);
-            generator.WriteCreatePartition(2, "MSR", 128);
-            generator.WriteCreatePartition(3, "Primary");
-        }
+    /// <value>
+    /// The file system type "FAT32".
+    /// </value>
+    protected override string SystemPartitionFileSystem => "FAT32";
 
-        using var modifyPartitions = generator.Writer.WriteAutoCloseElement("ModifyPartitions");
-        generator.WriteModifyPartition(1, 1, "FAT32", "System");
-        generator.WriteModifyPartition(2, 2);
-        generator.WriteModifyPartition(3, 3, "NTFS", "Windows", 'C');
+    /// <summary>
+    /// Gets a value which indicates whether an extended partition should be used if there are more
+    /// than 4 partitions.
+    /// </summary>
+    /// <value>
+    /// <see langword="false"/>.
+    /// </value>
+    protected override bool UseExtendedPartition => false;
+
+    /// <summary>
+    /// Gets the type ID that marks a partition as a utility partition.
+    /// </summary>
+    /// <value>
+    /// The partition type ID.
+    /// </value>
+    protected override string UtilityTypeId => "de94bba4-06d1-4d40-a16a-bfd50179d6ac";
+
+    /// <summary>
+    /// Gets the partition layout to use if the <see cref="CleanOptionsBase.Partitions"/> property is an empty list.
+    /// </summary>
+    /// <returns>A list containing the default EFI partition layout.</returns>
+    protected override List<Partition> GetDefaultPartitions()
+    {
+        return new List<Partition>
+        {
+            new Partition() { Type = PartitionType.System, Size = BinarySize.FromMebi(100), Label = "System" },
+            new Partition() { Type = PartitionType.Msr, Size = BinarySize.FromMebi(128) },
+            new Partition() { Label = "Windows" }
+        };
     }
 }

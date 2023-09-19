@@ -1,3 +1,4 @@
+using Ookii;
 using Ookii.AnswerFile;
 using System.Drawing;
 using System.Reflection.PortableExecutable;
@@ -66,6 +67,57 @@ namespace GenerateAnswerFileTests
         }
 
         [TestMethod]
+        public void TestGenerateCleanEfiCustomPartitions()
+        {
+            var (actualPath, expectedPath) = GetPaths();
+            var options = new GeneratorOptions()
+            {
+                InstallOptions = new CleanEfiOptions()
+                {
+                    Partitions =
+                    {
+                        new Partition() { Type = PartitionType.Utility, Label = "WinRE", Size = BinarySize.FromMebi(350) },
+                        new Partition() { Type = PartitionType.System, Label = "System", Size = BinarySize.FromMebi(100) },
+                        new Partition() { Type = PartitionType.Msr, Size = BinarySize.FromMebi(128) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Windows", Size = BinarySize.FromGibi(64) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Data", FileSystem = "FAT32" },
+                    }
+                },
+                LocalAccounts = { new LocalCredential("MyUser", "Password") },
+                ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE"
+            };
+
+            Generator.Generate(actualPath, options);
+            CheckFilesEqual(expectedPath, actualPath);
+        }
+
+        [TestMethod]
+        public void TestGenerateCleanEfiCustomTargetPartition()
+        {
+            var (actualPath, expectedPath) = GetPaths();
+            var options = new GeneratorOptions()
+            {
+                InstallOptions = new CleanEfiOptions()
+                {
+                    Partitions =
+                    {
+                        new Partition() { Type = PartitionType.Utility, Label = "WinRE", Size = BinarySize.FromMebi(350) },
+                        new Partition() { Type = PartitionType.System, Label = "System", Size = BinarySize.FromMebi(100) },
+                        new Partition() { Type = PartitionType.Msr, Size = BinarySize.FromMebi(128) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Windows", Size = BinarySize.FromGibi(64) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Data", FileSystem = "FAT32" },
+                    },
+                    CustomTargetPartitionId = 5
+                },
+                LocalAccounts = { new LocalCredential("MyUser", "Password") },
+                ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE"
+            };
+
+            Generator.Generate(actualPath, options);
+            CheckFilesEqual(expectedPath, actualPath);
+        }
+
+        [TestMethod]
         public void TestGenerateCleanBios()
         {
             var (actualPath, expectedPath) = GetPaths();
@@ -77,6 +129,57 @@ namespace GenerateAnswerFileTests
                     ImageIndex = 2,
                 },
                 EnableDefender = false,
+                LocalAccounts = { new LocalCredential("MyUser", "Password") },
+                ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
+                ProcessorArchitecture = "x86"
+            };
+
+            Generator.Generate(actualPath, options);
+            CheckFilesEqual(expectedPath, actualPath);
+        }
+
+        [TestMethod]
+        public void TestGenerateCleanBiosCustomPartitions()
+        {
+            var (actualPath, expectedPath) = GetPaths();
+            var options = new GeneratorOptions()
+            {
+                InstallOptions = new CleanBiosOptions()
+                {
+                    Partitions =
+                    {
+                        new Partition() { Type = PartitionType.Utility, Label = "WinRE", Size = BinarySize.FromMebi(350) },
+                        new Partition() { Type = PartitionType.System, Label = "System", Size = BinarySize.FromMebi(100) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Windows", Size = BinarySize.FromGibi(64) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Data", FileSystem = "FAT32" },
+                    },
+                },
+                LocalAccounts = { new LocalCredential("MyUser", "Password") },
+                ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
+                ProcessorArchitecture = "x86"
+            };
+
+            Generator.Generate(actualPath, options);
+            CheckFilesEqual(expectedPath, actualPath);
+        }
+
+        [TestMethod]
+        public void TestGenerateCleanBiosExtendedPartition()
+        {
+            var (actualPath, expectedPath) = GetPaths();
+            var options = new GeneratorOptions()
+            {
+                InstallOptions = new CleanBiosOptions()
+                {
+                    Partitions =
+                    {
+                        new Partition() { Type = PartitionType.Utility, Label = "WinRE", Size = BinarySize.FromMebi(350) },
+                        new Partition() { Type = PartitionType.System, Label = "System", Size = BinarySize.FromMebi(100) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Windows", Size = BinarySize.FromGibi(64) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Data", FileSystem = "FAT32", Size = BinarySize.FromGibi(10) },
+                        new Partition() { Type = PartitionType.Normal, Label = "Data 2", FileSystem = "NTFS" },
+                    },
+                },
                 LocalAccounts = { new LocalCredential("MyUser", "Password") },
                 ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
                 ProcessorArchitecture = "x86"

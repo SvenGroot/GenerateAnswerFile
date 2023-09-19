@@ -23,7 +23,17 @@ static class XmlWriterExtensions
             if (value != null)
             {
                 var (prefix, name) = property.Name.SplitOnce('_');
-                writer.WriteAttributeString(prefix, name, null, value.ToString());
+                string? valueString;
+                if (property.PropertyType == typeof(bool) || property.PropertyType == typeof(bool?))
+                {
+                    valueString = ((bool)value ? "true" : "false");
+                }
+                else
+                {
+                    valueString = value.ToString();
+                }
+
+                writer.WriteAttributeString(prefix, name, null, valueString);
             }
         }
     }
@@ -58,7 +68,17 @@ static class XmlWriterExtensions
                 }
                 else
                 {
-                    writer.WriteElementString(property.Name, value.ToString());
+                    string? valueString;
+                    if (property.PropertyType == typeof(bool) || property.PropertyType == typeof(bool?))
+                    {
+                        valueString = ((bool)value ? "true" : "false");
+                    }
+                    else
+                    {
+                        valueString = value.ToString();
+                    }
+
+                    writer.WriteElementString(property.Name, valueString);
                 }
             }
         }

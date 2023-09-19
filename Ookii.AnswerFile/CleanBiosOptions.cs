@@ -4,36 +4,63 @@
 /// Provides options for a clean installation on BIOS-based systems.
 /// </summary>
 /// <remarks>
-/// When using this installation method, the disk specified by <see cref="TargetedInstallOptionsBase.DiskId"/>
-/// will be wiped, and two partitions will be created: a 100MB system partition, and an OS
-/// partition with the remaining size of the disk. Windows will be installed on the second
-/// partition.
+/// <para>
+///   When using this installation method, the disk specified by <see cref="TargetedInstallOptionsBase.DiskId"/>
+///   will be wiped, with partitions created according to the <see cref="CleanOptionsBase.Partitions"/>
+///   property.
+/// </para>
+/// <para>
+///   If the <see cref="CleanOptionsBase.Partitions"/> property is an empty list, the default layout
+///   will be used: a 100MB system partition, and an OS partition with the remaining size of the
+///   disk. Windows will be installed on the second partition.
+/// </para>
 /// </remarks>
-public class CleanBiosOptions : TargetedInstallOptionsBase
+public class CleanBiosOptions : CleanOptionsBase
 {
     /// <summary>
-    /// Gets the ID of the partition to install to.
+    /// Gets the partition type to use for the system partition.
     /// </summary>
     /// <value>
-    /// This property returns 2 for clean BIOS-based installations.
+    /// The value "Primary".
     /// </value>
-    protected override int TargetPartitionId => 2;
+    protected override string SystemPartitionType => "Primary";
 
     /// <summary>
-    /// Writes the disk configuration for this installation method.
+    /// Gets the file system to use for the system partition.
     /// </summary>
-    /// <param name="generator">The generator creating the answer file.</param>
-    protected override void WriteDiskConfiguration(Generator generator)
-    {
-        generator.Writer.WriteElementString("WillWipeDisk", "true");
-        using (var createPartitions = generator.Writer.WriteAutoCloseElement("CreatePartitions"))
-        {
-            generator.WriteCreatePartition(1, "Primary", 100);
-            generator.WriteCreatePartition(2, "Primary");
-        }
+    /// <value>
+    /// The file system type "NTFS".
+    /// </value>
+    protected override string SystemPartitionFileSystem => "NTFS";
 
-        using var modifyPartitions = generator.Writer.WriteAutoCloseElement("ModifyPartitions");
-        generator.WriteModifyPartition(1, 1, "NTFS", "System");
-        generator.WriteModifyPartition(2, 2, "NTFS", "Windows", 'C');
+    /// <summary>
+    /// Gets a value which indicates whether an extended partition should be used if there are more
+    /// than 4 partitions.
+    /// </summary>
+    /// <value>
+    /// <see langword="true"/>.
+    /// </value>
+    protected override bool UseExtendedPartition => true;
+
+    /// <summary>
+    /// Gets the type ID that marks a partition as a utility partition.
+    /// </summary>
+    /// <value>
+    /// The partition type ID.
+    /// </value>
+    protected override string UtilityTypeId => "0x27";
+
+    /// <summary>
+    /// Gets the partition layout to use if the <see cref="CleanOptionsBase.Partitions"/> property
+    /// is an empty list.
+    /// </summary>
+    /// <returns>A list containing the default BIOS partition layout.</returns>
+    protected override List<Partition> GetDefaultPartitions()
+    {
+        return new List<Partition>
+        {
+            new Partition() { Type = PartitionType.System, Label = "System", Size = BinarySize.FromMebi(100) },
+            new Partition() { Label = "Windows" },
+        };
     }
 }

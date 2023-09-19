@@ -10,13 +10,29 @@
 
   <ItemGroup>
     <None Remove="expected\TestGenerateCleanBios.xml" />
+    <None Remove="expected\TestGenerateCleanBiosCustomPartitions.xml" />
+    <None Remove="expected\TestGenerateCleanBiosExtendedPartition.xml" />
     <None Remove="expected\TestGenerateCleanEfi.xml" />
+    <None Remove="expected\TestGenerateCleanEfiCustomPartitions.xml" />
+    <None Remove="expected\TestGenerateCleanEfiCustomTargetPartition.xml" />
     <None Remove="expected\TestGenerateExistingPartition.xml" />
     <None Remove="expected\TestGenerateManual.xml" />
     <None Remove="expected\TestGeneratePreInstalled.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="expected\TestGenerateCleanBiosCustomPartitions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="expected\TestGenerateCleanBiosExtendedPartition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="expected\TestGenerateCleanEfiCustomTargetPartition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="expected\TestGenerateCleanEfiCustomPartitions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="expected\TestGenerateManual.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

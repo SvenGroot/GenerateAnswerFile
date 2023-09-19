@@ -10,30 +10,34 @@
     <component name="Microsoft-Windows-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
       <ImageInstall>
         <OSImage>
-          <InstallFrom>
-            <MetaData wcm:action="add">
-              <Key>/IMAGE/INDEX</Key>
-              <Value>2</Value>
-            </MetaData>
-          </InstallFrom>
           <InstallTo>
-            <DiskID>1</DiskID>
-            <PartitionID>2</PartitionID>
+            <DiskID>0</DiskID>
+            <PartitionID>3</PartitionID>
           </InstallTo>
         </OSImage>
       </ImageInstall>
       <DiskConfiguration>
         <Disk wcm:action="add">
-          <DiskID>1</DiskID>
+          <DiskID>0</DiskID>
           <WillWipeDisk>true</WillWipeDisk>
           <CreatePartitions>
             <CreatePartition wcm:action="add">
               <Order>1</Order>
-              <Size>100</Size>
+              <Size>350</Size>
               <Type>Primary</Type>
             </CreatePartition>
             <CreatePartition wcm:action="add">
               <Order>2</Order>
+              <Size>100</Size>
+              <Type>Primary</Type>
+            </CreatePartition>
+            <CreatePartition wcm:action="add">
+              <Order>3</Order>
+              <Size>65536</Size>
+              <Type>Primary</Type>
+            </CreatePartition>
+            <CreatePartition wcm:action="add">
+              <Order>4</Order>
               <Type>Primary</Type>
               <Extend>true</Extend>
             </CreatePartition>
@@ -43,15 +47,29 @@
               <Order>1</Order>
               <PartitionId>1</PartitionId>
               <Format>NTFS</Format>
-              <Label>System</Label>
-              <Active>true</Active>
+              <Label>WinRE</Label>
+              <TypeID>0x27</TypeID>
             </ModifyPartition>
             <ModifyPartition wcm:action="add">
               <Order>2</Order>
               <PartitionId>2</PartitionId>
               <Format>NTFS</Format>
+              <Label>System</Label>
+              <Active>true</Active>
+            </ModifyPartition>
+            <ModifyPartition wcm:action="add">
+              <Order>3</Order>
+              <PartitionId>3</PartitionId>
+              <Format>NTFS</Format>
               <Label>Windows</Label>
               <Letter>C</Letter>
+            </ModifyPartition>
+            <ModifyPartition wcm:action="add">
+              <Order>4</Order>
+              <PartitionId>4</PartitionId>
+              <Format>FAT32</Format>
+              <Label>Data</Label>
+              <Letter>D</Letter>
             </ModifyPartition>
           </ModifyPartitions>
         </Disk>
@@ -75,9 +93,6 @@
     </component>
     <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
       <ProductKey>ABCDE-12345-ABCDE-12345-ABCDE</ProductKey>
-    </component>
-    <component name="Security-Malware-Windows-Defender" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-      <DisableAntiSpyware>true</DisableAntiSpyware>
     </component>
   </settings>
   <settings pass="oobeSystem">

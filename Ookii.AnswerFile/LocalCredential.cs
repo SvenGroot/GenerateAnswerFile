@@ -70,7 +70,7 @@ public class LocalCredential
         var (userName, password) = value.SplitOnce(',');
         if (userName == null)
         {
-            throw new FormatException("Format is not 'user,password'.");
+            throw new FormatException(Properties.Resources.InvalidLocalCredential);
         }
 
         return new LocalCredential(userName, password);
