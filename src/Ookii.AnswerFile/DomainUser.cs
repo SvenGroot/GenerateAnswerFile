@@ -48,6 +48,16 @@ public record class DomainUser
     public string UserName { get; }
 
     /// <summary>
+    /// Gets a string representation of the current <see cref="DomainUser"/>.
+    /// </summary>
+    /// <returns>
+    /// If the <see cref="Domain"/> property is not <see langword="null"/>, a string in the format
+    /// "domain\user"; otherwise, the value of the <see cref="UserName"/> property.
+    /// </returns>
+    public override string ToString()
+        => Domain == null ? UserName : $"{Domain}\\{UserName}";
+
+    /// <summary>
     /// Parses the domain and user name from a string in the form 'domain\user' or just 'user'.
     /// </summary>
     /// <param name="value">The value to parse.</param>
