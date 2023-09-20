@@ -95,18 +95,8 @@
         </SynchronousCommand>
         <SynchronousCommand wcm:action="add">
           <Order>3</Order>
-          <Description>PowerShell unrestricted</Description>
-          <CommandLine>PowerShell.exe Set-ExecutionPolicy unrestricted -Force</CommandLine>
-        </SynchronousCommand>
-        <SynchronousCommand wcm:action="add">
-          <Order>4</Order>
-          <Description>PowerShell bypass</Description>
-          <CommandLine>PowerShell.exe Set-ExecutionPolicy bypass -Force</CommandLine>
-        </SynchronousCommand>
-        <SynchronousCommand wcm:action="add">
-          <Order>5</Order>
           <Description>Setup script</Description>
-          <CommandLine>PowerShell.exe \\machine\shared\script.ps1 -Arg</CommandLine>
+          <CommandLine>PowerShell.exe -ExecutionPolicy Bypass \\machine\shared\script.ps1 -Arg</CommandLine>
         </SynchronousCommand>
       </FirstLogonCommands>
       <Display>

@@ -307,17 +307,10 @@ public class Generator
                 ++order;
             }
 
-            if (Options.SetupScripts.Count > 0)
+            foreach (var script in Options.SetupScripts)
             {
-                WriteSynchronousCommand("PowerShell.exe Set-ExecutionPolicy unrestricted -Force", "PowerShell unrestricted", order);
+                WriteSynchronousCommand($"PowerShell.exe -ExecutionPolicy Bypass {script}", "Setup script", order);
                 ++order;
-                WriteSynchronousCommand("PowerShell.exe Set-ExecutionPolicy bypass -Force", "PowerShell bypass", order);
-                ++order;
-                foreach (var script in Options.SetupScripts)
-                {
-                    WriteSynchronousCommand($"PowerShell.exe {script}", "Setup script", order);
-                    ++order;
-                }
             }
         }
 
