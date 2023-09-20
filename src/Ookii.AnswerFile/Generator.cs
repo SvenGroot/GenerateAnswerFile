@@ -256,19 +256,28 @@ public class Generator
         });
 
         Writer.WriteElementString("TimeZone", Options.TimeZone);
-        if (Options.AutoLogon is AutoLogonOptions autoLogonOptions)
+        if (Options.AutoLogon?.Count > 0)
         {
+            // Windows adds 1 to the LogonCount value, so subtract one to get the correct number
+            // of logons. If the count is 1, we use a first logon command to work around that.
+            // See https://learn.microsoft.com/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon-logoncount
+            var count = Options.AutoLogon.Count;
+            if (count > 1)
+            {
+                --count;
+            }
+
             Writer.WriteElements(new
             {
                 AutoLogon = new
                 {
                     Enabled = true,
-                    LogonCount = autoLogonOptions.Count,
-                    autoLogonOptions.Credential.UserAccount.Domain,
-                    Username = autoLogonOptions.Credential.UserAccount.UserName,
+                    LogonCount = count,
+                    Options.AutoLogon.Credential.UserAccount.Domain,
+                    Username = Options.AutoLogon.Credential.UserAccount.UserName,
                     Password = new
                     {
-                        Value = Convert.ToBase64String(Encoding.Unicode.GetBytes(autoLogonOptions.Credential.Password + "Password")),
+                        Value = Convert.ToBase64String(Encoding.Unicode.GetBytes(Options.AutoLogon.Credential.Password + "Password")),
                         PlainText = false
                     }
                 }
@@ -278,6 +287,14 @@ public class Generator
         using (var firstLogon = Writer.WriteAutoCloseElement("FirstLogonCommands"))
         {
             int order = 1;
+            
+            // Work around the LogonCount issue if the count is 1 (see above).
+            if (Options.AutoLogon?.Count == 1)
+            {
+                WriteSynchronousCommand(@"reg add ""HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"" /v AutoLogonCount /t REG_DWORD /d 0 /f", "LogonCount", order);
+                ++order;
+            }
+
             if (Options.CmdKeyAccount is DomainCredential cmdKeyOptions)
             {
                 WriteSynchronousCommand($"cmdkey.exe /add:* /user:{cmdKeyOptions.UserAccount} /pass:{cmdKeyOptions.Password}", "CmdKey", order);

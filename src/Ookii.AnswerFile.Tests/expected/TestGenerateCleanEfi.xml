@@ -141,7 +141,13 @@
           <PlainText>false</PlainText>
         </Password>
       </AutoLogon>
-      <FirstLogonCommands />
+      <FirstLogonCommands>
+        <SynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Description>LogonCount</Description>
+          <CommandLine>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v AutoLogonCount /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+      </FirstLogonCommands>
     </component>
   </settings>
 </unattend>
