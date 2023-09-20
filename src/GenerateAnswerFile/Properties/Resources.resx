@@ -162,6 +162,9 @@
   <data name="FeaturesDescription" xml:space="preserve">
     <value>The feature name of an optional feature to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.</value>
   </data>
+  <data name="FirstLogonCommandsDescription" xml:space="preserve">
+    <value>A command to run during first logon. Can have multiple values. Commands are run before the scripts specified by -SetupScript.</value>
+  </data>
   <data name="ImageIndexDescription" xml:space="preserve">
     <value>The WIM image index to install. Use this for editions not installed using a product key such as volume license editions. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.</value>
   </data>
@@ -230,7 +233,7 @@ If not specified, the default partition layout for the method specified by -Inst
     <value>The product key used to select what edition to install and to activate Windows.</value>
   </data>
   <data name="SetupScriptsDescription" xml:space="preserve">
-    <value>The full path of a Windows PowerShell script to run during first logon. Can have multiple values.</value>
+    <value>The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are run after the commands specified by -FirstLogonCommand.</value>
   </data>
   <data name="TimeZoneDescription" xml:space="preserve">
     <value>The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.</value>

@@ -196,6 +196,15 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. Commands are run before the scripts specified by -SetupScript..
+        /// </summary>
+        internal static string FirstLogonCommandsDescription {
+            get {
+                return ResourceManager.GetString("FirstLogonCommandsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The WIM image index to install. Use this for editions not installed using a product key such as volume license editions. Use the PowerShell &apos;Get-WindowsImage&apos; command to list all images in a .wim or .esd file..
         /// </summary>
         internal static string ImageIndexDescription {
@@ -387,7 +396,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values..
+        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are run after the commands specified by -FirstLogonCommand..
         /// </summary>
         internal static string SetupScriptsDescription {
             get {

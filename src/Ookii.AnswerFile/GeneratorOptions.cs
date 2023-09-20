@@ -190,10 +190,30 @@ public class GeneratorOptions
     public string TimeZone { get; set; } = "Pacific Standard Time";
 
     /// <summary>
+    /// Gets a collection of commands to run during first log-on.
+    /// </summary>
+    /// <value>
+    /// A collection of commands.
+    /// </value>
+    /// <remarks>
+    /// <para>
+    ///   These commands will run before any scripts specified by the <see cref="SetupScripts"/>
+    ///   property.
+    /// </para>
+    /// </remarks>
+    public Collection<string> FirstLogonCommands { get; } = new();
+
+    /// <summary>
     /// Gets a collection of PowerShell scripts to run during first log-on.
     /// </summary>
     /// <value>
     /// A collection of scripts, with their path and arguments.
     /// </value>
+    /// <remarks>
+    /// <para>
+    ///   These scripts will run after any commands specified by the <see cref="FirstLogonCommands"/>
+    ///   property.
+    /// </para>
+    /// </remarks>
     public Collection<string> SetupScripts { get; } = new();
 }

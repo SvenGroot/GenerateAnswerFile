@@ -301,6 +301,12 @@ public class Generator
                 ++order;
             }
 
+            foreach (var command in Options.FirstLogonCommands)
+            {
+                WriteSynchronousCommand(command, $"Custom command", order);
+                ++order;
+            }
+
             if (Options.SetupScripts.Count > 0)
             {
                 WriteSynchronousCommand("PowerShell.exe Set-ExecutionPolicy unrestricted -Force", "PowerShell unrestricted", order);

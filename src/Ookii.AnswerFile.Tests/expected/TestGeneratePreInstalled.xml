@@ -85,16 +85,26 @@
       <FirstLogonCommands>
         <SynchronousCommand wcm:action="add">
           <Order>1</Order>
+          <Description>Custom command</Description>
+          <CommandLine>command1.exe</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>2</Order>
+          <Description>Custom command</Description>
+          <CommandLine>command2.exe foo</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>3</Order>
           <Description>PowerShell unrestricted</Description>
           <CommandLine>PowerShell.exe Set-ExecutionPolicy unrestricted -Force</CommandLine>
         </SynchronousCommand>
         <SynchronousCommand wcm:action="add">
-          <Order>2</Order>
+          <Order>4</Order>
           <Description>PowerShell bypass</Description>
           <CommandLine>PowerShell.exe Set-ExecutionPolicy bypass -Force</CommandLine>
         </SynchronousCommand>
         <SynchronousCommand wcm:action="add">
-          <Order>3</Order>
+          <Order>5</Order>
           <Description>Setup script</Description>
           <CommandLine>PowerShell.exe \\machine\shared\script.ps1 -Arg</CommandLine>
         </SynchronousCommand>

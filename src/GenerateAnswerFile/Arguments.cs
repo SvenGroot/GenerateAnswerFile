@@ -125,6 +125,13 @@ partial class Arguments
     [ValidateNotWhiteSpace]
     public string? CmdKeyPassword { get; set; }
 
+    [CommandLineArgument("FirstLogonCommand")]
+    [ResourceDescription(nameof(Properties.Resources.FirstLogonCommandsDescription))]
+    [Alias("cmd")]
+    [ValidateNotWhiteSpace]
+    [MultiValueSeparator]
+    public string[]? FirstLogonCommands { get; set; }
+
     [CommandLineArgument("SetupScript")]
     [ResourceDescription(nameof(Properties.Resources.SetupScriptsDescription))]
     [Alias("s")]
@@ -265,6 +272,11 @@ partial class Arguments
         if (LocalAccounts != null)
         {
             options.LocalAccounts.AddRange(LocalAccounts);
+        }
+
+        if (FirstLogonCommands != null)
+        {
+            options.FirstLogonCommands.AddRange(FirstLogonCommands);
         }
 
         if (SetupScripts != null)
