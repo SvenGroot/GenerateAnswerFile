@@ -12,6 +12,8 @@ namespace Ookii.AnswerFile;
 /// </remarks>
 public class DomainOptions
 {
+    private Collection<string>? _domainAccounts;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainOptions"/> class.
     /// </summary>
@@ -68,5 +70,9 @@ public class DomainOptions
     ///   These accounts must be in the domain specified by the <see cref="Domain"/> property.
     /// </para>
     /// </remarks>
-    public Collection<string> DomainAccounts { get; } = new();
+    public Collection<string> DomainAccounts
+    {
+        get => _domainAccounts ??= new();
+        set => _domainAccounts = value;
+    }
 }

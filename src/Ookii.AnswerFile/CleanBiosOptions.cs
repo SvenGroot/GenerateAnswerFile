@@ -55,9 +55,9 @@ public class CleanBiosOptions : CleanOptionsBase
     /// is an empty list.
     /// </summary>
     /// <returns>A list containing the default BIOS partition layout.</returns>
-    protected override List<Partition> GetDefaultPartitions()
+    protected override IList<Partition> GetDefaultPartitions()
     {
-        return new List<Partition>
+        return new[]
         {
             new Partition() { Type = PartitionType.System, Label = "System", Size = BinarySize.FromMebi(100) },
             new Partition() { Label = "Windows" },

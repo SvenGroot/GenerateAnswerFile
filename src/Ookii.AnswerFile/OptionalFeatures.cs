@@ -7,14 +7,16 @@ namespace Ookii.AnswerFile;
 /// </summary>
 public class OptionalFeatures
 {
+    private Collection<string>? _features;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="OptionalFeatures"/> class.
     /// </summary>
-    /// <param name="version">The exact Windows version being installed (e.g. "10.0.22000.1").</param>
-    public OptionalFeatures(Version version)
+    /// <param name="windowsVersion">The exact Windows version being installed (e.g. "10.0.22000.1").</param>
+    public OptionalFeatures(Version windowsVersion)
     {
-        ArgumentNullException.ThrowIfNull(version);
-        WindowsVersion = version;
+        ArgumentNullException.ThrowIfNull(windowsVersion);
+        WindowsVersion = windowsVersion;
     }
 
     /// <summary>
@@ -26,7 +28,7 @@ public class OptionalFeatures
     public Version WindowsVersion { get; }
 
     /// <summary>
-    /// Gets the optional features to install.
+    /// Gets or sets the optional features to install.
     /// </summary>
     /// <value>
     /// A collection of optional features.
@@ -35,7 +37,11 @@ public class OptionalFeatures
     /// Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature
     /// names.
     /// </remarks>
-    public Collection<string> Features { get; } = new();
+    public Collection<string> Features
+    {
+        get => _features ??= new();
+        set => _features = value;
+    }
 
     internal void GenerateServicingPass(Generator generator)
     {

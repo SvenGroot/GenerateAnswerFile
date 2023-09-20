@@ -1,10 +1,7 @@
-using Ookii;
-using Ookii.AnswerFile;
 using System.Drawing;
-using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
 
-namespace GenerateAnswerFileTests;
+namespace Ookii.AnswerFile.Tests;
 
 [TestClass]
 public class GeneratorTests

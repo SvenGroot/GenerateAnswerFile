@@ -56,9 +56,9 @@ public class CleanEfiOptions : CleanOptionsBase
     /// Gets the partition layout to use if the <see cref="CleanOptionsBase.Partitions"/> property is an empty list.
     /// </summary>
     /// <returns>A list containing the default EFI partition layout.</returns>
-    protected override List<Partition> GetDefaultPartitions()
+    protected override IList<Partition> GetDefaultPartitions()
     {
-        return new List<Partition>
+        return new[]
         {
             new Partition() { Type = PartitionType.System, Size = BinarySize.FromMebi(100), Label = "System" },
             new Partition() { Type = PartitionType.Msr, Size = BinarySize.FromMebi(128) },

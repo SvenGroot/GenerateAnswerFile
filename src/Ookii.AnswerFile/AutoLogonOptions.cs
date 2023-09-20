@@ -1,4 +1,6 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Text.Json.Serialization;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides options for logging on automatically.
@@ -6,7 +8,23 @@
 public class AutoLogonOptions
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AutoLogonOptions"/> class.
+    /// Initializes a new instance of the <see cref="AutoLogonOptions"/> class with the specified
+    /// credential.
+    /// </summary>
+    /// <param name="credential">The domain or local credential used to log on automatically.</param>
+    /// <exception cref="ArgumentNullException">
+    ///   <paramref name="credential"/> is <see langword="null"/>.
+    /// </exception>
+    [JsonConstructor]
+    public AutoLogonOptions(DomainCredential credential)
+    {
+        ArgumentNullException.ThrowIfNull(credential);
+        Credential = credential;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AutoLogonOptions"/> class with the specified
+    /// account and password.
     /// </summary>
     /// <param name="userAccount">The domain or local account used to log on automatically.</param>
     /// <param name="password">The password of the account used to log on automatically.</param>

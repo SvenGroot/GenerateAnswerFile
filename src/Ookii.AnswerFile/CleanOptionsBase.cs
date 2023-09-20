@@ -9,18 +9,10 @@ namespace Ookii.AnswerFile;
 /// <threadsafety instance="false" static="true"/>
 public abstract class CleanOptionsBase : TargetedInstallOptionsBase
 {
-    private readonly List<Partition> _partitions = new();
+    private Collection<Partition>? _partitions;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CleanOptionsBase"/> class.
-    /// </summary>
-    protected CleanOptionsBase()
-    {
-        Partitions = new(_partitions);
-    }
-
-    /// <summary>
-    /// Gets a list of partitions to create.
+    /// Gets or sets a list of partitions to create.
     /// </summary>
     /// <value>
     /// A collection of <see cref="Partition"/> objects.
@@ -31,7 +23,11 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     ///   system type.
     /// </para>
     /// </remarks>
-    public Collection<Partition> Partitions { get; }
+    public Collection<Partition> Partitions
+    {
+        get => _partitions ??= new();
+        set => _partitions = value;
+    }
 
     /// <summary>
     /// Gets or sets the ID of the partition to install to.
@@ -57,7 +53,7 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
                 return id;
             }
 
-            var partitions = _partitions.Count == 0 ? GetDefaultPartitions() : _partitions;
+            var partitions = _partitions?.Count > 0 ? _partitions : GetDefaultPartitions();
             var index = partitions.FindIndex(p => p.Type == PartitionType.Normal);
             if (index < 0)
             {
@@ -110,7 +106,7 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// <param name="generator">The generator creating the answer file.</param>
     protected override void WriteDiskConfiguration(Generator generator)
     {
-        var partitions = _partitions.Count == 0 ? GetDefaultPartitions() : _partitions;
+        var partitions = _partitions?.Count > 0 ? _partitions : GetDefaultPartitions();
 
         generator.Writer.WriteElementString("WillWipeDisk", "true");
         bool useLogical = false;
@@ -119,7 +115,7 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
         {
             foreach (var partition in partitions)
             {
-                if (order == 4 && _partitions.Count > 4 && UseExtendedPartition)
+                if (order == 4 && partitions.Count > 4 && UseExtendedPartition)
                 {
                     generator.WriteCreatePartition(order, "Extended");
                     useLogical = true;
@@ -179,5 +175,5 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// <see cref="Partitions"/> property is an empty list.
     /// </summary>
     /// <returns>A list containing the default partition layout.</returns>
-    protected abstract List<Partition> GetDefaultPartitions();
+    protected abstract IList<Partition> GetDefaultPartitions();
 }

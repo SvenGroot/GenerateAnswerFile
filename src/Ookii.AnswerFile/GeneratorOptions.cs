@@ -9,6 +9,10 @@ namespace Ookii.AnswerFile;
 /// <seealso cref="Generator"/>
 public class GeneratorOptions
 {
+    private Collection<LocalCredential>? _localAccounts;
+    private Collection<string>? _firstLogonCommands;
+    private Collection<string>? _setupScripts;
+
     /// <summary>
     /// Gets or sets the installation method to use, along with the options for that method.
     /// </summary>
@@ -88,7 +92,7 @@ public class GeneratorOptions
     public bool EnableServerManager { get; set; } = true;
 
     /// <summary>
-    /// Gets a collection of local administrator accounts to create.
+    /// Gets or sets a collection of local administrator accounts to create.
     /// </summary>
     /// <value>
     /// A collection with the local user accounts.
@@ -99,7 +103,11 @@ public class GeneratorOptions
     ///   encrypted.
     /// </note>
     /// </remarks>
-    public Collection<LocalCredential> LocalAccounts { get; } = new();
+    public Collection<LocalCredential> LocalAccounts
+    {
+        get => _localAccounts ??= new();
+        set => _localAccounts = value;
+    }
 
     /// <summary>
     /// Gets or sets options for automatic logging on to Windows.
@@ -190,7 +198,7 @@ public class GeneratorOptions
     public string TimeZone { get; set; } = "Pacific Standard Time";
 
     /// <summary>
-    /// Gets a collection of commands to run during first log-on.
+    /// Gets or sets a collection of commands to run during first log-on.
     /// </summary>
     /// <value>
     /// A collection of commands.
@@ -201,10 +209,15 @@ public class GeneratorOptions
     ///   property.
     /// </para>
     /// </remarks>
-    public Collection<string> FirstLogonCommands { get; } = new();
+    public Collection<string> FirstLogonCommands
+    {
+        get => _firstLogonCommands ??= new();
+        set => _firstLogonCommands = value;
+    }
+
 
     /// <summary>
-    /// Gets a collection of PowerShell scripts to run during first log-on.
+    /// Gets or sets a collection of PowerShell scripts to run during first log-on.
     /// </summary>
     /// <value>
     /// A collection of scripts, with their path and arguments.
@@ -215,5 +228,9 @@ public class GeneratorOptions
     ///   property.
     /// </para>
     /// </remarks>
-    public Collection<string> SetupScripts { get; } = new();
+    public Collection<string> SetupScripts
+    {
+        get => _setupScripts ??= new();
+        set => _setupScripts = value;
+    }
 }

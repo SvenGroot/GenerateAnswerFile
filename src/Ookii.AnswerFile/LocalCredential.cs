@@ -9,7 +9,7 @@
 ///   at best. Do not store generated files with sensitive passwords in public locations.
 /// </note>
 /// </remarks>
-public class LocalCredential
+public record class LocalCredential
 {
     /// <summary>
     /// Creates a new instance of the <see cref="LocalCredential"/> class.

@@ -1,9 +1,11 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Text.Json.Serialization;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Represents a domain or local user.
 /// </summary>
-public class DomainUser
+public record class DomainUser
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainUser"/> class.
@@ -12,6 +14,7 @@ public class DomainUser
     ///   The domain of the account, or <see langword="null"/> if this is a local account.
     /// </param>
     /// <param name="userName">The account user name.</param>
+    [JsonConstructor]
     public DomainUser(string? domain, string userName)
     {
         ArgumentNullException.ThrowIfNull(userName);

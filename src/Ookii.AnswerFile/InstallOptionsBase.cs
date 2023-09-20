@@ -1,8 +1,14 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Text.Json.Serialization;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// A base class for all the various installation options classes.
 /// </summary>
+[JsonDerivedType(typeof(CleanEfiOptions), typeDiscriminator: "CleanEfi")]
+[JsonDerivedType(typeof(CleanBiosOptions), typeDiscriminator: "CleanBios")]
+[JsonDerivedType(typeof(ExistingPartitionOptions), typeDiscriminator: "ExistingPartition")]
+[JsonDerivedType(typeof(ManualInstallOptions), typeDiscriminator: "Manual")]
 public abstract class InstallOptionsBase
 {
     /// <summary>

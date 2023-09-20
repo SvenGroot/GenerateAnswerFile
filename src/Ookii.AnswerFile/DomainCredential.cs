@@ -9,7 +9,7 @@
 ///   at best. Do not store generated files with sensitive passwords in public locations.
 /// </note>
 /// </remarks>
-public class DomainCredential
+public record class DomainCredential
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainCredential"/> class.
