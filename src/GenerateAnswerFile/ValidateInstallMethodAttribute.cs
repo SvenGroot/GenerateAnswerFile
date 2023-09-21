@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 
 namespace GenerateAnswerFile;
+
 class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
 {
     private readonly InstallMethod[] _methods;

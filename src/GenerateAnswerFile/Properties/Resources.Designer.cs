@@ -97,6 +97,51 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatic logon options:.
+        /// </summary>
+        internal static string CategoryAutoLogon {
+            get {
+                return ResourceManager.GetString("CategoryAutoLogon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Domain options:.
+        /// </summary>
+        internal static string CategoryDomain {
+            get {
+                return ResourceManager.GetString("CategoryDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installation options:.
+        /// </summary>
+        internal static string CategoryInstall {
+            get {
+                return ResourceManager.GetString("CategoryInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other setup options:.
+        /// </summary>
+        internal static string CategoryOther {
+            get {
+                return ResourceManager.GetString("CategoryOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User account options:.
+        /// </summary>
+        internal static string CategoryUserAccounts {
+            get {
+                return ResourceManager.GetString("CategoryUserAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password of the user used to access the network..
         /// </summary>
         internal static string CmdKeyPasswordDescription {
