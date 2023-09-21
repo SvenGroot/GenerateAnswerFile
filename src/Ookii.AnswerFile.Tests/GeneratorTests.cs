@@ -219,6 +219,27 @@ public class GeneratorTests
         CheckFilesEqual(expectedPath, actualPath);
     }
 
+    [TestMethod]
+    public void TestGenerateDomainOnly()
+    {
+        // Make sure account screens are hidden in OOBE if joining a domain while not creating
+        // local accounts.
+        var (actualPath, expectedPath) = GetPaths();
+        var options = new GeneratorOptions()
+        {
+            JoinDomain = new DomainOptions("somedomain",
+                new DomainCredential(new DomainUser("somedomain", "domainuser"), "DomainPassword"))
+            {
+                OUPath = "OU=SomeOU,DC=somedomain",
+            },
+            ComputerName = "test-machine",
+        };
+
+        Generator.Generate(actualPath, options);
+        CheckFilesEqual(expectedPath, actualPath);
+    }
+
+
     private static void CheckFilesEqual(string expectedPath, string actualPath)
     {
         var expected = File.ReadAllText(expectedPath);

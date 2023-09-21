@@ -62,10 +62,10 @@
       <OOBE>
         <ProtectYourPC>1</ProtectYourPC>
         <HideEULAPage>true</HideEULAPage>
-        <HideLocalAccountScreen>true</HideLocalAccountScreen>
+        <HideLocalAccountScreen>false</HideLocalAccountScreen>
         <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
-        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
-        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+        <HideOnlineAccountScreens>false</HideOnlineAccountScreens>
+        <HideWirelessSetupInOOBE>false</HideWirelessSetupInOOBE>
       </OOBE>
       <TimeZone>UTC</TimeZone>
       <FirstLogonCommands />

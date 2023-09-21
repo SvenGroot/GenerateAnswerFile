@@ -221,11 +221,11 @@ public class Generator
                 }
             }
 
-            if (Options.JoinDomain is DomainOptions domainOptions && domainOptions.DomainAccounts.Count > 0)
+            if (Options.JoinDomain?.DomainAccounts.Count > 0)
             {
                 using var domainAccounts = Writer.WriteAutoCloseElement("DomainAccounts");
                 using var domainAccountList = Writer.WriteAutoCloseElement("DomainAccountList", new { wcm_action = "add" });
-                foreach (var account in domainOptions.DomainAccounts)
+                foreach (var account in Options.JoinDomain.DomainAccounts)
                 {
                     Writer.WriteElements(new
                     {
@@ -238,20 +238,21 @@ public class Generator
                     });
                 }
 
-                Writer.WriteElementString("Domain", domainOptions.Domain);
+                Writer.WriteElementString("Domain", Options.JoinDomain.Domain);
             }
         }
 
+        bool hideAccountScreens = Options.JoinDomain != null || Options.LocalAccounts.Count != 0;
         Writer.WriteElements(new
         {
             OOBE = new
             {
                 ProtectYourPC = 1,
                 HideEULAPage = true,
-                HideLocalAccountScreen = true,
+                HideLocalAccountScreen = hideAccountScreens,
                 HideOEMRegistrationScreen = true,
-                HideOnlineAccountScreens = true,
-                HideWirelessSetupInOOBE = true
+                HideOnlineAccountScreens = hideAccountScreens,
+                HideWirelessSetupInOOBE = hideAccountScreens
             }
         });
 
