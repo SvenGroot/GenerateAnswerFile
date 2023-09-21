@@ -187,7 +187,7 @@
     <value>Password of the user used to join the domain. Will be stored in plain text.</value>
   </data>
   <data name="JoinDomainUserDescription" xml:space="preserve">
-    <value>Name of a user with permission to join the domain. Must be a member of the domain specified with -JoinDomain.</value>
+    <value>Name of a user with permission to join the domain. Use the format 'domain\user', or just 'user' to if the user is a member of the domain specified with -JoinDomain.</value>
   </data>
   <data name="LanguageDescription" xml:space="preserve">
     <value>The language used for the UI language and the input, system and user locales.</value>

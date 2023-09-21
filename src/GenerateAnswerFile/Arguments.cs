@@ -33,10 +33,11 @@ partial class Arguments
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.JoinDomainUserDescription))]
+    [ResourceValueDescription(nameof(Properties.Resources.OptionalDomainUserValueDescription))]
     [Alias("jdu")]
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
-    public string? JoinDomainUser { get; set; }
+    public DomainUser? JoinDomainUser { get; set; }
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.JoinDomainPasswordDescription))]
@@ -334,7 +335,13 @@ partial class Arguments
             return null;
         }
 
-        var options = new DomainOptions(JoinDomain, new DomainCredential(new DomainUser(JoinDomain, JoinDomainUser!), JoinDomainPassword!))
+        var user = JoinDomainUser!;
+        if (user.Domain ==  null)
+        {
+            user = new DomainUser(JoinDomain, user.UserName);
+        }
+
+        var options = new DomainOptions(JoinDomain, new DomainCredential(user, JoinDomainPassword!))
         {
             OUPath = OUPath,
         };

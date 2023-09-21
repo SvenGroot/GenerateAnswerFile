@@ -268,7 +268,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name of a user with permission to join the domain. Must be a member of the domain specified with -JoinDomain..
+        ///   Looks up a localized string similar to Name of a user with permission to join the domain. Use the format &apos;domain\user&apos;, or just &apos;user&apos; to if the user is a member of the domain specified with -JoinDomain..
         /// </summary>
         internal static string JoinDomainUserDescription {
             get {
