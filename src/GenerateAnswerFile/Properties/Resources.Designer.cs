@@ -70,7 +70,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The number of times the user will be automatically logged in..
+        ///   Looks up a localized string similar to The number of times the user will be automatically logged on..
         /// </summary>
         internal static string AutoLogonCountDescription {
             get {
@@ -88,7 +88,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of the user (in the format &apos;domain\user&apos;, or just &apos;user&apos; for local users) to automatically log on..
+        ///   Looks up a localized string similar to The name of a user to automatically log on, in the format &apos;domain\user&apos;, or just &apos;user&apos; for local users..
         /// </summary>
         internal static string AutoLogonUserDescription {
             get {
@@ -151,7 +151,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The default user used to access the network, in &apos;domain\user&apos; format..
+        ///   Looks up a localized string similar to The name of a user used to access all network resources, in &apos;domain\user&apos; format. If present, the cmdkey.exe application will be used at first logon to save this user&apos;s credentials for all applications..
         /// </summary>
         internal static string CmdKeyUserDescription {
             get {
@@ -223,7 +223,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn on remote desktop and allow it through the firewall..
+        ///   Looks up a localized string similar to Turn on remote desktop create a Windows Defender Firewall rule to allow incoming connections..
         /// </summary>
         internal static string EnableRemoteDesktopDescriptoin {
             get {
@@ -232,7 +232,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The feature name of an optional feature to install. Use the PowerShell &apos;Get-WindowsOptionalFeature&apos; command to get a list of valid feature names. Can have multiple values..
+        ///   Looks up a localized string similar to The name of an optional feature to install. Use the PowerShell &apos;Get-WindowsOptionalFeature&apos; command to get a list of valid feature names. Can have multiple values..
         /// </summary>
         internal static string FeaturesDescription {
             get {
@@ -250,7 +250,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The WIM image index to install. Use this for editions not installed using a product key such as volume license editions. Use the PowerShell &apos;Get-WindowsImage&apos; command to list all images in a .wim or .esd file..
+        ///   Looks up a localized string similar to The WIM image index to install. Use this for editions not installed using a product key, such as those that use volume licensing. Use the PowerShell &apos;Get-WindowsImage&apos; command to list all images in a .wim or .esd file..
         /// </summary>
         internal static string ImageIndexDescription {
             get {
@@ -259,7 +259,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The install method to use..
+        ///   Looks up a localized string similar to The installation method to use..
         /// </summary>
         internal static string InstallDescription {
             get {
@@ -295,7 +295,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name of the domain to join..
+        ///   Looks up a localized string similar to The name of a domain to join. If not specified, the system will not be joined to a domain..
         /// </summary>
         internal static string JoinDomainDescription {
             get {
@@ -304,7 +304,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password of the user used to join the domain. Will be stored in plain text..
+        ///   Looks up a localized string similar to The password of the user used to join the domain. Will be stored in plain text..
         /// </summary>
         internal static string JoinDomainPasswordDescription {
             get {
@@ -313,7 +313,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name of a user with permission to join the domain. Use the format &apos;domain\user&apos;, or just &apos;user&apos; to if the user is a member of the domain specified with -JoinDomain..
+        ///   Looks up a localized string similar to The name of a user with permission to join the domain. Use the format &apos;domain\user&apos;, or just &apos;user&apos; if the user is a member of the domain specified with -JoinDomain..
         /// </summary>
         internal static string JoinDomainUserDescription {
             get {
@@ -331,7 +331,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A local account to add, using the format &apos;name,password&apos;. Can have multiple values..
+        ///   Looks up a localized string similar to A local account to create, using the format &apos;name,password&apos;. Can have multiple values. If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended..
         /// </summary>
         internal static string LocalAccountsDescription {
             get {
@@ -349,7 +349,16 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows additional help in your web browser..
+        ///   Looks up a localized string similar to Number.
+        /// </summary>
+        internal static string NumberValueDescription {
+            get {
+                return ResourceManager.GetString("NumberValueDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows additional help in your web browser, include example usage..
         /// </summary>
         internal static string OnlineHelpDescription {
             get {
@@ -395,8 +404,8 @@ namespace GenerateAnswerFile.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to A partition to create on the disk specified by -InstallToDisk. Can have multiple values.
-        ///Use the format &apos;label:size&apos; or &apos;label:size[fs]&apos;, where label is the volume label, size is the size of the partition and can use multiple-byte units such as GB, and fs is an optional file system like FAT32 or NTFS. For example &apos;System:100MB&apos;, &apos;Windows:128GB&apos;, or &apos;Data:16GB[FAT32]&apos;. Sizes will be truncated to whole megabytes.
-        ///Use &apos;*&apos; for the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windows:* [rest of string was truncated]&quot;;.
+        ///Use the format &apos;label:size&apos; or &apos;label:size[fs]&apos;, where label is the volume label, size is the size of the partition, and fs is an optional file system like FAT32 or NTFS. Sizes and can use multiple-byte units such as GB, and will be truncated to whole megabytes. For example &apos;System:100MB&apos;, &apos;Windows:128GB&apos;, or &apos;Data:16GB[FAT32]&apos;.
+        ///Use &apos;*&apos; as the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PartitionsDescription {
             get {
@@ -423,7 +432,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The processor architecture of the Windows edition you&apos;re installing. Use amd64 for 64 bit, and x86 for 32 bit..
+        ///   Looks up a localized string similar to The processor architecture of the Windows edition you&apos;re installing. Use &apos;amd64&apos; for 64 bit Intel and AMD processors, &apos;x86&apos; for 32 bit, and &apos;arm64&apos; for ARM-based devices..
         /// </summary>
         internal static string ProcessorArchitectureDescription {
             get {
@@ -432,7 +441,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The product key used to select what edition to install and to activate Windows..
+        ///   Looks up a localized string similar to The product key used to select what edition to install, and to activate Windows..
         /// </summary>
         internal static string ProductKeyDescription {
             get {
@@ -486,7 +495,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version and build number (e.g. 10.0.22000.1) of the OS being installed. This argument is only used when -Feature is specified..
+        ///   Looks up a localized string similar to The exact version and build number (e.g. &apos;10.0.22000.1&apos;) of the OS being installed. This argument is only used when -Feature is specified..
         /// </summary>
         internal static string WindowsVersionDescription {
             get {

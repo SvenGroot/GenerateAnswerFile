@@ -8,6 +8,10 @@ var options = new ParseOptions
     UsageWriter = new CustomUsageWriter()
     {
         UseAbbreviatedSyntax = true,
+    },
+    DefaultValueDescriptions = new Dictionary<Type, string>() 
+    {
+        { typeof(int), GenerateAnswerFile.Properties.Resources.NumberValueDescription } 
     }
 };
 
