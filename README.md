@@ -167,8 +167,8 @@ remainder of the disk.
 
 ```text
 ./GenerateAnswerFile autounattend.xml `
-    -Install CleanEFI
-    -ProductKey ABCDE-12345-ABCDE-12345-ABCDE
+    -Install CleanEFI ``
+    -ProductKey ABCDE-12345-ABCDE-12345-ABCDE `
     -Partition System:100MB MSR:128MB Windows:256GB Data:*
 ```
 
