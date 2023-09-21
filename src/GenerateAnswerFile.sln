@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{043ADC27-1539-4392-BDE6-5F756EECF0C1}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Create-Release.ps1 = Create-Release.ps1
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject

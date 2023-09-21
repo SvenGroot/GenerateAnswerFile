@@ -7,9 +7,15 @@
     <Nullable>enable</Nullable>
     <AssemblyTitle>Windows Answer File Generator</AssemblyTitle>
     <Description>Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation.</Description>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="Ookii.CommandLine" Version="4.0.1" />
   </ItemGroup>
 
