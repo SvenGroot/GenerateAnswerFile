@@ -88,8 +88,8 @@ argument. Run `tzutil /l` for a list of accepted time zone names.
 
 ## Examples
 
-To make them easier to read, the examples below are split amount multiple lines, using the
-PowerShell syntax to continue a command on the next line.
+To make them easier to read, the examples below are split over multiple lines, using the PowerShell
+syntax to continue a command on the next line.
 
 ### Clean installation using UEFI
 
