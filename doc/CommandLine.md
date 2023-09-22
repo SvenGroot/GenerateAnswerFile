@@ -3,6 +3,9 @@
 This page describes the command line arguments supported by Answer File Generator, which are used
 to customize the generated answer file. All argument names are case insensitive.
 
+Argument values can be specified as either `-JoinDomain mydomain`, `-JoinDomain:mydomain` or
+`-JoinDomain=mydomain`.
+
 Some arguments can be specified multiple times. This can be done by listing several values after
 the argument:
 
@@ -15,9 +18,6 @@ Or, by repeating the argument multiple times:
 ```text
 -LocalAccount "John,Password" -EnableRemoteDesktop -LocalAccount "Dave,OtherPassword"
 ```
-
-Argument values can be specified as either `-JoinDomain mydomain`, `-JoinDomain:mydomain` or
-`-JoinDomain=mydomain`.
 
 This syntax makes Answer File Generator compatible with
 [PowerShell hash table splatting](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_splatting),
@@ -33,6 +33,14 @@ $arguments = @{
 
 ./GenerateAnswerFile @arguments
 ```
+
+The arguments are split into several categories:
+
+- [General options](#general-options)
+- [Installation options](#installation-options)
+- [User account options](#user-account-options)
+- [Domain options](#domain-options)
+- [Other setup options](#other-setup-options)
 
 ## Usage syntax
 
