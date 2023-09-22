@@ -169,7 +169,7 @@ A partition to create on the disk specified by [`-InstallToDisk`](#-installtodis
 multiple values.
 
 Use the format `label:size` or `label:size[fs]`, where label is the volume label, size is the size
-of the partition, and fs is an optional file system like FAT32 or NTFS. Sizes and can use
+of the partition, and fs is an optional file system like FAT32 or NTFS. Sizes can use
 multiple-byte units such as GB, and will be truncated to whole megabytes. For example
 `System:100MB`, `Windows:128GB`, or `Data:16GB[FAT32]`.
 

@@ -404,8 +404,8 @@ namespace GenerateAnswerFile.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to A partition to create on the disk specified by -InstallToDisk. Can have multiple values.
-        ///Use the format &apos;label:size&apos; or &apos;label:size[fs]&apos;, where label is the volume label, size is the size of the partition, and fs is an optional file system like FAT32 or NTFS. Sizes and can use multiple-byte units such as GB, and will be truncated to whole megabytes. For example &apos;System:100MB&apos;, &apos;Windows:128GB&apos;, or &apos;Data:16GB[FAT32]&apos;.
-        ///Use &apos;*&apos; as the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windo [rest of string was truncated]&quot;;.
+        ///Use the format &apos;label:size&apos; or &apos;label:size[fs]&apos;, where label is the volume label, size is the size of the partition, and fs is an optional file system like FAT32 or NTFS. Sizes can use multiple-byte units such as GB, and will be truncated to whole megabytes. For example &apos;System:100MB&apos;, &apos;Windows:128GB&apos;, or &apos;Data:16GB[FAT32]&apos;.
+        ///Use &apos;*&apos; as the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windows:* [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PartitionsDescription {
             get {

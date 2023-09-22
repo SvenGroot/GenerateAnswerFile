@@ -39,31 +39,31 @@ any other options to be available through the tool, you can
 ## Installation method
 
 The Answer File Generator supports several methods of installing Windows, which are specified using
-the `-Install` argument. The following values are supported.
+the [`-Install`][] argument. The following values are supported.
 
 Method                | Description
-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **PreInstalled**      | This is the default method, which is used to customize an already installed Windows image, such as one created using sysprep, or an image that was manually expanded using DISM tools such as [`Expand-WindowsImage`](https://learn.microsoft.com/powershell/module/dism/expand-windowsimage). Some features are unavailable using this method, including installation of optional features.
-**CleanEfi**          | Performs a clean installation for systems using UEFI on the disk indicated by the `-InstallToDisk` argument. This disk will be repartitioned according to the `-Partition` argument, or using a default layout of a 100MB EFI partition, a 128MB MSR partition, and the remainder of the disk used for the OS installation.
-**CleanBios**         | Performs a clean installation for systems using legacy BIOS on the disk indicated by the `-InstallToDisk` argument. This disk will be repartitioned according to the `-Partition` argument, or using a default of a 100MB system partition, and the remainder of the disk used for the OS installation.
-**ExistingPartition** | Installs Windows to an existing partition, specified using the `-InstallToDisk` and `-InstallToPartition` arguments. This partition will be formatted before installation, but other partitions are not touched. The system must already have a suitable system or EFI partition.
+**CleanEfi**          | Performs a clean installation for systems using UEFI on the disk indicated by the [`-InstallToDisk`][] argument. This disk will be repartitioned according to the [`-Partition`][] argument, or using a default layout of a 100MB EFI partition, a 128MB MSR partition, and the remainder of the disk used for the OS installation.
+**CleanBios**         | Performs a clean installation for systems using legacy BIOS on the disk indicated by the [`-InstallToDisk`][] argument. This disk will be repartitioned according to the [`-Partition`][] argument, or using a default of a 100MB system partition, and the remainder of the disk used for the OS installation.
+**ExistingPartition** | Installs Windows to an existing partition, specified using the [`-InstallToDisk`][] and [`-InstallToPartition`][] arguments. This partition will be formatted before installation, but other partitions are not touched. The system must already have a suitable system or EFI partition.
 **Manual**            | Allows the user to specify the target disk/partition during setup. When using this method, installation is not fully unattended and will require user intervention during the first stage.
 
-The `-InstallToDisk` argument takes the zero-based disk index, in the order that the Windows
-installation (when executed manually) would list them. The `-InstallToPartition` argument is
+The [`-InstallToDisk`][] argument takes the zero-based disk index, in the order that the Windows
+installation (when executed manually) would list them. The [`-InstallToPartition`][] argument is
 one-based instead (don't look at me; that's how the IDs work in the answer file).
 
 ## Selecting the edition to install
 
 Usually, Windows installation media contains multiple editions, such as Professional or Home, and
 you must select which edition to install. The most common way to do this is using the product key,
-which can be set using the `-ProductKey` argument. Setting the product key will select the correct
+which can be set using the [`-ProductKey`][] argument. Setting the product key will select the correct
 edition to install, and activate Windows using that key. Setting a product key in the answer file is
 required for most installations of Windows unless the installation method is `PreInstalled`.
 
 Versions of Windows that use alternative activation methods, such as volume licensing, do not
 require a product key in the answer file. In this case, if the installation media holds multiple
-editions, you can select the desired one using the `-ImageIndex` argument. You can use the
+editions, you can select the desired one using the [`-ImageIndex`][] argument. You can use the
 [`Get-WindowsImage`](https://learn.microsoft.com/powershell/module/dism/get-windowsimage) PowerShell
 command to list the images in an install.wim or install.esd file.
 
@@ -86,7 +86,7 @@ memory after the application is terminated.
 
 ## Time zone
 
-The Answer File Generator defaults to Pacific Standard Time. To change this, use the `-TimeZone`
+The Answer File Generator defaults to Pacific Standard Time. To change this, use the [`-TimeZone`][]
 argument. Run `tzutil /l` for a list of accepted time zone names.
 
 ## Examples
@@ -115,7 +115,7 @@ system, and activates it using the specified product key.
 ```
 
 By default, the generated answer files are for 64 bit editions of Windows. Use the
-`-ProcessorArchitecture` argument to specify a different CPU architecture.
+[`-ProcessorArchitecture`][] argument to specify a different CPU architecture.
 
 ### Creating a user during installation
 
@@ -130,9 +130,9 @@ By default, the generated answer files are for 64 bit editions of Windows. Use t
 
 This example creates a user named "John" with the password "Password" (don't do this, obviously),
 and logs in with that user automatically on first boot[^1]. To log in automatically more often, use
-the `-AutoLogonCount` argument.
+the [`-AutoLogonCount`][] argument.
 
-The `-LocalAccount` argument takes multiple values, if you want to create more than one account.
+The [`-LocalAccount`][] argument takes multiple values, if you want to create more than one account.
 
 ### Joining a domain and automatic log-on
 
@@ -151,14 +151,14 @@ The answer file created by this command sets the computer name to "my-pc" and jo
 "mydomain", using the supplied credentials. It also adds the account "domainuser" to the local
 administrators group and logs in using that account automatically on first boot[^1].
 
-This sample does not use the `-Install` argument, so it creates an answer file suitable for
-pre-installed Windows images, such as those created using sysprep or DISM tools. The `-JoinDomain`
+This sample does not use the [`-Install`][] argument, so it creates an answer file suitable for
+pre-installed Windows images, such as those created using sysprep or DISM tools. The [`-JoinDomain`][]
 argument can be used with any install method, however.
 
 ### Custom partition layout
 
 If you use the `CleanEfi` or `CleanBios`, you can choose to customize the partition layout for the
-disk specified by `-InstallToDisk`, by using the `-Partition` argument. This argument accepts
+disk specified by [`-InstallToDisk`][], by using the [`-Partition`][] argument. This argument accepts
 multiple values, each creating a partition on that disk in the order specified. If this argument is
 not specified, a default partition layout is used.
 
@@ -195,7 +195,7 @@ a file system to format the volume with. If no file system is specified, it defa
 for EFI partitions, which must be FAT32. MSR partitions are not formatted, so this attribute is
 ignored.
 
-You can use the `-InstallToPartition` argument to specify which partition should hold the OS. If you
+You can use the [`-InstallToPartition`][] argument to specify which partition should hold the OS. If you
 don't supply this argument, Windows will be installed on the first regular data partition.
 
 If you use `CleanBios` and specify more than four partitions, the Answer File Generator will create
@@ -205,7 +205,7 @@ volumes in that partition.
 ### Optional features
 
 Answer files can be used to enable optional features during installation. To do this, use the
-`-Feature` argument. This argument can take multiple values to enable multiple features.
+[`-Feature`][] argument. This argument can take multiple values to enable multiple features.
 
 ```text
 ./GenerateAnswerFile autounattend.xml `
@@ -219,7 +219,7 @@ feature.
 
 When using optional features, the answer file must contain the exact version number of the Windows
 version being installed, such as "10.0.22621.1" (this is the version for Windows 11 22h2). You must
-specify this version using the `-WindowsVersion` argument. To find out the exact version number, the
+specify this version using the [`-WindowsVersion`][] argument. To find out the exact version number, the
 easiest way is to look at the file properties of the setup.exe file on your Windows installation
 media. The Windows version is not needed if you don't enable any optional features.
 
@@ -244,9 +244,9 @@ using sysprep, or by using DISM tools.
     -ProductKey ABCDE-12345-ABCDE-12345-ABCDE
 ```
 
-The `-FirstLogonCommand` argument can be used to execute a command when a user first logs on to the
+The [`-FirstLogonCommand`][] argument can be used to execute a command when a user first logs on to the
 system after installation (either manually, or automatically as in the above example). For
-convenience, there is also a `-SetupScript` argument which executes the specified Windows PowerShell
+convenience, there is also a [`-SetupScript`][] argument which executes the specified Windows PowerShell
 script, including any arguments.
 
 Either argument accepts multiple values to run multiple commands or scripts. Both are executed in
@@ -277,3 +277,19 @@ any other adverse effects caused by the use of answer files generated by this to
 [^1]: Windows has a [known issue with the `LogonCount` element](https://learn.microsoft.com/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon-logoncount)
     which causes it to be inaccurate. The Answer File Generator adjusts the count and uses a first
     log-on command if needed to ensure the `-AutoLogonCount` argument is accurate.
+
+[`-AutoLogonCount`]: doc/CommandLine.md#-autologoncount
+[`-Feature`]: doc/CommandLine.md#-feature
+[`-FirstLogonCommand`]: doc/CommandLine.md#-firstlogoncommand
+[`-Install`]: doc/CommandLine.md#-install
+[`-InstallToDisk`]: doc/CommandLine.md#-installtodisk
+[`-InstallToPartition`]: doc/CommandLine.md#-installtopartition
+[`-ImageIndex`]: doc/CommandLine.md#-imageindex
+[`-JoinDomain`]: doc/CommandLine.md#-joindomain
+[`-LocalAccount`]: doc/CommandLine.md#-localaccount
+[`-Partition`]: doc/CommandLine.md#-partition
+[`-ProcessorArchitecture`]: doc/CommandLine.md#-processorarchitecture
+[`-ProductKey`]: doc/CommandLine.md#-productkey
+[`-SetupScript`]: doc/CommandLine.md#-setupscript
+[`-TimeZone`]: doc/CommandLine.md#-timezone
+[`-WindowsVersion`]: doc/CommandLine.md#-windowsversion
