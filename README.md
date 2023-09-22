@@ -262,11 +262,9 @@ to see how to use an answer file during Windows setup.
 
 ## Ookii.AnswerFile library
 
-The core functionality for generating answer files is implemented in the Ookii.AnswerFile library,
-which you can use in your own applications targeting .Net 7.0 or later.
-
-The library is available on [NuGet ![NuGet](https://img.shields.io/nuget/v/Ookii.AnswerFile)](https://nuget.org/packages/Ookii.AnswerFile).
-For more information, check out the [class library documentation](https://www.ookii.org/Link/GenerateAnswerFileDoc).
+The core functionality for generating answer files is implemented in the
+[Ookii.AnswerFile library](doc/Library.md), which you can use in your own applications targeting
+.Net 7.0 or later.
 
 ## Disclaimer
 
