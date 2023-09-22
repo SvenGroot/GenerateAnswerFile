@@ -34,6 +34,7 @@ public class Partition : ISpanParsable<Partition>
     /// <remarks>
     /// Only the last partition to create should use <see langword="null"/> as the value.
     /// </remarks>
+    /// <seealso href="https://github.com/SvenGroot/Ookii.BinarySize">Ookii.BinarySize library</seealso>
     public BinarySize? Size { get; set; }
 
     /// <summary>
@@ -62,6 +63,7 @@ public class Partition : ISpanParsable<Partition>
     /// <remarks>
     /// <inheritdoc cref="Parse(string, IFormatProvider?)"/>
     /// </remarks>
+    /// <seealso href="https://github.com/SvenGroot/Ookii.BinarySize">Ookii.BinarySize library</seealso>
     public static Partition Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
     {
         ParseHelper(s, provider, true, out var result);
@@ -105,6 +107,7 @@ public class Partition : ISpanParsable<Partition>
     ///   <see cref="PartitionType.Normal" qualifyHint="true"/>.
     /// </para>
     /// </remarks>
+    /// <seealso href="https://github.com/SvenGroot/Ookii.BinarySize">Ookii.BinarySize library</seealso>
     public static Partition Parse(string s, IFormatProvider? provider)
     {
         ArgumentNullException.ThrowIfNull(s);
@@ -129,6 +132,7 @@ public class Partition : ISpanParsable<Partition>
     /// <remarks>
     /// <inheritdoc cref="Parse(string, IFormatProvider?)"/>
     /// </remarks>
+    /// <seealso href="https://github.com/SvenGroot/Ookii.BinarySize">Ookii.BinarySize library</seealso>
     public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, [MaybeNullWhen(false)] out Partition result)
         => ParseHelper(s, provider, false, out result);
 
@@ -150,6 +154,7 @@ public class Partition : ISpanParsable<Partition>
     /// <remarks>
     /// <inheritdoc cref="Parse(string, IFormatProvider?)"/>
     /// </remarks>
+    /// <seealso href="https://github.com/SvenGroot/Ookii.BinarySize">Ookii.BinarySize library</seealso>
     public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Partition result)
     {
         if (s == null)
