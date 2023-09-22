@@ -26,8 +26,8 @@ All of these items can be customized using command line arguments. In addition, 
 generated here will always skip the entire OOBE experience unless no local account was created and
 no domain was joined.
 
-Below, the core functionality is explained with several examples. You can also check the [full list
-of command line arguments](doc/CommandLine.md), or run `./GenerateAnswerFile -Help`.
+Below, the core functionality is explained with several examples. You can also check the
+[full list of command line arguments](doc/CommandLine.md), or run `./GenerateAnswerFile -Help`.
 
 See [what's new in Answer File Generator](doc/ChangeLog.md).
 
