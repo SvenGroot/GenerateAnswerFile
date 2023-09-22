@@ -25,10 +25,10 @@ which can be a convenient way to handle invocations with many arguments.
 
 ```powershell
 $arguments = @{
-    `"OutputPath" = "unattend.xml"
-    `"InstallMethod" = "CleanEfi"
-    `"Feature" = "Microsoft-Windows-Subsystem-Linux","VirtualMachinePlatform"
-    `"EnableRemoteDesktop" = $true
+    "OutputPath" = "unattend.xml"
+    "InstallMethod" = "CleanEfi"
+    "Feature" = "Microsoft-Windows-Subsystem-Linux","VirtualMachinePlatform"
+    "EnableRemoteDesktop" = $true
 }
 
 ./GenerateAnswerFile @arguments
@@ -64,7 +64,7 @@ Positional: True
 
 ### `-Help`
 
-Displays this help message.
+Displays a help message.
 
 ```yaml
 Value: [<Boolean>]
@@ -97,7 +97,7 @@ to get a list of valid feature names. Can have multiple values.
 
 Must not be blank.
 
-See [optional features](../README.md#optional-features)
+See [optional features](../README.md#optional-features).
 
 ```yaml
 Value: <String> (multiple allowed)
@@ -135,7 +135,7 @@ Default value: PreInstalled
 ### `-InstallToDisk`
 
 The zero-based ID of the disk to install to. This disk will be wiped and repartitioned according to
-[`-Partition`](#partition), or using the default layout if [`-Partition`](#partition) is not
+[`-Partition`](#-partition), or using the default layout if [`-Partition`](#-partition) is not
 specified.
 
 Must be at least 0.
@@ -150,9 +150,9 @@ Allowed -Install values: ExistingPartition, CleanEfi, CleanBios
 ### `-InstallToPartition`
 
 The one-based ID of the partition to install to on the disk specified by
-[`-InstallToDisk`](#installtodisk). If not specified and [`-Install`](#install) is `CleanEfi` or
+[`-InstallToDisk`](#-installtodisk). If not specified and [`-Install`](#-install) is `CleanEfi` or
 `CleanBios`, Windows will be installed on the first regular data partition. If
-[`-Install`](#install) is `ExistingPartition`, the default value is 3, which is appropriate for
+[`-Install`](#-install) is `ExistingPartition`, the default value is 3, which is appropriate for
 UEFI systems with the default partition layout.
 
 Must be at least 1.
@@ -165,7 +165,7 @@ Allowed -Install values: CleanEfi, CleanBios, ExistingPartition
 
 ### `-Partition`
 
-A partition to create on the disk specified by [`-InstallToDisk`](#installtodisk). Can have
+A partition to create on the disk specified by [`-InstallToDisk`](#-installtodisk). Can have
 multiple values.
 
 Use the format `label:size` or `label:size[fs]`, where label is the volume label, size is the size
@@ -177,7 +177,7 @@ Use `*` as the size to extend the partition to fill the remainder of the disk (e
 
 Use the following labels to create special partitions: `System`, `MSR`, `WinRE`, and `Recovery`.
 
-If not specified, the default partition layout for the method specified by [`-Install`](#install)
+If not specified, the default partition layout for the method specified by [`-Install`](#-install)
 is used.
 
 See [custom partition layout](../README.md#custom-partition-layout).
@@ -204,7 +204,7 @@ Aliases: -key
 ### `-WindowsVersion`
 
 The exact version and build number (e.g. `10.0.22000.1`) of the OS being installed. This argument
-is only used when [`-Feature`](#feature) is specified.
+is only used when [`-Feature`](#-feature) is specified.
 
 ```yaml
 Value: <Version>
@@ -338,7 +338,7 @@ Required arguments: -JoinDomain
 ### `-JoinDomainUser`
 
 The name of a user with permission to join the domain. Use the format `domain\user`, or just `user`
-if the user is a member of the domain specified with [`-JoinDomain`](#joindomain).
+if the user is a member of the domain specified with [`-JoinDomain`](#-joindomain).
 
 Must not be blank.
 
@@ -422,7 +422,7 @@ Aliases: -rdp
 ### `-FirstLogonCommand`
 
 A command to run during first logon. Can have multiple values. Commands are run before the scripts
-specified by [`-SetupScript`](#setupscript).
+specified by [`-SetupScript`](#-setupscript).
 
 Must not be blank.
 
@@ -463,7 +463,7 @@ Default value: amd64
 ### `-SetupScript`
 
 The full path of a Windows PowerShell script to run during first logon. Can have multiple values.
-Scripts are run after the commands specified by [`-FirstLogonCommand`](#firstlogoncommand).
+Scripts are run after the commands specified by [`-FirstLogonCommand`](#-firstlogoncommand).
 
 Must not be blank.
 

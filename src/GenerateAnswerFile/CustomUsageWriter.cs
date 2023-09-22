@@ -117,7 +117,7 @@ class CustomUsageWriter : UsageWriter
 
         // Make links for arguments.
         description = Regex.Replace(description, @"(?<=^|\s)-([A-Z][a-zA-Z]*)(?=\s|$|\.|,|\))",
-            m => $"[`-{m.Groups[1]}`](#{m.Groups[1].Value.ToLowerInvariant()})");
+            m => $"[`-{m.Groups[1]}`](#-{m.Groups[1].Value.ToLowerInvariant()})");
 
         description = description.Replace(Environment.NewLine, Environment.NewLine + Environment.NewLine);
         WriteLine(description);
