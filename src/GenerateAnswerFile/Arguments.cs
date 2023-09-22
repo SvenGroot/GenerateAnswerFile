@@ -83,6 +83,7 @@ partial class Arguments
     [Alias("v")]
     public Version? WindowsVersion { get; set; }
 
+
     #endregion
 
     #region User account options
@@ -298,7 +299,26 @@ partial class Arguments
         return CancelMode.Abort;
     }
 
-    #endregion
+#if DEBUG
+
+    // This argument is used to generate the bulk of CommandLine.md. It has no real value otherwise,
+    // so is excluded from the release.
+    // N.B. Some modifications are made manually in CommandLine.md, so when updating do so
+    // selectively.
+    [CommandLineArgument(IsHidden = true)]
+    public static CancelMode MarkdownHelp(CommandLineParser parser)
+    {
+        var writer = ((CustomUsageWriter)parser.Options.UsageWriter);
+        writer.Markdown = true;
+        writer.IncludeApplicationDescription = false;
+        writer.UseAbbreviatedSyntax = false;
+        parser.HelpRequested = true;
+        return CancelMode.Abort;
+    }
+
+#endif
+
+#endregion
 
     public GeneratorOptions ToOptions()
     {

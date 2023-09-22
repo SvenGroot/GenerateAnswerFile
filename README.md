@@ -26,7 +26,10 @@ All of these items can be customized using command line arguments. In addition, 
 generated here will always skip the entire OOBE experience unless no local account was created and
 no domain was joined.
 
-For a full list of command line arguments, run `./GenerateAnswerFile -Help`.
+Below, the core functionality is explained with several examples. You can also check the [full list
+of command line arguments](doc/CommandLine.md), or run `./GenerateAnswerFile -Help`.
+
+See [what's new in Answer File Generator](doc/ChangeLog.md).
 
 If you need additional customization, you will need to edit the generated answer file. If you'd like
 any other options to be available through the tool, you can
@@ -164,10 +167,9 @@ of the partition. The size can use multiple-byte units, such as GB or MB, and wi
 to a whole number of megabytes. If the size is `*`, it indicates the partition will fill the
 remainder of the disk.
 
-
 ```text
 ./GenerateAnswerFile autounattend.xml `
-    -Install CleanEFI ``
+    -Install CleanEFI `
     -ProductKey ABCDE-12345-ABCDE-12345-ABCDE `
     -Partition System:100MB MSR:128MB Windows:256GB Data:*
 ```
@@ -182,10 +184,16 @@ Label                     | Meaning
 --------------------------|-----------------------------------------------------------------------------------------------------------------------------------
 **System**                | For `CleanEfi`, creates the special EFI partition. For `CleanBios`, creates the system partition holding the Windows boot manager.
 **MSR**                   | Creates a partition with the Microsoft Reserved partition type. For use with `CleanEfi` only.
-**WinRE** or **Recovery** | Marks the partition as a utility partition, and does not assign it a drive letter.
+**WinRE** or **Recovery** | Marks the partition as a utility partition.
 
-All other volume labels create regular data partitions with that label. These will be assigned
-drive letters in the order they were specified, starting with `C:`.
+These special partition types will not have a drive letter. All other volume labels create regular
+data partitions with that label. These will be assigned drive letters in the order they were
+specified, starting with `C:`.
+
+You can use the format `label:size[fs]`, where fs is a file system like FAT32 or NTFS, to specify
+a file system to format the volume with. If no file system is specified, it defaults to NTFS except
+for EFI partitions, which must be FAT32. MSR partitions are not formatted, so this attribute is
+ignored.
 
 You can use the `-InstallToPartition` argument to specify which partition should hold the OS. If you
 don't supply this argument, Windows will be installed on the first regular data partition.

@@ -172,7 +172,7 @@
     <value>Domain\User</value>
   </data>
   <data name="EnableRemoteDesktopDescriptoin" xml:space="preserve">
-    <value>Turn on remote desktop create a Windows Defender Firewall rule to allow incoming connections.</value>
+    <value>Turn on remote desktop, and create a Windows Defender Firewall rule to allow incoming connections.</value>
   </data>
   <data name="FeaturesDescription" xml:space="preserve">
     <value>The name of an optional feature to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.</value>

@@ -19,6 +19,8 @@ class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
         _methods = methods;
     }
 
+    public InstallMethod[] Methods => _methods;
+
     public override ValidationMode Mode => ValidationMode.AfterParsing;
 
     public override bool IsValid(CommandLineArgument argument, object? value)

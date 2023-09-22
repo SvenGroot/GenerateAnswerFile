@@ -223,7 +223,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn on remote desktop create a Windows Defender Firewall rule to allow incoming connections..
+        ///   Looks up a localized string similar to Turn on remote desktop, and create a Windows Defender Firewall rule to allow incoming connections..
         /// </summary>
         internal static string EnableRemoteDesktopDescriptoin {
             get {
