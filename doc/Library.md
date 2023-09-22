@@ -10,8 +10,8 @@ answer file.
 
 To specify the install method, you set the [`GeneratorOptions.InstallOptions`][] property to an
 instance of the [`CleanEfiOptions`][], [`CleanBiosOptions`][], [`ExistingPartitionOptions`][], or
-`ManualOptions` class. Additional options that are specific to an install method, such as partition
-layout or optional features, are set in those classes.
+[`ManualInstallOptions`][] class. Additional options that are specific to an install method, such as
+partition layout or optional features, are set in those classes.
 
 Leave the [`GeneratorOptions.InstallOptions`][] set to null to generate an answer file for a
 pre-installed image, such as one created by sysprep or DISM tools.
@@ -49,3 +49,4 @@ For more information, check out the
 [`Generator.Generate`]: https://www.ookii.org/docs/answerfile-1.1/html/Overload_Ookii_AnswerFile_Generator_Generate.htm
 [`GeneratorOptions.InstallOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/P_Ookii_AnswerFile_GeneratorOptions_InstallOptions.htm
 [`GeneratorOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_GeneratorOptions.htm
+[`ManualInstallOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_ManualInstallOptions.htm
