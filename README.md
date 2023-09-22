@@ -266,6 +266,17 @@ The core functionality for generating answer files is implemented in the
 [Ookii.AnswerFile library](doc/Library.md), which you can use in your own applications targeting
 .Net 7.0 or later.
 
+## Building and testing
+
+To build Answer File Generator, make sure you have the following installed:
+
+- [Microsoft .Net 7.0 SDK](https://dotnet.microsoft.com/download) or later
+
+To build the application, library, and tests, simply use the `dotnet build` command in the `src`
+directory. You can run the unit tests using `dotnet test`.
+
+The class library documentation is generated using [Sandcastle Help File Builder](https://github.com/EWSoftware/SHFB).
+
 ## Disclaimer
 
 The Answer File Generator will generate files that, when used to install Windows, can erase a disk
