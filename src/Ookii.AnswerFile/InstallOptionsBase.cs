@@ -5,6 +5,7 @@ namespace Ookii.AnswerFile;
 /// <summary>
 /// A base class for all the various installation options classes.
 /// </summary>
+/// <threadsafety instance="false" static="true"/>
 [JsonDerivedType(typeof(CleanEfiOptions), typeDiscriminator: "CleanEfi")]
 [JsonDerivedType(typeof(CleanBiosOptions), typeDiscriminator: "CleanBios")]
 [JsonDerivedType(typeof(ExistingPartitionOptions), typeDiscriminator: "ExistingPartition")]

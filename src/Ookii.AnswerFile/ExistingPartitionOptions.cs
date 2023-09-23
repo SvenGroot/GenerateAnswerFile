@@ -14,6 +14,7 @@
 ///   Depending on the system type, a system or EFI partition must already exist.
 /// </para>
 /// </remarks>
+/// <threadsafety instance="false" static="true"/>
 public class ExistingPartitionOptions : TargetedInstallOptionsBase
 {
     /// <summary>

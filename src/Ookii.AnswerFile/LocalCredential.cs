@@ -9,6 +9,7 @@
 ///   at best. Do not store generated files with sensitive passwords in public locations.
 /// </note>
 /// </remarks>
+/// <threadsafety instance="false" static="true"/>
 public record class LocalCredential
 {
     /// <summary>

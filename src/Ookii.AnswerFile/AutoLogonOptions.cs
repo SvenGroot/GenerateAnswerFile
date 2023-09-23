@@ -5,6 +5,7 @@ namespace Ookii.AnswerFile;
 /// <summary>
 /// Provides options for logging on automatically.
 /// </summary>
+/// <threadsafety instance="false" static="true"/>
 public class AutoLogonOptions
 {
     /// <summary>

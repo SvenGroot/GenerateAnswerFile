@@ -7,6 +7,7 @@ namespace Ookii.AnswerFile;
 /// Provides options for generating an unattended Windows installation answer file.
 /// </summary>
 /// <seealso cref="Generator"/>
+/// <threadsafety instance="false" static="true"/>
 public class GeneratorOptions
 {
     private Collection<LocalCredential>? _localAccounts;

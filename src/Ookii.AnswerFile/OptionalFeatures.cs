@@ -5,6 +5,7 @@ namespace Ookii.AnswerFile;
 /// <summary>
 /// Provides options for installing optional features.
 /// </summary>
+/// <threadsafety instance="false" static="true"/>
 public class OptionalFeatures
 {
     private Collection<string>? _features;

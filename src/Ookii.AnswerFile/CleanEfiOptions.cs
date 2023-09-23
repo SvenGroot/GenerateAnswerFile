@@ -17,6 +17,7 @@ namespace Ookii.AnswerFile;
 ///   remaining size of the disk. Windows will be installed on the third partition.
 /// </para>
 /// </remarks>
+/// <threadsafety instance="false" static="true"/>
 public class CleanEfiOptions : CleanOptionsBase
 {
     /// <summary>

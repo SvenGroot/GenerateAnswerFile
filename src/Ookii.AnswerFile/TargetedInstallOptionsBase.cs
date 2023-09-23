@@ -3,6 +3,7 @@
 /// <summary>
 /// Base class for all install options that target a specific disk and partition.
 /// </summary>
+/// <threadsafety instance="false" static="true"/>
 public abstract class TargetedInstallOptionsBase : InstallOptionsBase
 {
     /// <summary>

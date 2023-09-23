@@ -15,6 +15,7 @@
 ///   disk. Windows will be installed on the second partition.
 /// </para>
 /// </remarks>
+/// <threadsafety instance="false" static="true"/>
 public class CleanBiosOptions : CleanOptionsBase
 {
     /// <summary>

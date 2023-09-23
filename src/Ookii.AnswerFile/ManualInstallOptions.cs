@@ -6,6 +6,7 @@
 /// <remarks>
 /// When using this installation method, the installation is not fully unattended.
 /// </remarks>
+/// <threadsafety instance="false" static="true"/>
 public class ManualInstallOptions : InstallOptionsBase
 {
     /// <summary>

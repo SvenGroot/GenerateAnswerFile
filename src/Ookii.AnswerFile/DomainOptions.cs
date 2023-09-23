@@ -10,6 +10,7 @@ namespace Ookii.AnswerFile;
 ///   The password of the account used to join the domain is stored in plain text.
 /// </note>
 /// </remarks>
+/// <threadsafety instance="false" static="true"/>
 public class DomainOptions
 {
     private Collection<string>? _domainAccounts;

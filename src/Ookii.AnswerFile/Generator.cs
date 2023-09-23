@@ -10,6 +10,7 @@ namespace Ookii.AnswerFile;
 /// A generator for Windows unattended installation files.
 /// </summary>
 /// <seealso cref="GeneratorOptions"/>
+/// <threadsafety instance="false" static="true"/>
 public class Generator
 {
     internal const string PublicKeyToken = "31bf3856ad364e35";

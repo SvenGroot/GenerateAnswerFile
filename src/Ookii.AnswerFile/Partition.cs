@@ -6,6 +6,7 @@ namespace Ookii.AnswerFile;
 /// Specifies a partition to be created when using the <see cref="CleanBiosOptions"/> or
 /// <see cref="CleanEfiOptions"/> class.
 /// </summary>
+/// <threadsafety instance="false" static="true"/>
 public class Partition : ISpanParsable<Partition>
 {
     /// <summary>

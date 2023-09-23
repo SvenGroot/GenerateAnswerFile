@@ -5,6 +5,7 @@ namespace Ookii.AnswerFile;
 /// <summary>
 /// Represents a domain or local user.
 /// </summary>
+/// <threadsafety instance="false" static="true"/>
 public record class DomainUser
 {
     /// <summary>
