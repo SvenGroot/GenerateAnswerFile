@@ -13,7 +13,7 @@ public class OptionalFeatures
     /// <summary>
     /// Initializes a new instance of the <see cref="OptionalFeatures"/> class.
     /// </summary>
-    /// <param name="windowsVersion">The exact Windows version being installed (e.g. "10.0.22000.1").</param>
+    /// <param name="windowsVersion">The exact Windows version being installed (e.g. "10.0.22621.1").</param>
     public OptionalFeatures(Version windowsVersion)
     {
         ArgumentNullException.ThrowIfNull(windowsVersion);
@@ -35,7 +35,7 @@ public class OptionalFeatures
     /// A collection of optional features.
     /// </value>
     /// <remarks>
-    /// Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature
+    /// Use the PowerShell <c>Get-WindowsOptionalFeature</c> command to get a list of valid feature
     /// names.
     /// </remarks>
     public Collection<string> Features

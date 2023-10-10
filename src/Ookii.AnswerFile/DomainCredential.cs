@@ -6,7 +6,7 @@
 /// <remarks>
 /// <note type="security">
 ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
-///   at best. Do not store generated files with sensitive passwords in public locations.
+///   at best. Do not store answer files with sensitive passwords in public locations.
 /// </note>
 /// </remarks>
 /// <threadsafety instance="false" static="true"/>
@@ -20,7 +20,7 @@ public record class DomainCredential
     /// <remarks>
     /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
-    ///   at best. Do not store generated files with sensitive passwords in public locations.
+    ///   at best. Do not store answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
     /// <exception cref="ArgumentNullException">
@@ -51,7 +51,7 @@ public record class DomainCredential
     /// <remarks>
     /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
-    ///   at best. Do not store generated files with sensitive passwords in public locations.
+    ///   at best. Do not store answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
     public string Password { get; }

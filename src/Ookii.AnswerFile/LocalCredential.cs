@@ -4,9 +4,13 @@
 /// Provides credentials for a local user account.
 /// </summary>
 /// <remarks>
+/// <para>
+///   While the <see cref="DomainCredential"/> class can represent either a domain or local user
+///   account, this class is used when only local accounts can be used.
+/// </para>
 /// <note type="security">
 ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
-///   at best. Do not store generated files with sensitive passwords in public locations.
+///   at best. Do not store answer files with sensitive passwords in public locations.
 /// </note>
 /// </remarks>
 /// <threadsafety instance="false" static="true"/>
@@ -20,7 +24,7 @@ public record class LocalCredential
     /// <remarks>
     /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
-    ///   at best. Do not store generated files with sensitive passwords in public locations.
+    ///   at best. Do not store answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
     /// <exception cref="ArgumentNullException">
@@ -51,7 +55,7 @@ public record class LocalCredential
     /// <remarks>
     /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
-    ///   at best. Do not store generated files with sensitive passwords in public locations.
+    ///   at best. Do not store answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
     public string Password { get; }

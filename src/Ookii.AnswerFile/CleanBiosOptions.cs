@@ -6,8 +6,8 @@
 /// <remarks>
 /// <para>
 ///   When using this installation method, the disk specified by <see cref="TargetedInstallOptionsBase.DiskId"/>
-///   will be wiped, with partitions created according to the <see cref="CleanOptionsBase.Partitions"/>
-///   property.
+///   will be wiped, and repartitioned as an MBR disk with partitions created according to the
+///   <see cref="CleanOptionsBase.Partitions"/> property.
 /// </para>
 /// <para>
 ///   If the <see cref="CleanOptionsBase.Partitions"/> property is an empty list, the default layout
@@ -24,14 +24,26 @@ public class CleanBiosOptions : CleanOptionsBase
     /// <value>
     /// The value "Primary".
     /// </value>
+    /// <remarks>
+    /// <para>
+    ///   The system partition for BIOS systems is a regular primary partition that holds the
+    ///   Windows boot manager. This partition should be formatted using the NTFS file system.
+    /// </para>
+    /// </remarks>
     protected override string SystemPartitionType => "Primary";
 
     /// <summary>
     /// Gets the file system to use for the system partition.
     /// </summary>
     /// <value>
-    /// The file system type "NTFS".
+    /// The value "NTFS".
     /// </value>
+    /// <remarks>
+    /// <para>
+    ///   The system partition for BIOS systems is a regular primary partition that holds the
+    ///   Windows boot manager. This partition should be formatted using the NTFS file system.
+    /// </para>
+    /// </remarks>
     protected override string SystemPartitionFileSystem => "NTFS";
 
     /// <summary>
@@ -41,13 +53,19 @@ public class CleanBiosOptions : CleanOptionsBase
     /// <value>
     /// <see langword="true"/>.
     /// </value>
+    /// <remarks>
+    /// <para>
+    ///   BIOS systems use MBR, which has a four partition limit, requiring the use of an extended
+    ///   partition containing logical volumes if more volumes are desired.
+    /// </para>
+    /// </remarks>
     protected override bool UseExtendedPartition => true;
 
     /// <summary>
     /// Gets the type ID that marks a partition as a utility partition.
     /// </summary>
     /// <value>
-    /// The partition type ID.
+    /// The MBR partition type ID for utility partitions, which is "0x27".
     /// </value>
     protected override string UtilityTypeId => "0x27";
 
@@ -55,7 +73,10 @@ public class CleanBiosOptions : CleanOptionsBase
     /// Gets the partition layout to use if the <see cref="CleanOptionsBase.Partitions"/> property
     /// is an empty list.
     /// </summary>
-    /// <returns>A list containing the default BIOS partition layout.</returns>
+    /// <returns>
+    /// A list containing the default BIOS partition layout: a 100MB system partition, and an OS
+    /// partition with the remaining size of the disk.
+    /// </returns>
     protected override IList<Partition> GetDefaultPartitions()
     {
         return new[]

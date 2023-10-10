@@ -4,9 +4,9 @@ using System.Drawing;
 namespace Ookii.AnswerFile;
 
 /// <summary>
-/// Provides options for generating an unattended Windows installation answer file.
+/// Provides options for generating an unattended Windows installation answer file using the
+/// <see cref="Generator"/> class.
 /// </summary>
-/// <seealso cref="Generator"/>
 /// <threadsafety instance="false" static="true"/>
 public class GeneratorOptions
 {
@@ -35,13 +35,14 @@ public class GeneratorOptions
     /// </value>
     /// <remarks>
     /// <note type="security">
-    ///   The password of the account used to join the domain is stored in plain text.
+    ///   The password of the account used to join the domain is stored in plain text in the answer
+    ///   file. Do not store answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
     public DomainOptions? JoinDomain { get; set; }
 
     /// <summary>
-    /// Gets or sets the computer name of the system after installation.
+    /// Gets or sets the computer name of the system.
     /// </summary>
     /// <value>
     /// The computer name, or <see langword="null"/> to let Windows pick a computer name.
@@ -65,6 +66,14 @@ public class GeneratorOptions
     /// <see langword="true"/> to enable cloud consumer features; otherwise, <see langword="false"/>.
     /// The default value is <see langword="true"/>.
     /// </value>
+    /// <remarks>
+    /// <para>
+    ///   If this value is <see langword="false"/>, the value DisableWindowsConsumerFeatures under
+    ///   the registry key HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\CloudContent
+    ///   will be set to 1. On certain versions of Windows, this may prevent auto-installation of
+    ///   additional recommended store apps for new user accounts.
+    /// </para>
+    /// </remarks>
     public bool EnableCloud { get; set; } = true;
 
     /// <summary>
@@ -75,11 +84,18 @@ public class GeneratorOptions
     /// <see langword="true"/> to enable remote desktop; otherwise, <see langword="false"/>. The
     /// default value is <see langword="false"/>.
     /// </value>
+    /// <remarks>
+    /// <para>
+    ///   If this property is <see langword="true"/>, remote desktop will be enabled, and a
+    ///   firewall rule will be created to allow remote desktop connections. This will automatically
+    ///   give all members of the Administrators group remote access to the machine.
+    /// </para>
+    /// </remarks>
     public bool EnableRemoteDesktop { get; set; }
 
     /// <summary>
     /// Gets or sets a value which indicates whether server manager will be launched on logon on
-    /// Windows Server installation.
+    /// Windows Server.
     /// </summary>
     /// <value>
     /// <see langword="true"/> to enable server manager; otherwise, <see langword="false"/>. the
@@ -87,7 +103,7 @@ public class GeneratorOptions
     /// </value>
     /// <remarks>
     /// <para>
-    ///   This property has no effect on Windows installation that are not a Server SKU.
+    ///   This property has no effect on Windows installations that are not a Server SKU.
     /// </para>
     /// </remarks>
     public bool EnableServerManager { get; set; } = true;
@@ -96,12 +112,17 @@ public class GeneratorOptions
     /// Gets or sets a collection of local administrator accounts to create.
     /// </summary>
     /// <value>
-    /// A collection with the local user accounts.
+    /// A collection of local user accounts.
     /// </value>
     /// <remarks>
+    /// <para>
+    ///   All accounts specified by this property will be created as members of the local
+    ///   Administrators group.
+    /// </para>
     /// <note type="security">
-    ///   The passwords for the local accounts are stored using base64 encoding. They are not
-    ///   encrypted.
+    ///   The passwords for the local accounts are stored using base64 encoding in the answer file;
+    ///   they are not encrypted. Do not store answer files with sensitive passwords in public
+    ///   locations.
     /// </note>
     /// </remarks>
     public Collection<LocalCredential> LocalAccounts
@@ -111,7 +132,7 @@ public class GeneratorOptions
     }
 
     /// <summary>
-    /// Gets or sets options for automatic logging on to Windows.
+    /// Gets or sets options for logging on automatically.
     /// </summary>
     /// <value>
     /// An instance of the <see cref="AutoLogonOptions"/> class, or <see langword="null"/> to not
@@ -129,12 +150,14 @@ public class GeneratorOptions
     /// </value>
     /// <remarks>
     /// <para>
-    ///   This adds a command to the answer file that uses 'cmdkey.exe' to use the specified
-    ///   account for all network destinations. Using this is not very secure and should only be
-    ///   done in test environments.
+    ///   Setting this property to a value other than <see langword="null"/> will add a first log-on
+    ///   command to the answer file that uses 'cmdkey.exe' to use the specified account for all
+    ///   network destinations. Using this is not very secure and should only be done in test
+    ///   environments.
     /// </para>
     /// <note type="security">
-    ///   The password of the cmdkey account is stored in plain text.
+    ///   The password of this account is stored in plain text in the answer file. Do not store
+    ///   answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
     public DomainCredential? CmdKeyAccount { get; set; }
@@ -167,8 +190,8 @@ public class GeneratorOptions
     ///   The product key is used to select a Windows edition, and to activate Windows.
     /// </para>
     /// <para>
-    ///   Depending on the edition being installed and the installation method used, a product key
-    ///   may or may not be required.
+    ///   A product key is required in the answer file for most editions of Windows, but may not
+    ///   be required if the edition uses alternate activation methods such as volume licensing.
     /// </para>
     /// </remarks>
     public string? ProductKey { get; set; }
@@ -181,8 +204,8 @@ public class GeneratorOptions
     /// </value>
     /// <remarks>
     /// <para>
-    ///   Use "amd64" for 64 bit systems, and "x86" for 32 bit systems. Other values may also be
-    ///   valid, such as "arm64".
+    ///   Use "amd64" for 64 bit Intel and AMD systems, and "x86" for 32 bit systems. Other values
+    ///   may also be valid, such as "arm64".
     /// </para>
     /// </remarks>
     public string ProcessorArchitecture { get; set; } = "amd64";

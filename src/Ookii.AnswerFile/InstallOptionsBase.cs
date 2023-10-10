@@ -3,7 +3,7 @@
 namespace Ookii.AnswerFile;
 
 /// <summary>
-/// A base class for all the various installation options classes.
+/// Base class for types that provide options for a specific installation method.
 /// </summary>
 /// <threadsafety instance="false" static="true"/>
 [JsonDerivedType(typeof(CleanEfiOptions), typeDiscriminator: "CleanEfi")]
@@ -25,6 +25,12 @@ public abstract class InstallOptionsBase
     /// When implemented in a derived class, writes options specific to the install method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
+    /// <remarks>
+    /// <para>
+    ///   This method is called when generating the Microsoft-Windows-Setup component of the
+    ///   windowsPE pass.
+    /// </para>
+    /// </remarks>
     protected abstract void WriteInstallElements(Generator generator);
 
     internal void GenerateWindowsPePass(Generator generator)

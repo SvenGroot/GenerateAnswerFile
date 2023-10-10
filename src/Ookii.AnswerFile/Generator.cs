@@ -9,7 +9,13 @@ namespace Ookii.AnswerFile;
 /// <summary>
 /// A generator for Windows unattended installation files.
 /// </summary>
-/// <seealso cref="GeneratorOptions"/>
+/// <remarks>
+/// <para>
+///   Create an instance of the <see cref="GeneratorOptions"/> class with the answer file options
+///   you wish to use, and call the <see cref="Generate(string, GeneratorOptions)"/> method or
+///   one of its overloads to generate an answer file with those options.
+/// </para>
+/// </remarks>
 /// <threadsafety instance="false" static="true"/>
 public class Generator
 {
@@ -24,6 +30,8 @@ public class Generator
 
     private Generator(XmlWriter writer, GeneratorOptions options)
     {
+        ArgumentNullException.ThrowIfNull(writer);
+        ArgumentNullException.ThrowIfNull(options);
         Writer = writer;
         Options = options;
     }
@@ -50,6 +58,9 @@ public class Generator
     /// </summary>
     /// <param name="writer">The <see cref="XmlWriter"/> to write to.</param>
     /// <param name="options">The options for the unattended installation.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="writer"/> or <paramref name="options"/> is <see langword="null"/>.
+    /// </exception>
     public static void Generate(XmlWriter writer, GeneratorOptions options)
     {
         var generator = new Generator(writer, options);
@@ -61,6 +72,9 @@ public class Generator
     /// </summary>
     /// <param name="outputPath">The path of the file to write to.</param>
     /// <param name="options">The options for the unattended installation.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="outputPath"/> or <paramref name="options"/> is <see langword="null"/>.
+    /// </exception>
     public static void Generate(string outputPath, GeneratorOptions options)
     {
         using var writer = XmlWriter.Create(outputPath, XmlSettings);
@@ -73,6 +87,9 @@ public class Generator
     /// </summary>
     /// <param name="writer">The <see cref="TextWriter"/> to write to.</param>
     /// <param name="options">The options for the unattended installation.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="writer"/> or <paramref name="options"/> is <see langword="null"/>.
+    /// </exception>
     public static void Generate(TextWriter writer, GeneratorOptions options)
     {
         using var xmlWriter = XmlWriter.Create(writer, XmlSettings);

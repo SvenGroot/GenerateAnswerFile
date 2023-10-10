@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 namespace Ookii.AnswerFile;
 
 /// <summary>
-/// Base class for all install options that perform a clean install on a specific disk.
+/// Base class for all install options that perform a clean installation on a specific disk.
 /// </summary>
 /// <threadsafety instance="false" static="true"/>
 public abstract class CleanOptionsBase : TargetedInstallOptionsBase
@@ -19,8 +19,8 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// </value>
     /// <remarks>
     /// <para>
-    ///   If this property is an empty list, the default layout will be used, which depends on the
-    ///   system type.
+    ///   If this property is an empty list, the default layout returned by the
+    ///   <see cref="GetDefaultPartitions"/> method will be used, which depends on the system type.
     /// </para>
     /// </remarks>
     public Collection<Partition> Partitions
@@ -42,8 +42,15 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// Gets the ID of the partition to install to.
     /// </summary>
     /// <value>
-    /// The one-based partition ID.
+    /// The value of the <see cref="CustomTargetPartitionId"/> property, or if that property is
+    /// <see langword="null"/>, the one-based ID of the first partition with
+    /// <see cref="PartitionType.Normal" qualifyHint="true"/>.
     /// </value>
+    /// <exception cref="InvalidOperationException">
+    /// The <see cref="CustomTargetPartitionId"/> property is <see langword="null"/>, and the value
+    /// of the <see cref="Partitions"/> property does not contain a partition with
+    /// <see cref="PartitionType.Normal" qualifyHint="true"/>.
+    /// </exception>
     protected override int TargetPartitionId
     {
         get

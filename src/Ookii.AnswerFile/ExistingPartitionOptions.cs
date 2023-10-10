@@ -25,7 +25,7 @@ public class ExistingPartitionOptions : TargetedInstallOptionsBase
     /// </value>
     /// <remarks>
     /// <para>
-    ///   If the disk uses a default (U)EFI partition layout, Windows should be installed to
+    ///   If the disk uses a default UEFI partition layout, Windows should be installed to
     ///   partition 3. For the default BIOS partition layout, Windows should be installed to
     ///   partition 2.
     /// </para>

@@ -1,7 +1,8 @@
 ﻿namespace Ookii.AnswerFile;
 
 /// <summary>
-/// Indicates the user must manually pick an installation target.
+/// Provides options for an installation where the disk and partition to install to must be manually
+/// selected by the user.
 /// </summary>
 /// <remarks>
 /// When using this installation method, the installation is not fully unattended.

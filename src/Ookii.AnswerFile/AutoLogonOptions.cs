@@ -46,7 +46,7 @@ public class AutoLogonOptions
     public DomainCredential Credential { get; }
 
     /// <summary>
-    /// Gets the number of times automatic log-on will be used.
+    /// Gets or sets the number of times automatic log-on will be used.
     /// </summary>
     /// <value>
     /// The automatic log-on count. The default value is 1.

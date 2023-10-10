@@ -66,15 +66,15 @@
     <CopyrightText>Copyright %28c%29 Sven Groot %28Ookii.org%29</CopyrightText>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="Ookii.AnswerFile" isDocumented="True">Contains the &lt;see cref="T:Ookii.AnswerFile.Generator"/&gt; class, which generates answer files (unattend.xml) for unattended Windows installation.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Ookii.AnswerFile" isDocumented="True">Contains the &lt;see cref="T:Ookii.AnswerFile.Generator"/&gt; class, which generates answer files (usually called unattend.xml or autounattend.xml) for unattended Windows installation.</NamespaceSummaryItem>
     </NamespaceSummaries>
     <PlugInConfigurations>
       <PlugInConfig id="Additional Reference Links" enabled="True">
         <configuration>
-  <targets>
-    <target htmlSdkLinkType="None" helpViewerSdkLinkType="Id" websiteSdkLinkType="None" helpFileProject="..\..\Ookii.BinarySize\docs\Ookii.BinarySize.shfbproj" />
-  </targets>
-</configuration>
+          <targets>
+            <target htmlSdkLinkType="None" helpViewerSdkLinkType="Id" websiteSdkLinkType="None" helpFileProject="..\..\Ookii.BinarySize\docs\Ookii.BinarySize.shfbproj" />
+          </targets>
+        </configuration>
       </PlugInConfig>
     </PlugInConfigurations>
   </PropertyGroup>

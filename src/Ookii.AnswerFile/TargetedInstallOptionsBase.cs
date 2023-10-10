@@ -22,14 +22,14 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// </value>
     /// <remarks>
     /// <para>
-    ///   A wim or esd image file can contain multiple images, typically used for different SKUs
-    ///   such as Home or Professional. Normally, the <see cref="GeneratorOptions.ProductKey"/> is
-    ///   used to determine which image to install. However, for editions that are not necessarily
-    ///   activated using a product key (such as volume licensed editions), you can use the
-    ///   image index to select which edition to install.
+    ///   A WIM or ESD image file can contain multiple images, typically used for different SKUs
+    ///   such as Home or Professional. Normally, the <see cref="GeneratorOptions.ProductKey" qualifyHint="true"/>
+    ///   property is used to determine which image to install. However, for editions that are not
+    ///   necessarily activated using a product key (such as those using volume licensing), you can
+    ///   use the image index to select which edition to install.
     /// </para>
     /// <para>
-    ///   To list the images in a wim or esd file, use the PowerShell <c>Get-WindowsImage</c>
+    ///   To list the images in a WIM or ESD file, use the PowerShell <c>Get-WindowsImage</c>
     ///   command.
     /// </para>
     /// </remarks>
@@ -47,6 +47,9 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// Writes elements specific to this installation method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
+    /// <remarks>
+    /// <inheritdoc/>
+    /// </remarks>
     protected override void WriteInstallElements(Generator generator)
     {
         using (var imageInstall = generator.Writer.WriteAutoCloseElement("ImageInstall"))

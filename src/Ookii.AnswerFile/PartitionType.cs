@@ -14,13 +14,14 @@ public enum PartitionType
     /// </summary>
     Normal,
     /// <summary>
-    /// The system partition. For EFI/GPT, this is the special ESP partition, and will be formatted
-    /// as FAT32. For BIOS/MBR, this is a regular NTFS partition that should precede the Windows
-    /// partition. No drive letter will be assigned.
+    /// The system partition. For EFI/GPT, this is the special EFI System Partition (ESP), and will
+    /// be formatted as FAT32. For BIOS/MBR, this is a regular NTFS partition that should precede
+    /// the Windows partition. No drive letter will be assigned.
     /// </summary>
     System,
     /// <summary>
     /// A Microsoft reserved (MSR) partition. This partition type is only used for EFI/GPT.
+    /// Partitions of this type will not be formatted using a file system.
     /// </summary>
     Msr,
     /// <summary>

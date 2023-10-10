@@ -5,6 +5,12 @@ namespace Ookii.AnswerFile;
 /// <summary>
 /// Represents a domain or local user.
 /// </summary>
+/// <remarks>
+/// <para>
+///   This class represents a local user account if the <see cref="Domain"/> property is
+///   <see langword="null"/>.
+/// </para>
+/// </remarks>
 /// <threadsafety instance="false" static="true"/>
 public record class DomainUser
 {
@@ -15,6 +21,9 @@ public record class DomainUser
     ///   The domain of the account, or <see langword="null"/> if this is a local account.
     /// </param>
     /// <param name="userName">The account user name.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="userName"/> is <see langword="null"/>.
+    /// </exception>
     [JsonConstructor]
     public DomainUser(string? domain, string userName)
     {
@@ -27,6 +36,9 @@ public record class DomainUser
     /// Initializes a new instance of the <see cref="DomainUser"/> class for a local user account.
     /// </summary>
     /// <param name="userName">The account user name.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="userName"/> is <see langword="null"/>.
+    /// </exception>
     public DomainUser(string userName)
         : this(null, userName)
     {

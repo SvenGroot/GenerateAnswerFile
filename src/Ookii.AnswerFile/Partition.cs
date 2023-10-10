@@ -92,12 +92,12 @@ public class Partition : ISpanParsable<Partition>
     /// <para>
     ///   The input must use the format "size", "label:size", "size[fs]" or "label:size[fs]", where
     ///   "label" is the volume label, "size" is a value using multiple-byte units, and "fs" is the
-    ///   name of a supported file system such as "FAT32" or "NTFS". An example value is
-    ///   "Windows:128GB" or "Data:16GB[FAT32]"
+    ///   name of a supported file system such as "FAT32" or "NTFS". Examples are "Windows:128GB"
+    ///   and "Data:16GB[FAT32]"
     /// </para>
     /// <para>
     ///   Instead of an explicit size, you can use "*" for the size to indicate the partition
-    ///   should be extended to fill the remaining space on the disk.
+    ///   should be extended to fill the remaining space on the disk. For example, "Windows:*".
     /// </para>
     /// <para>
     ///   Certain volume labels are treated specially, and can be used to create special partition

@@ -7,7 +7,8 @@ namespace Ookii.AnswerFile;
 /// </summary>
 /// <remarks>
 /// <note type="security">
-///   The password of the account used to join the domain is stored in plain text.
+///   The password of the account used to join the domain is stored in plain text in the answer
+///   file. Do not store answer files with sensitive passwords in public locations.
 /// </note>
 /// </remarks>
 /// <threadsafety instance="false" static="true"/>
@@ -19,10 +20,13 @@ public class DomainOptions
     /// Initializes a new instance of the <see cref="DomainOptions"/> class.
     /// </summary>
     /// <param name="domain">The domain to join.</param>
-    /// <param name="credential">The credentials of a domain account that has permission to join the domain.</param>
+    /// <param name="credential">
+    /// The credentials of a domain account that has permission to join the domain.
+    /// </param>
     /// <remarks>
     /// <note type="security">
-    ///   The password of the account used to join the domain is stored in plain text.
+    ///   The password of the account used to join the domain is stored in plain text in the answer
+    ///   file. Do not store answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
     /// <exception cref="ArgumentNullException">
@@ -56,7 +60,8 @@ public class DomainOptions
     /// Gets the path of the Organizational Unit that the computer account should be added to.
     /// </summary>
     /// <value>
-    /// The organizational unit path, or <see langword="null"/> to not join a specific OU.
+    /// The organizational unit path, or <see langword="null"/> to not join a specific OU. The
+    /// default value is <see langword="null"/>.
     /// </value>
     public string? OUPath { get; set; }
 
