@@ -108,7 +108,7 @@ public class Generator
     {
         using var pass = WritePassStart("specialize");
         WriteInternationalCore();
-        if (Options.JoinDomain is DomainOptions domainOptions)
+        if (Options.JoinDomain != null)
         {
             using var join = WriteComponentStart("Microsoft-Windows-UnattendedJoin");
             Writer.WriteElements(new
@@ -118,12 +118,12 @@ public class Generator
                     UnsecureJoin = false,
                     Credentials = new
                     {
-                        domainOptions.Credential.UserAccount.Domain,
-                        domainOptions.Credential.Password,
-                        Username = domainOptions.Credential.UserAccount.UserName
+                        Options.JoinDomain.Credential.UserAccount.Domain,
+                        Options.JoinDomain.Credential.Password,
+                        Username = Options.JoinDomain.Credential.UserAccount.UserName
                     },
-                    JoinDomain = domainOptions.Domain,
-                    MachineObjectOU = domainOptions.OUPath,
+                    JoinDomain = Options.JoinDomain.Domain,
+                    MachineObjectOU = Options.JoinDomain.OUPath,
                 }
             });
         }
@@ -305,7 +305,7 @@ public class Generator
 
             foreach (var command in Options.FirstLogonCommands)
             {
-                WriteSynchronousCommand(command, $"Custom command", order);
+                WriteSynchronousCommand(command, "Custom command", order);
                 ++order;
             }
 
