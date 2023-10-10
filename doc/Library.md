@@ -13,8 +13,8 @@ instance of the [`CleanEfiOptions`][], [`CleanBiosOptions`][], [`ExistingPartiti
 [`ManualInstallOptions`][] class. Additional options that are specific to an install method, such as
 partition layout or optional features, are set in those classes.
 
-Leave the [`GeneratorOptions.InstallOptions`][] set to null to generate an answer file for a
-pre-installed image, such as one created by sysprep or DISM tools.
+Leave the [`GeneratorOptions.InstallOptions`][] property set to null to generate an answer file for
+a pre-installed image, such as one created by sysprep or DISM tools.
 
 The below example sets various options to perform a clean installation on a UEFI-based system,
 enabling some optional features and remote desktop. It creates a user account, and sets it to be
