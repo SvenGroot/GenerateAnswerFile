@@ -70,7 +70,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The number of times the user will be automatically logged on..
+        ///   Looks up a localized string similar to The number of times the user specified by -AutoLogonCount will be automatically logged on..
         /// </summary>
         internal static string AutoLogonCountDescription {
             get {
@@ -79,7 +79,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password of the user to automatically log on..
+        ///   Looks up a localized string similar to The password of the user specified by -AutoLogonCount..
         /// </summary>
         internal static string AutoLogonPasswordDescription {
             get {
@@ -88,7 +88,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of a user to automatically log on, in the format &apos;domain\user&apos;, or just &apos;user&apos; for local users..
+        ///   Looks up a localized string similar to The name of a user to automatically log on, in the format &apos;domain\user&apos;, or just &apos;user&apos; for local users. If not specified, automatic logon will not be used..
         /// </summary>
         internal static string AutoLogonUserDescription {
             get {
@@ -142,7 +142,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password of the user used to access the network..
+        ///   Looks up a localized string similar to The password of the user specified by -CmdKeyUser..
         /// </summary>
         internal static string CmdKeyPasswordDescription {
             get {
@@ -151,7 +151,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of a user used to access all network resources, in &apos;domain\user&apos; format. If present, the cmdkey.exe application will be used at first logon to save this user&apos;s credentials for all applications..
+        ///   Looks up a localized string similar to The name of a user used to access all network resources, in &apos;domain\user&apos; format. If present, the cmdkey.exe application will be used at first logon to save this user&apos;s credentials for all network paths.
         /// </summary>
         internal static string CmdKeyUserDescription {
             get {
@@ -178,7 +178,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable Windows Defender after installation..
+        ///   Looks up a localized string similar to Disable Windows Defender virus and threat protection..
         /// </summary>
         internal static string DisableDefenderDesciption {
             get {
@@ -187,7 +187,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable Server Manager from starting at first logon (Windows Server only)..
+        ///   Looks up a localized string similar to Do not automatically start Server Manager when logging on (Windows Server only)..
         /// </summary>
         internal static string DisableServerManagerDescription {
             get {
@@ -196,7 +196,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The display resolution, in the format &apos;width,height&apos;. For example, &apos;1280,1024&apos;. If not specified, the default resolution is determined by Windows..
+        ///   Looks up a localized string similar to The display resolution, in the format &apos;width,height&apos;. For example, &apos;1920,1080&apos;. If not specified, the default resolution is determined by Windows..
         /// </summary>
         internal static string DisplayResolutionDescription {
             get {
@@ -241,7 +241,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. Commands are run before the scripts specified by -SetupScript..
+        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. Commands are executed before the scripts specified by -SetupScript..
         /// </summary>
         internal static string FirstLogonCommandsDescription {
             get {
@@ -250,7 +250,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The WIM image index to install. Use this for editions not installed using a product key, such as those that use volume licensing. Use the PowerShell &apos;Get-WindowsImage&apos; command to list all images in a .wim or .esd file..
+        ///   Looks up a localized string similar to The index of the image in the WIM file to install. Use this for Windows editions not installed using a product key, such as those that use volume licensing. Use the PowerShell &apos;Get-WindowsImage&apos; command to list all images in a .wim or .esd file..
         /// </summary>
         internal static string ImageIndexDescription {
             get {
@@ -277,7 +277,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The one-based ID of the partition to install to on the disk specified by -InstallToDisk. If not specified and -Install is CleanEfi or CleanBios, Windows will be installed on the first regular data partition. If -Install is ExistingPartition, the default value is 3, which is appropriate for UEFI systems with the default partition layout..
+        ///   Looks up a localized string similar to The one-based ID of the partition to install to, on the disk specified by -InstallToDisk. If not specified and -Install is CleanEfi or CleanBios, Windows will be installed on the first regular data partition. If -Install is ExistingPartition, the default value is 3, which is appropriate for UEFI systems with the default partition layout..
         /// </summary>
         internal static string InstallToPartitionDescription {
             get {
@@ -304,7 +304,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password of the user used to join the domain. Will be stored in plain text..
+        ///   Looks up a localized string similar to The password of the user specified by -JoinDomainUser. Will be stored in plain text..
         /// </summary>
         internal static string JoinDomainPasswordDescription {
             get {
@@ -313,7 +313,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of a user with permission to join the domain. Use the format &apos;domain\user&apos;, or just &apos;user&apos; if the user is a member of the domain specified with -JoinDomain..
+        ///   Looks up a localized string similar to The name of a user with permission to join the domain specified by -JoinDomain. Use the format &apos;domain\user&apos;, or just &apos;user&apos; if the user is a member of the domain you are joining..
         /// </summary>
         internal static string JoinDomainUserDescription {
             get {
@@ -322,7 +322,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The language used for the UI language and the input, system and user locales..
+        ///   Looks up a localized string similar to The language used for the UI language, and the input, system and user locales..
         /// </summary>
         internal static string LanguageDescription {
             get {
@@ -358,7 +358,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows additional help in your web browser, include example usage..
+        ///   Looks up a localized string similar to Shows additional help in your web browser, including example usage..
         /// </summary>
         internal static string OnlineHelpDescription {
             get {
@@ -385,7 +385,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The organizational unit to use when joining the domain..
+        ///   Looks up a localized string similar to The organizational unit to use when joining the domain specified by -JoinDomain..
         /// </summary>
         internal static string OUPathDescription {
             get {
@@ -450,7 +450,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are run after the commands specified by -FirstLogonCommand..
+        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand..
         /// </summary>
         internal static string SetupScriptsDescription {
             get {
@@ -495,7 +495,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The exact version and build number (e.g. &apos;10.0.22000.1&apos;) of the OS being installed. This argument is only used when -Feature is specified..
+        ///   Looks up a localized string similar to The exact version and build number (e.g. &apos;10.0.22621.1&apos;) of the OS being installed. This argument is only used when -Feature is specified..
         /// </summary>
         internal static string WindowsVersionDescription {
             get {

@@ -44,18 +44,43 @@ The arguments are split into several categories:
 
 ## Usage syntax
 
-```text
-GenerateAnswerFile [-OutputFile] <Path> [-AutoLogonCount <Number>] [-AutoLogonPassword <String>]
-   [-AutoLogonUser <[Domain\]User>] [-CmdKeyPassword <String>] [-CmdKeyUser <Domain\User>]
-   [-ComputerName <String>] [-DisableCloud] [-DisableDefender] [-DisableServerManager]
-   [-DisplayResolution <Size>] [-DomainAccount <String>...] [-EnableRemoteDesktop] [-Feature
-   <String>...] [-FirstLogonCommand <String>...] [-Help] [-ImageIndex <Number>] [-Install
-   <InstallMethod>] [-InstallToDisk <Number>] [-InstallToPartition <Number>] [-JoinDomain <String>]
-   [-JoinDomainPassword <String>] [-JoinDomainUser <[Domain\]User>] [-Language <String>]
-   [-LocalAccount <Name,Password>...] [-OnlineHelp] [-OUPath <String>] [-Partition <Label:Size>...]
-   [-ProcessorArchitecture <String>] [-ProductKey <String>] [-SetupScript <String>...] [-TimeZone
-   <String>] [-Version] [-WindowsVersion <Version>]
-```
+<!-- markdownlint-disable MD033 -->
+<pre>GenerateAnswerFile
+    [<a href="#-outputfile">-OutputFile</a>] &lt;Path&gt;
+    [<a href="#-autologoncount">-AutoLogonCount</a> &lt;Number&gt;]
+    [<a href="#-autologonpassword">-AutoLogonPassword</a> &lt;String&gt;]
+    [<a href="#-autologonuser">-AutoLogonUser</a> &lt;[Domain\]User&gt;]
+    [<a href="#-cmdkeypassword">-CmdKeyPassword</a> &lt;String&gt;]
+    [<a href="#-cmdkeyuser">-CmdKeyUser</a> &lt;Domain\User&gt;]
+    [<a href="#-computername">-ComputerName</a> &lt;String&gt;]
+    [<a href="#-disablecloud">-DisableCloud</a>]
+    [<a href="#-disabledefender">-DisableDefender</a>]
+    [<a href="#-disableservermanager">-DisableServerManager</a>]
+    [<a href="#-displayresolution">-DisplayResolution</a> &lt;Size&gt;]
+    [<a href="#-domainaccount">-DomainAccount</a> &lt;String&gt;...]
+    [<a href="#-enableremotedesktop">-EnableRemoteDesktop</a>]
+    [<a href="#-feature">-Feature</a> &lt;String&gt;...]
+    [<a href="#-firstlogoncommand">-FirstLogonCommand</a> &lt;String&gt;...]
+    [<a href="#-help">-Help</a>]
+    [<a href="#-imageindex">-ImageIndex</a> &lt;Number&gt;]
+    [<a href="#-install">-Install</a> &lt;InstallMethod&gt;]
+    [<a href="#-installtodisk">-InstallToDisk</a> &lt;Number&gt;]
+    [<a href="#-installtopartition">-InstallToPartition</a> &lt;Number&gt;]
+    [<a href="#-joindomain">-JoinDomain</a> &lt;String&gt;]
+    [<a href="#-joindomainpassword">-JoinDomainPassword</a> &lt;String&gt;]
+    [<a href="#-joindomainuser">-JoinDomainUser</a> &lt;[Domain\]User&gt;]
+    [<a href="#-language">-Language</a> &lt;String&gt;]
+    [<a href="#-localaccount">-LocalAccount</a> &lt;Name,Password&gt;...]
+    [<a href="#-onlinehelp">-OnlineHelp</a>]
+    [<a href="#-oupath">-OUPath</a> &lt;String&gt;]
+    [<a href="#-partition">-Partition</a> &lt;Label:Size&gt;...]
+    [<a href="#-processorarchitecture">-ProcessorArchitecture</a> &lt;String&gt;]
+    [<a href="#-productkey">-ProductKey</a> &lt;String&gt;]
+    [<a href="#-setupscript">-SetupScript</a> &lt;String&gt;...]
+    [<a href="#-timezone">-TimeZone</a> &lt;String&gt;]
+    [<a href="#-version">-Version</a>]
+    [<a href="#-windowsversion">-WindowsVersion</a> &lt;Version&gt;]</pre>
+<!-- markdownlint-enable MD033 -->
 
 ## General options
 
@@ -81,7 +106,7 @@ Aliases: -?, -h
 
 ### `-OnlineHelp`
 
-Shows additional help in your web browser, include example usage.
+Shows additional help in your web browser, including example usage.
 
 ```yaml
 Value: [<Boolean>]
@@ -116,9 +141,9 @@ Allowed -Install values: ExistingPartition, CleanBios, CleanEfi, Manual
 
 ### `-ImageIndex`
 
-The WIM image index to install. Use this for editions not installed using a product key, such as
-those that use volume licensing. Use the PowerShell `Get-WindowsImage` command to list all images
-in a .wim or .esd file.
+The index of the image in the WIM file to install. Use this for Windows editions not installed using
+a product key, such as those that use volume licensing. Use the PowerShell `Get-WindowsImage`
+command to list all images in a .wim or .esd file.
 
 See [selecting the edition to install](../README.md#selecting-the-edition-to-install).
 
@@ -157,7 +182,7 @@ Allowed -Install values: ExistingPartition, CleanEfi, CleanBios
 
 ### `-InstallToPartition`
 
-The one-based ID of the partition to install to on the disk specified by
+The one-based ID of the partition to install to, on the disk specified by
 [`-InstallToDisk`](#-installtodisk). If not specified and [`-Install`](#-install) is `CleanEfi` or
 `CleanBios`, Windows will be installed on the first regular data partition. If
 [`-Install`](#-install) is `ExistingPartition`, the default value is 3, which is appropriate for
@@ -177,9 +202,9 @@ A partition to create on the disk specified by [`-InstallToDisk`](#-installtodis
 multiple values.
 
 Use the format `label:size` or `label:size[fs]`, where label is the volume label, size is the size
-of the partition, and fs is an optional file system like FAT32 or NTFS. Sizes can use
-multiple-byte units such as GB, and will be truncated to whole megabytes. For example
-`System:100MB`, `Windows:128GB`, or `Data:16GB[FAT32]`.
+of the partition, and fs is an optional file system like FAT32 or NTFS. Sizes can use multiple-byte
+units such as GB, and will be truncated to whole megabytes. For example `System:100MB`,
+`Windows:128GB`, or `Data:16GB[FAT32]`.
 
 Use `*` as the size to extend the partition to fill the remainder of the disk (e.g. `Windows:*`).
 
@@ -211,8 +236,8 @@ Aliases: -key
 
 ### `-WindowsVersion`
 
-The exact version and build number (e.g. `10.0.22000.1`) of the OS being installed. This argument
-is only used when [`-Feature`](#-feature) is specified.
+The exact version and build number (e.g. `10.0.22621.1`) of the OS being installed. This argument is
+only used when [`-Feature`](#-feature) is specified.
 
 ```yaml
 Value: <Version>
@@ -223,7 +248,7 @@ Aliases: -v
 
 ### `-CmdKeyPassword`
 
-The password of the user used to access the network.
+The password of the user specified by [`-CmdKeyUser`](#-cmdkeyuser).
 
 Must not be blank.
 
@@ -236,8 +261,8 @@ Required arguments: -CmdKeyUser
 ### `-CmdKeyUser`
 
 The name of a user used to access all network resources, in `domain\user` format. If present, the
-cmdkey.exe application will be used at first logon to save this user's credentials for all
-applications.
+cmdkey.exe application will be used at first logon to save this user's credentials for all network
+paths
 
 Must not be blank.
 
@@ -264,11 +289,10 @@ Aliases: -a
 
 ### `-AutoLogonCount`
 
-The number of times the user will be automatically logged on.
+The number of times the user specified by [`-AutoLogonCount`](#-autologoncount) will be
+automatically logged on.
 
 Must be at least 1.
-
-See [joining a domain and automatic logon](../README.md#joining-a-domain-and-automatic-log-on).
 
 ```yaml
 Value: <Number>
@@ -279,7 +303,7 @@ Required arguments: -AutoLogonUser
 
 ### `-AutoLogonPassword`
 
-The password of the user to automatically log on.
+The password of the user specified by [`-AutoLogonCount`](#-autologoncount).
 
 Must not be blank.
 
@@ -292,9 +316,11 @@ Required arguments: -AutoLogonUser
 ### `-AutoLogonUser`
 
 The name of a user to automatically log on, in the format `domain\user`, or just `user` for local
-users.
+users. If not specified, automatic logon will not be used.
 
 Must not be blank.
+
+See [joining a domain and automatic logon](../README.md#joining-a-domain-and-automatic-log-on).
 
 ```yaml
 Value: <[Domain\]User>
@@ -333,7 +359,8 @@ Required arguments: -JoinDomainUser, -JoinDomainPassword
 
 ### `-JoinDomainPassword`
 
-The password of the user used to join the domain. Will be stored in plain text.
+The password of the user specified by [`-JoinDomainUser`](#-joindomainuser). Will be stored in plain
+text.
 
 Must not be blank.
 
@@ -345,8 +372,8 @@ Required arguments: -JoinDomain
 
 ### `-JoinDomainUser`
 
-The name of a user with permission to join the domain. Use the format `domain\user`, or just `user`
-if the user is a member of the domain specified with [`-JoinDomain`](#-joindomain).
+The name of a user with permission to join the domain specified by [`-JoinDomain`](#-joindomain).
+Use the format `domain\user`, or just `user` if the user is a member of the domain you are joining.
 
 Must not be blank.
 
@@ -358,7 +385,7 @@ Required arguments: -JoinDomain
 
 ### `-OUPath`
 
-The organizational unit to use when joining the domain.
+The organizational unit to use when joining the domain specified by [`-JoinDomain`](#-joindomain).
 
 Must not be blank.
 
@@ -392,7 +419,7 @@ Aliases: -dc
 
 ### `-DisableDefender`
 
-Disable Windows Defender after installation.
+Disable Windows Defender virus and threat protection.
 
 ```yaml
 Value: [<Boolean>]
@@ -401,7 +428,7 @@ Aliases: -d
 
 ### `-DisableServerManager`
 
-Disable Server Manager from starting at first logon (Windows Server only).
+Do not automatically start Server Manager when logging on (Windows Server only).
 
 ```yaml
 Value: [<Boolean>]
@@ -410,7 +437,7 @@ Aliases: -dsm
 
 ### `-DisplayResolution`
 
-The display resolution, in the format `width,height`. For example, `1280,1024`. If not specified,
+The display resolution, in the format `width,height`. For example, `1920,1080`. If not specified,
 the default resolution is determined by Windows.
 
 ```yaml
@@ -429,8 +456,8 @@ Aliases: -rdp
 
 ### `-FirstLogonCommand`
 
-A command to run during first logon. Can have multiple values. Commands are run before the scripts
-specified by [`-SetupScript`](#-setupscript).
+A command to run during first logon. Can have multiple values. Commands are executed before the
+scripts specified by [`-SetupScript`](#-setupscript).
 
 Must not be blank.
 
@@ -443,7 +470,7 @@ Aliases: -cmd
 
 ### `-Language`
 
-The language used for the UI language and the input, system and user locales.
+The language used for the UI language, and the input, system and user locales.
 
 Must not be blank.
 
@@ -471,7 +498,7 @@ Default value: amd64
 ### `-SetupScript`
 
 The full path of a Windows PowerShell script to run during first logon. Can have multiple values.
-Scripts are run after the commands specified by [`-FirstLogonCommand`](#-firstlogoncommand).
+Scripts are executed after the commands specified by [`-FirstLogonCommand`](#-firstlogoncommand).
 
 Must not be blank.
 

@@ -21,37 +21,6 @@ class CustomUsageWriter : UsageWriter
         }
     }
 
-    protected override void WriteUsageSyntaxPrefix()
-    {
-        if (Markdown)
-        {
-            SetIndent(0);
-            WriteLine("## Usage syntax");
-            WriteLine();
-            WriteLine("```text");
-            SetIndent(3);
-            Write(ExecutableName);
-        }
-        else
-        {
-            base.WriteUsageSyntaxPrefix();
-        }
-    }
-
-    protected override void WriteUsageSyntaxSuffix()
-    {
-        if (Markdown)
-        {
-            WriteLine();
-            Writer.ResetIndent();
-            Write("```");
-        }
-        else 
-        {
-            base.WriteUsageSyntaxSuffix(); 
-        }
-    }
-
     protected override void WriteArgumentDescriptions()
     {
         var groups = Parser.Arguments.GroupBy(a => GetCategory(a)).OrderBy(c => c.Key);
@@ -100,6 +69,65 @@ class CustomUsageWriter : UsageWriter
             }
         }
     }
+
+#if DEBUG
+
+    protected override void WriteParserUsageSyntax()
+    {
+        if (!Markdown)
+        {
+            base.WriteParserUsageSyntax();
+            return;
+        }
+
+        SetIndent(0);
+        WriteLine("## Usage syntax");
+        WriteLine();
+        WriteLine("<!-- markdownlint-disable MD033 -->");
+        SetIndent(4);
+        Write($"<pre>{ExecutableName}");
+        foreach (var arg in GetArgumentsInUsageOrder())
+        {
+            WriteLine();
+            if (arg.IsRequired)
+            {
+                WriteArgumentSyntax(arg);
+            }
+            else
+            {
+                WriteOptionalArgumentSyntax(arg);
+            }
+        }
+
+        WriteLine("</pre>");
+        WriteLine("<!-- markdownlint-enable MD033 -->");
+        WriteLine();
+    }
+
+    protected override void WriteArgumentName(string argumentName, string prefix)
+    {
+        if (!Markdown)
+        { 
+            base.WriteArgumentName(argumentName, prefix);
+            return; 
+        }
+
+        Write($"<a href=\"#-{argumentName.ToLowerInvariant()}\">{prefix}{argumentName}</a>");
+    }
+
+    protected override void WriteValueDescription(string valueDescription)
+    {
+        if (!Markdown)
+        {
+            base.WriteValueDescription(valueDescription);
+            return;
+        }
+
+        Write($"&lt;{valueDescription}&gt;");
+    }
+
+#endif
+
 
     private void WriteArgumentMarkdown(CommandLineArgument argument)
     {

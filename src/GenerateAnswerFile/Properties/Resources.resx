@@ -121,13 +121,13 @@
     <value>Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation.</value>
   </data>
   <data name="AutoLogonCountDescription" xml:space="preserve">
-    <value>The number of times the user will be automatically logged on.</value>
+    <value>The number of times the user specified by -AutoLogonCount will be automatically logged on.</value>
   </data>
   <data name="AutoLogonPasswordDescription" xml:space="preserve">
-    <value>The password of the user to automatically log on.</value>
+    <value>The password of the user specified by -AutoLogonCount.</value>
   </data>
   <data name="AutoLogonUserDescription" xml:space="preserve">
-    <value>The name of a user to automatically log on, in the format 'domain\user', or just 'user' for local users.</value>
+    <value>The name of a user to automatically log on, in the format 'domain\user', or just 'user' for local users. If not specified, automatic logon will not be used.</value>
   </data>
   <data name="CategoryAutoLogon" xml:space="preserve">
     <value>Automatic logon options:</value>
@@ -145,10 +145,10 @@
     <value>User account options:</value>
   </data>
   <data name="CmdKeyPasswordDescription" xml:space="preserve">
-    <value>The password of the user used to access the network.</value>
+    <value>The password of the user specified by -CmdKeyUser.</value>
   </data>
   <data name="CmdKeyUserDescription" xml:space="preserve">
-    <value>The name of a user used to access all network resources, in 'domain\user' format. If present, the cmdkey.exe application will be used at first logon to save this user's credentials for all applications.</value>
+    <value>The name of a user used to access all network resources, in 'domain\user' format. If present, the cmdkey.exe application will be used at first logon to save this user's credentials for all network paths</value>
   </data>
   <data name="ComputerNameDescription" xml:space="preserve">
     <value>The network name for the computer.</value>
@@ -157,13 +157,13 @@
     <value>Disable Windows cloud consumer features. This prevents auto-installation of recommended store apps.</value>
   </data>
   <data name="DisableDefenderDesciption" xml:space="preserve">
-    <value>Disable Windows Defender after installation.</value>
+    <value>Disable Windows Defender virus and threat protection.</value>
   </data>
   <data name="DisableServerManagerDescription" xml:space="preserve">
-    <value>Disable Server Manager from starting at first logon (Windows Server only).</value>
+    <value>Do not automatically start Server Manager when logging on (Windows Server only).</value>
   </data>
   <data name="DisplayResolutionDescription" xml:space="preserve">
-    <value>The display resolution, in the format 'width,height'. For example, '1280,1024'. If not specified, the default resolution is determined by Windows.</value>
+    <value>The display resolution, in the format 'width,height'. For example, '1920,1080'. If not specified, the default resolution is determined by Windows.</value>
   </data>
   <data name="DomainAccountsDescription" xml:space="preserve">
     <value>The name of a domain account to add to the local administrators group. Must be in the domain you're joining. Can have multiple values.</value>
@@ -178,10 +178,10 @@
     <value>The name of an optional feature to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.</value>
   </data>
   <data name="FirstLogonCommandsDescription" xml:space="preserve">
-    <value>A command to run during first logon. Can have multiple values. Commands are run before the scripts specified by -SetupScript.</value>
+    <value>A command to run during first logon. Can have multiple values. Commands are executed before the scripts specified by -SetupScript.</value>
   </data>
   <data name="ImageIndexDescription" xml:space="preserve">
-    <value>The WIM image index to install. Use this for editions not installed using a product key, such as those that use volume licensing. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.</value>
+    <value>The index of the image in the WIM file to install. Use this for Windows editions not installed using a product key, such as those that use volume licensing. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.</value>
   </data>
   <data name="InstallDescription" xml:space="preserve">
     <value>The installation method to use.</value>
@@ -190,7 +190,7 @@
     <value>The zero-based ID of the disk to install to. This disk will be wiped and repartitioned according to -Partition, or using the default layout if -Partition is not specified.</value>
   </data>
   <data name="InstallToPartitionDescription" xml:space="preserve">
-    <value>The one-based ID of the partition to install to on the disk specified by -InstallToDisk. If not specified and -Install is CleanEfi or CleanBios, Windows will be installed on the first regular data partition. If -Install is ExistingPartition, the default value is 3, which is appropriate for UEFI systems with the default partition layout.</value>
+    <value>The one-based ID of the partition to install to, on the disk specified by -InstallToDisk. If not specified and -Install is CleanEfi or CleanBios, Windows will be installed on the first regular data partition. If -Install is ExistingPartition, the default value is 3, which is appropriate for UEFI systems with the default partition layout.</value>
   </data>
   <data name="InvalidMethodCount" xml:space="preserve">
     <value>Need at least one method.</value>
@@ -199,13 +199,13 @@
     <value>The name of a domain to join. If not specified, the system will not be joined to a domain.</value>
   </data>
   <data name="JoinDomainPasswordDescription" xml:space="preserve">
-    <value>The password of the user used to join the domain. Will be stored in plain text.</value>
+    <value>The password of the user specified by -JoinDomainUser. Will be stored in plain text.</value>
   </data>
   <data name="JoinDomainUserDescription" xml:space="preserve">
-    <value>The name of a user with permission to join the domain. Use the format 'domain\user', or just 'user' if the user is a member of the domain specified with -JoinDomain.</value>
+    <value>The name of a user with permission to join the domain specified by -JoinDomain. Use the format 'domain\user', or just 'user' if the user is a member of the domain you are joining.</value>
   </data>
   <data name="LanguageDescription" xml:space="preserve">
-    <value>The language used for the UI language and the input, system and user locales.</value>
+    <value>The language used for the UI language, and the input, system and user locales.</value>
   </data>
   <data name="LocalAccountsDescription" xml:space="preserve">
     <value>A local account to create, using the format 'name,password'. Can have multiple values. If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended.</value>
@@ -217,7 +217,7 @@
     <value>Number</value>
   </data>
   <data name="OnlineHelpDescription" xml:space="preserve">
-    <value>Shows additional help in your web browser, include example usage.</value>
+    <value>Shows additional help in your web browser, including example usage.</value>
   </data>
   <data name="OnlineHelpUrl" xml:space="preserve">
     <value>https://github.com/SvenGroot/GenerateAnswerFile</value>
@@ -226,7 +226,7 @@
     <value>[Domain\]User</value>
   </data>
   <data name="OUPathDescription" xml:space="preserve">
-    <value>The organizational unit to use when joining the domain.</value>
+    <value>The organizational unit to use when joining the domain specified by -JoinDomain.</value>
   </data>
   <data name="OutputFileDescription" xml:space="preserve">
     <value>The path and file name to write the answer file to.</value>
@@ -251,7 +251,7 @@ If not specified, the default partition layout for the method specified by -Inst
     <value>The product key used to select what edition to install, and to activate Windows.</value>
   </data>
   <data name="SetupScriptsDescription" xml:space="preserve">
-    <value>The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are run after the commands specified by -FirstLogonCommand.</value>
+    <value>The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand.</value>
   </data>
   <data name="TimeZoneDescription" xml:space="preserve">
     <value>The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.</value>
@@ -266,6 +266,6 @@ If not specified, the default partition layout for the method specified by -Inst
     <value>May only be used if -Install is set to {0}.</value>
   </data>
   <data name="WindowsVersionDescription" xml:space="preserve">
-    <value>The exact version and build number (e.g. '10.0.22000.1') of the OS being installed. This argument is only used when -Feature is specified.</value>
+    <value>The exact version and build number (e.g. '10.0.22621.1') of the OS being installed. This argument is only used when -Feature is specified.</value>
   </data>
 </root>
