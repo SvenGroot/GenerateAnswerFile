@@ -1,9 +1,9 @@
 # Command line arguments
 
-This page describes the command line arguments supported by Answer File Generator, which are used
-to customize the generated answer file. All argument names are case insensitive.
+This page describes the command line arguments supported by the Answer File Generator, which are
+used to customize the generated answer file. All argument names are case insensitive.
 
-Argument values can be specified as either `-JoinDomain mydomain`, `-JoinDomain:mydomain` or
+Argument values can be specified as either e.g. `-JoinDomain mydomain`, `-JoinDomain:mydomain` or
 `-JoinDomain=mydomain`.
 
 Some arguments can be specified multiple times. This can be done by listing several values after
@@ -13,7 +13,7 @@ the argument:
 -LocalAccount "John,Password" "Dave,OtherPassword" -EnableRemoteDesktop
 ```
 
-Or, by repeating the argument multiple times:
+Or, by repeating the argument multiple times, potentially interleaving other arguments:
 
 ```text
 -LocalAccount "John,Password" -EnableRemoteDesktop -LocalAccount "Dave,OtherPassword"
@@ -28,6 +28,7 @@ $arguments = @{
     "OutputPath" = "unattend.xml"
     "InstallMethod" = "CleanEfi"
     "Feature" = "Microsoft-Windows-Subsystem-Linux","VirtualMachinePlatform"
+    "WindowsVersion" = "10.0.22621.1"
     "EnableRemoteDesktop" = $true
 }
 

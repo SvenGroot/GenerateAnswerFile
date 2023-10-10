@@ -16,9 +16,9 @@ partition layout or optional features, are set in those classes.
 Leave the [`GeneratorOptions.InstallOptions`][] set to null to generate an answer file for a
 pre-installed image, such as one created by sysprep or DISM tools.
 
-The below sample sets various options to perform a clean installation on a UEFI-based system,
-enabling some optional features and remote desktop. It creates a user account, and sets it be logged
-on automatically at first boot.
+The below example sets various options to perform a clean installation on a UEFI-based system,
+enabling some optional features and remote desktop. It creates a user account, and sets it to be
+logged on automatically at first boot.
 
 ```csharp
 var options = new GeneratorOptions()
@@ -33,8 +33,8 @@ var options = new GeneratorOptions()
     EnableRemoteDesktop = true,
     LocalAccounts = { new LocalCredential("MyUser", "Password") },
     AutoLogon = new AutoLogonOptions(new DomainUser(null, "MyUser"), "Password"),
-    ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE"
-    DisplayResolution = new Size(1280, 1024)
+    ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
+    DisplayResolution = new Size(1920, 1080)
 };
 
 Generator.Generate("unattend.xml", options);

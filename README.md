@@ -1,6 +1,6 @@
 # Windows Answer File Generator
 
-The Answer File Generator is a command line application and [library](#ookiianswerfile-library) for
+The Answer File Generator is a command line application and [library](doc/Library.md) for
 generating answer files for unattended Windows installations. These files are commonly called
 unattend.xml or autounattend.xml (depending on the installation method used).
 
@@ -31,7 +31,7 @@ Below, the core functionality is explained with several examples. You can also c
 
 See [what's new in Answer File Generator](doc/ChangeLog.md).
 
-If you need additional customization, you will need to edit the generated answer file. If you'd like
+If you need additional customization, you will have to edit the generated answer file. If you'd like
 any other options to be available through the tool, you can
 [file an issue](https://github.com/SvenGroot/GenerateAnswerFile/issues) or
 [submit a pull request](https://github.com/SvenGroot/GenerateAnswerFile/pulls).
@@ -103,7 +103,7 @@ syntax to continue a command on the next line.
 ```
 
 The resulting answer file will install a 64 bit version of Windows on the first disk of a UEFI
-system, and activates it using the specified product key.
+system, using the default UEFI partition layout, and activates it using the specified product key.
 
 ### Installing a 32 bit OS
 
@@ -114,31 +114,31 @@ system, and activates it using the specified product key.
     -ProductKey ABCDE-12345-ABCDE-12345-ABCDE
 ```
 
-By default, the generated answer files are for 64 bit editions of Windows. Use the
-[`-ProcessorArchitecture`][] argument to specify a different CPU architecture.
+By default, the generated answer files are for Windows editions running on 64 bit Intel or AMD
+processors. Use the [`-ProcessorArchitecture`][] argument to specify a different CPU architecture,
+such as "x86" for 32 bit processors, or "arm64" for ARM based systems.
 
 ### Creating a user during installation
 
 ```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanEfi `
-    -LocalAccount "John,Password" `
-    -AutoLogonUser John `
-    -AutoLogonPassword Password `
+    -LocalAccount "John,Password" "Steve,OtherPassword" `
     -ProductKey ABCDE-12345-ABCDE-12345-ABCDE
 ```
 
-This example creates a user named "John" with the password "Password" (don't do this, obviously),
-and logs in with that user automatically on first boot[^1]. To log in automatically more often, use
-the [`-AutoLogonCount`][] argument.
+This example creates a user named "John" with the password "Password" (don't use that as your
+password, obviously), and a user named "Steve" with the password "OtherPassword". The
+[`-LocalAccount`][] argument takes one or more values, allowing the creation of any number of
+accounts.
 
-The [`-LocalAccount`][] argument takes multiple values, if you want to create more than one account.
+All accounts created during this method will be members of the local Administrators group.
 
 ### Joining a domain and automatic log-on
 
 ```text
 ./GenerateAnswerFile unattend.xml `
-    -ComputerName my-pc `
+    -ComputerName mypc `
     -JoinDomain mydomain `
     -JoinDomainUser domainuser `
     -JoinDomainPassword Password `
@@ -147,25 +147,32 @@ The [`-LocalAccount`][] argument takes multiple values, if you want to create mo
     -AutoLogonPassword Password
 ```
 
-The answer file created by this command sets the computer name to "my-pc" and joins it to the domain
-"mydomain", using the supplied credentials. It also adds the account "domainuser" to the local
-administrators group and logs in using that account automatically on first boot[^1].
+The answer file created by this command sets the computer name to "mypc" and joins it to the domain
+"mydomain", using the supplied credentials. It also adds the account "domainuser" from the
+"mydomain" domain to the local Administrators group, and logs in using that account automatically on
+first boot.
 
 This sample does not use the [`-Install`][] argument, so it creates an answer file suitable for
-pre-installed Windows images, such as those created using sysprep or DISM tools. The [`-JoinDomain`][]
-argument can be used with any install method, however.
+pre-installed Windows images, such as those created using sysprep or DISM tools. The
+[`-JoinDomain`][] argument can be used with any install method, however.
+
+The [`-AutoLogonUser`][] argument can be used for both domain or local accounts; to use a local
+account, specify the user name only, without a domain. To log in automatically more than once, use
+the [`-AutoLogonCount`][] argument[^1].
 
 ### Custom partition layout
 
 If you use the `CleanEfi` or `CleanBios`, you can choose to customize the partition layout for the
 disk specified by [`-InstallToDisk`][], by using the [`-Partition`][] argument. This argument accepts
-multiple values, each creating a partition on that disk in the order specified. If this argument is
-not specified, a default partition layout is used.
+multiple values, each creating a partition on that disk in the order specified.
 
-Each partition uses the format `label:size`, where label is the volume label, and size is the size
-of the partition. The size can use multiple-byte units, such as GB or MB, and will be rounded down
-to a whole number of megabytes. If the size is `*`, it indicates the partition will fill the
-remainder of the disk.
+If the [`-Partition`][] argument is not specified, the default partition layout for the install
+method is used, as specified in the table above.
+
+The [`-Partition`][] argument uses the format `label:size`, where label is the volume label, and
+size is the size of the partition. The size can use multiple-byte units, such as GB or MB[^2], and
+will be rounded down to a whole number of megabytes. If the size is `*`, it indicates the partition
+will fill the remainder of the disk.
 
 ```text
 ./GenerateAnswerFile autounattend.xml `
@@ -181,8 +188,8 @@ remainder of the disk.
 Several values for the volume label are used to create special partition types.
 
 Label                     | Meaning
---------------------------|-----------------------------------------------------------------------------------------------------------------------------------
-**System**                | For `CleanEfi`, creates the special EFI partition. For `CleanBios`, creates the system partition holding the Windows boot manager.
+--------------------------|----------------------------------------------------------------------------------------------------------------------------------------
+**System**                | For `CleanEfi`, creates the EFI system partition (ESP). For `CleanBios`, creates the system partition holding the Windows boot manager.
 **MSR**                   | Creates a partition with the Microsoft Reserved partition type. For use with `CleanEfi` only.
 **WinRE** or **Recovery** | Marks the partition as a utility partition.
 
@@ -236,7 +243,7 @@ using sysprep, or by using DISM tools.
 ```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanEfi `
-    -FirstLogonCommand "reg add "HKCU\Software\MyCompany\" /v ImportantRegistryKey /t REG_DWORD /d 1 /f" `
+    -FirstLogonCommand "reg add HKCU\Software\MyCompany /v ImportantRegistryKey /t REG_DWORD /d 1 /f" `
     -SetupScript "\\server\share\script.ps1 -Argument" `
     -LocalAccount "John,Password" `
     -AutoLogonUser John `
@@ -287,6 +294,10 @@ any other adverse effects caused by the use of answer files generated by this to
     which causes it to be inaccurate. The Answer File Generator adjusts the count and uses a first
     log-on command if needed to ensure the `-AutoLogonCount` argument is accurate.
 
+[^2]: All sizes use powers of two, so 1MB is 1,048,576 bytes. You can also use IEC units such as MiB
+    or GiB, with the same meaning.
+
+[`-AutoLogonUser`]: doc/CommandLine.md#-autologonuser
 [`-AutoLogonCount`]: doc/CommandLine.md#-autologoncount
 [`-Feature`]: doc/CommandLine.md#-feature
 [`-FirstLogonCommand`]: doc/CommandLine.md#-firstlogoncommand
