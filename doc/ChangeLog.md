@@ -15,7 +15,7 @@
   PowerShell.
 - The local and online account screens are no longer skipped if you do not specify either the
   [`-LocalAccount`][] or the [`-JoinDomain`][] arguments.
-- [Source Link](https://github.com/dotnet/sourcelink) support for the 
+- [Source Link](https://github.com/dotnet/sourcelink) support for the
   [Ookii.AnswerFile library](Library.md).
 
 ## Answer File Generator 1.0 (2023-01-25)
