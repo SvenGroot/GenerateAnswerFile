@@ -1,6 +1,6 @@
 # What's new in Answer File Generator
 
-## Answer File Generator 1.1
+## Answer File Generator 1.1 (2023-10-10)
 
 - Apply a workaround for a [known issue with the `LogonCount` element](https://learn.microsoft.com/windows-hardware/customize/desktop/unattend/microsoft-windows-shell-setup-autologon-logoncount),
   so that the [`-AutoLogonCount`][] argument is accurate.
