@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:schemas-microsoft-com:unattend">
+  <settings pass="specialize">
+    <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <InputLocale>en-US</InputLocale>
+      <SystemLocale>en-US</SystemLocale>
+      <UILanguage>en-US</UILanguage>
+      <UserLocale>en-US</UserLocale>
+    </component>
+    <component name="Microsoft-Windows-UnattendedJoin" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <Identification>
+        <UnsecureJoin>false</UnsecureJoin>
+        <Credentials>
+          <Domain>somedomain</Domain>
+          <Password>DomainPassword</Password>
+          <Username>domainuser</Username>
+        </Credentials>
+        <JoinDomain>somedomain</JoinDomain>
+        <MachineObjectOU>OU=SomeOU,DC=somedomain</MachineObjectOU>
+      </Identification>
+    </component>
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <ComputerName>test-machine</ComputerName>
+    </component>
+    <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <RunSynchronous>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Description>Disable cloud consumer features</Description>
+          <Path>reg add HKLM\Software\Policies\Microsoft\Windows\CloudContent /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1</Path>
+        </RunSynchronousCommand>
+      </RunSynchronous>
+    </component>
+  </settings>
+  <settings pass="oobeSystem">
+    <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <InputLocale>en-US</InputLocale>
+      <SystemLocale>en-US</SystemLocale>
+      <UILanguage>en-US</UILanguage>
+      <UserLocale>en-US</UserLocale>
+    </component>
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <UserAccounts>
+        <LocalAccounts>
+          <LocalAccount wcm:action="add">
+            <Password>
+              <Value>UABhAHMAcwB3AG8AcgBkAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+              <PlainText>false</PlainText>
+            </Password>
+            <Description>MyAccount</Description>
+            <DisplayName>MyAccount</DisplayName>
+            <Group>Administrators</Group>
+            <Name>MyAccount</Name>
+          </LocalAccount>
+        </LocalAccounts>
+        <DomainAccounts>
+          <DomainAccountList wcm:action="add">
+            <DomainAccount wcm:action="add">
+              <Name>domainuser2</Name>
+              <Group>Administrators</Group>
+            </DomainAccount>
+            <Domain>somedomain</Domain>
+          </DomainAccountList>
+        </DomainAccounts>
+      </UserAccounts>
+      <OOBE>
+        <ProtectYourPC>1</ProtectYourPC>
+        <HideEULAPage>true</HideEULAPage>
+        <HideLocalAccountScreen>true</HideLocalAccountScreen>
+        <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+      </OOBE>
+      <TimeZone>Pacific Standard Time</TimeZone>
+      <AutoLogon>
+        <Enabled>true</Enabled>
+        <LogonCount>9998</LogonCount>
+        <Domain>somedomain</Domain>
+        <Username>domainuser2</Username>
+        <Password>
+          <Value>RABvAG0AYQBpAG4AUABhAHMAcwB3AG8AcgBkADIAUABhAHMAcwB3AG8AcgBkAA==</Value>
+          <PlainText>false</PlainText>
+        </Password>
+      </AutoLogon>
+      <FirstLogonCommands>
+        <SynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Description>Custom command</Description>
+          <CommandLine>command1.exe</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>2</Order>
+          <Description>Custom command</Description>
+          <CommandLine>command2.exe foo</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>3</Order>
+          <Description>Setup script</Description>
+          <CommandLine>PowerShell.exe -ExecutionPolicy Bypass \\machine\shared\script.ps1 -Arg</CommandLine>
+        </SynchronousCommand>
+      </FirstLogonCommands>
+      <Display>
+        <HorizontalResolution>1280</HorizontalResolution>
+        <VerticalResolution>1024</VerticalResolution>
+      </Display>
+    </component>
+  </settings>
+</unattend>

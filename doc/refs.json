@@ -1,0 +1,12 @@
+{
+  "#apiPrefix": "https://learn.microsoft.com/dotnet/api/",
+  "#prefix": "https://www.ookii.org/docs/answerfile-1.1/html/",
+  "#suffix": ".htm",
+  "CleanBiosOptions": "T_Ookii_AnswerFile_CleanBiosOptions",
+  "CleanEfiOptions": "T_Ookii_AnswerFile_CleanEfiOptions",
+  "ExistingPartitionOptions": "T_Ookii_AnswerFile_ExistingPartitionOptions",
+  "Generator.Generate": "Overload_Ookii_AnswerFile_Generator_Generate",
+  "GeneratorOptions": "T_Ookii_AnswerFile_GeneratorOptions",
+  "GeneratorOptions.InstallOptions": "P_Ookii_AnswerFile_GeneratorOptions_InstallOptions",
+  "ManualInstallOptions": "T_Ookii_AnswerFile_ManualInstallOptions"
+}

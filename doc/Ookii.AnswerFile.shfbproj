@@ -43,7 +43,7 @@
       <Argument Key="RequestExampleUrl" Value="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Ookii.AnswerFile\Ookii.AnswerFile.csproj" xmlns="" />
+      <DocumentationSource sourceFile="..\src\Ookii.AnswerFile\Ookii.AnswerFile.csproj" xmlns="" />
     </DocumentationSources>
     <HelpFileFormat>Website</HelpFileFormat>
     <SyntaxFilters>Standard</SyntaxFilters>
@@ -54,7 +54,7 @@
     <IndentHtml>False</IndentHtml>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
-    <HelpTitle>Ookii.AnswerFile 1.0 Documentation</HelpTitle>
+    <HelpTitle>Ookii.AnswerFile 1.1 Documentation</HelpTitle>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <NamingMethod>MemberName</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
@@ -66,8 +66,17 @@
     <CopyrightText>Copyright %28c%29 Sven Groot %28Ookii.org%29</CopyrightText>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="Ookii.AnswerFile" isDocumented="True" xmlns="">Contains types for generating answer files (unattend.xml) for unattended Windows installation.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Ookii.AnswerFile" isDocumented="True">Contains the &lt;see cref="T:Ookii.AnswerFile.Generator"/&gt; class, which generates answer files (usually called unattend.xml or autounattend.xml) for unattended Windows installation.</NamespaceSummaryItem>
     </NamespaceSummaries>
+    <PlugInConfigurations>
+      <PlugInConfig id="Additional Reference Links" enabled="True">
+        <configuration>
+          <targets>
+            <target htmlSdkLinkType="None" helpViewerSdkLinkType="Id" websiteSdkLinkType="None" helpFileProject="..\..\Ookii.BinarySize\docs\Ookii.BinarySize.shfbproj" />
+          </targets>
+        </configuration>
+      </PlugInConfig>
+    </PlugInConfigurations>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
