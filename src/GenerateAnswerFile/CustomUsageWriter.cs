@@ -14,6 +14,7 @@ class CustomUsageWriter : UsageWriter
     {
         if (!Markdown)
         {
+            Writer.ResetIndent();
             WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat, ExecutableName));
             WriteLine();
         }
@@ -21,6 +22,7 @@ class CustomUsageWriter : UsageWriter
 
     protected override void WriteMoreInfoMessage()
     {
+        Writer.ResetIndent();
         WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpMoreInfoFormat, ExecutableName));
     }
 
@@ -38,6 +40,7 @@ class CustomUsageWriter : UsageWriter
                 }
                 else
                 {
+                    Writer.ResetIndent();
                     WriteColor(UsagePrefixColor);
                     Write(GetCategoryDescription(category));
                     ResetColor();
@@ -150,7 +153,6 @@ class CustomUsageWriter : UsageWriter
         description = Regex.Replace(description, @"(?<=^|\s)-([A-Z][a-zA-Z]*)(?=\s|$|\.|,|\))",
             m => $"[`-{m.Groups[1]}`](#-{m.Groups[1].Value.ToLowerInvariant()})");
 
-        description = description.Replace(Environment.NewLine, Environment.NewLine + Environment.NewLine);
         WriteLine(description);
         WriteLine();
         foreach (var validator in argument.Validators)

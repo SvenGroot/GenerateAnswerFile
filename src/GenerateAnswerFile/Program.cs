@@ -8,6 +8,7 @@ var options = new ParseOptions
     UsageWriter = new CustomUsageWriter()
     {
         UseAbbreviatedSyntax = true,
+        IndentAfterEmptyLine = true,
     },
     DefaultValueDescriptions = new Dictionary<Type, string>() 
     {
