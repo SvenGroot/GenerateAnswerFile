@@ -10,15 +10,18 @@ class CustomUsageWriter : UsageWriter
 {
     public bool Markdown { get; set; }
 
-    protected override void WriteParserUsageCore(UsageHelpRequest request)
+    protected override void WriteParserUsageFooter()
     {
-        base.WriteParserUsageCore(request);
-        if (request == UsageHelpRequest.Full && !Markdown)
+        if (!Markdown)
         {
-            Write(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat, ExecutableName));
-            WriteLine();
+            WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat, ExecutableName));
             WriteLine();
         }
+    }
+
+    protected override void WriteMoreInfoMessage()
+    {
+        WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpMoreInfoFormat, ExecutableName));
     }
 
     protected override void WriteArgumentDescriptions()
@@ -227,8 +230,7 @@ class CustomUsageWriter : UsageWriter
     }
 
     private static ArgumentCategory? GetCategory(CommandLineArgument argument)
-        => argument.Parser.ArgumentsType.GetMember(argument.MemberName).FirstOrDefault()
-                ?.GetCustomAttribute<ArgumentCategoryAttribute>()?.Category;
+        => argument.Member?.GetCustomAttribute<ArgumentCategoryAttribute>()?.Category;
 
     private static string GetCategoryDescription(ArgumentCategory category)
     {
@@ -240,11 +242,5 @@ class CustomUsageWriter : UsageWriter
             ArgumentCategory.Domain => Properties.Resources.CategoryDomain,
             _ => Properties.Resources.CategoryOther,
         };
-    }
-
-    private void WriteLine(string text)
-    {
-        Write(text);
-        WriteLine();
     }
 }

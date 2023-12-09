@@ -259,6 +259,9 @@ If not specified, the default partition layout for the method specified by -Inst
   <data name="UsageHelpFooterFormat" xml:space="preserve">
     <value>For more information, as well as usage examples, run '{0} -OnlineHelp', or see: https://github.com/SvenGroot/GenerateAnswerFile</value>
   </data>
+  <data name="UsageHelpMoreInfoFormat" xml:space="preserve">
+    <value>Run '{0} -Help' or '{0} -OnlineHelp' for more information, or see: https://github.com/SvenGroot/GenerateAnswerFile</value>
+  </data>
   <data name="ValidateInstallMethodErrorFormat" xml:space="preserve">
     <value>The '{0}' argument may only be used if -Install is set to {1}.</value>
   </data>

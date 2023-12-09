@@ -477,6 +477,15 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run &apos;{0} -Help&apos; or &apos;{0} -OnlineHelp&apos; for more information, or see: https://github.com/SvenGroot/GenerateAnswerFile.
+        /// </summary>
+        internal static string UsageHelpMoreInfoFormat {
+            get {
+                return ResourceManager.GetString("UsageHelpMoreInfoFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The &apos;{0}&apos; argument may only be used if -Install is set to {1}..
         /// </summary>
         internal static string ValidateInstallMethodErrorFormat {
