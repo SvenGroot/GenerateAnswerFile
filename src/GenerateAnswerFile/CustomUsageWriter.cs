@@ -14,7 +14,8 @@ class CustomUsageWriter : UsageWriter
     {
         if (!Markdown)
         {
-            Writer.ResetIndent();
+            // This done here and not with the UsageFooterAttribute because we need to add the
+            // executable name.
             WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat, ExecutableName));
             WriteLine();
         }
@@ -22,7 +23,6 @@ class CustomUsageWriter : UsageWriter
 
     protected override void WriteMoreInfoMessage()
     {
-        Writer.ResetIndent();
         WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpMoreInfoFormat, ExecutableName));
     }
 
