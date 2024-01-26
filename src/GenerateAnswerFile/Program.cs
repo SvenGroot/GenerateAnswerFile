@@ -8,6 +8,7 @@ var options = new ParseOptions
     UsageWriter = new CustomUsageWriter()
     {
         UseAbbreviatedSyntax = true,
+        IndentAfterEmptyLine = true,
     },
     DefaultValueDescriptions = new Dictionary<Type, string>() 
     {
@@ -27,28 +28,15 @@ try
 }
 catch (Exception ex)
 {
-    using var support = VirtualTerminal.EnableColor(StandardStream.Error);
-    using var writer = LineWrappingTextWriter.ForConsoleError();
-    if (support.IsSupported)
-    {
-        writer.Write(TextFormat.ForegroundRed);
-    }
-
     if (arguments.Debug)
     {
-        writer.Write(ex.ToString());
+        VirtualTerminal.WriteLineErrorFormatted(ex.ToString());
     }
     else
     {
-        writer.Write(ex.Message);
+        VirtualTerminal.WriteLineErrorFormatted(ex.Message);
     }
 
-    if (support.IsSupported)
-    {
-        writer.Write(TextFormat.Default);
-    }
-
-    writer.WriteLine();
     return 1;
 }
 

@@ -10,15 +10,20 @@ class CustomUsageWriter : UsageWriter
 {
     public bool Markdown { get; set; }
 
-    protected override void WriteParserUsageCore(UsageHelpRequest request)
+    protected override void WriteParserUsageFooter()
     {
-        base.WriteParserUsageCore(request);
-        if (request == UsageHelpRequest.Full && !Markdown)
+        if (!Markdown)
         {
-            Write(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat, ExecutableName));
-            WriteLine();
+            // This done here and not with the UsageFooterAttribute because we need to add the
+            // executable name.
+            WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat, ExecutableName));
             WriteLine();
         }
+    }
+
+    protected override void WriteMoreInfoMessage()
+    {
+        WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpMoreInfoFormat, ExecutableName));
     }
 
     protected override void WriteArgumentDescriptions()
@@ -35,6 +40,7 @@ class CustomUsageWriter : UsageWriter
                 }
                 else
                 {
+                    Writer.ResetIndent();
                     WriteColor(UsagePrefixColor);
                     Write(GetCategoryDescription(category));
                     ResetColor();
@@ -147,7 +153,6 @@ class CustomUsageWriter : UsageWriter
         description = Regex.Replace(description, @"(?<=^|\s)-([A-Z][a-zA-Z]*)(?=\s|$|\.|,|\))",
             m => $"[`-{m.Groups[1]}`](#-{m.Groups[1].Value.ToLowerInvariant()})");
 
-        description = description.Replace(Environment.NewLine, Environment.NewLine + Environment.NewLine);
         WriteLine(description);
         WriteLine();
         foreach (var validator in argument.Validators)
@@ -227,8 +232,7 @@ class CustomUsageWriter : UsageWriter
     }
 
     private static ArgumentCategory? GetCategory(CommandLineArgument argument)
-        => argument.Parser.ArgumentsType.GetMember(argument.MemberName).FirstOrDefault()
-                ?.GetCustomAttribute<ArgumentCategoryAttribute>()?.Category;
+        => argument.Member?.GetCustomAttribute<ArgumentCategoryAttribute>()?.Category;
 
     private static string GetCategoryDescription(ArgumentCategory category)
     {
@@ -240,11 +244,5 @@ class CustomUsageWriter : UsageWriter
             ArgumentCategory.Domain => Properties.Resources.CategoryDomain,
             _ => Properties.Resources.CategoryOther,
         };
-    }
-
-    private void WriteLine(string text)
-    {
-        Write(text);
-        WriteLine();
     }
 }

@@ -404,8 +404,10 @@ namespace GenerateAnswerFile.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to A partition to create on the disk specified by -InstallToDisk. Can have multiple values.
+        ///
         ///Use the format &apos;label:size&apos; or &apos;label:size[fs]&apos;, where label is the volume label, size is the size of the partition, and fs is an optional file system like FAT32 or NTFS. Sizes can use multiple-byte units such as GB, and will be truncated to whole megabytes. For example &apos;System:100MB&apos;, &apos;Windows:128GB&apos;, or &apos;Data:16GB[FAT32]&apos;.
-        ///Use &apos;*&apos; as the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windows:* [rest of string was truncated]&quot;;.
+        ///
+        ///Use &apos;*&apos; as the size to extend the partition to fill the remainder of the disk (e.g. &apos;Windo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PartitionsDescription {
             get {
@@ -473,6 +475,15 @@ namespace GenerateAnswerFile.Properties {
         internal static string UsageHelpFooterFormat {
             get {
                 return ResourceManager.GetString("UsageHelpFooterFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run &apos;{0} -Help&apos; or &apos;{0} -OnlineHelp&apos; for more information, or see: https://github.com/SvenGroot/GenerateAnswerFile.
+        /// </summary>
+        internal static string UsageHelpMoreInfoFormat {
+            get {
+                return ResourceManager.GetString("UsageHelpMoreInfoFormat", resourceCulture);
             }
         }
         

@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "GenerateAnswerFile": {
-      "commandName": "Project",
-      "commandLineArgs": "-Help"
-    }
-  }
-}
