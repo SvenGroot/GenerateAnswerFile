@@ -1,6 +1,4 @@
-﻿using NuGet.Frameworks;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Text.Json;
 
 namespace Ookii.AnswerFile.Tests;
@@ -169,5 +167,4 @@ public class GeneratorOptionsTests
         Assert.AreEqual(new Version(10, 0, 22000, 1), install.OptionalFeatures.WindowsVersion);
         CollectionAssert.AreEqual(new[] { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }, install.OptionalFeatures.Features);
     }
-
 }
