@@ -4,6 +4,7 @@
     <Authors>Sven Groot</Authors>
     <Company>Ookii.org</Company>
     <Copyright>Copyright (c) Sven Groot (Ookii.org)</Copyright>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 </Project>
