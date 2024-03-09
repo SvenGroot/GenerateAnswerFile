@@ -14,7 +14,7 @@ namespace Ookii.AnswerFile;
 /// <threadsafety instance="false" static="true"/>
 public class DomainOptions
 {
-    private Collection<string>? _domainAccounts;
+    private Collection<DomainUser>? _domainAccounts;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainOptions"/> class.
@@ -69,16 +69,18 @@ public class DomainOptions
     /// Gets a list of domain accounts that should be added to the local administrators group.
     /// </summary>
     /// <value>
-    /// A collection of the accounts.
+    /// A collection of <see cref="DomainUser"/> instances for the accounts.
     /// </value>
     /// <remarks>
     /// <para>
-    ///   These accounts must be in the domain specified by the <see cref="Domain"/> property.
+    ///   If the <see cref="DomainUser.Domain" qualifyHint="true"/> property is
+    ///   <see langword="null"/>, the account is assumed to belong to the domain specified in the
+    ///   <see cref="Domain"/> property, rather than a local account.
     /// </para>
     /// </remarks>
-    public Collection<string> DomainAccounts
+    public Collection<DomainUser> DomainAccounts
     {
-        get => _domainAccounts ??= new();
+        get => _domainAccounts ??= [];
         set => _domainAccounts = value;
     }
 }
