@@ -12,7 +12,15 @@ public class GeneratorOptionsTests
         var options = new GeneratorOptions()
         {
             AutoLogon = new AutoLogonOptions(new DomainUser("domain", "user"), "password"),
-            JoinDomain = new DomainOptions("domain", new DomainCredential(new DomainUser("domain", "user"), "password")),
+            JoinDomain = new DomainOptions("domain", new DomainCredential(new DomainUser("domain", "user"), "password"))
+            {
+                OUPath = "OU=Computers",
+                DomainAccounts =
+                {
+                    new DomainUser("user"),
+                    new DomainUser("domain", "user2"),
+                }
+            },
             CmdKeyAccount = new DomainCredential(new DomainUser("domain", "user"), "password"),
             ComputerName = "TestComputer",
             DisplayResolution = new Size(1280, 1024),
@@ -36,6 +44,8 @@ public class GeneratorOptionsTests
         Assert.IsNotNull(deserialized.JoinDomain);
         Assert.AreEqual(options.JoinDomain.Credential, deserialized.JoinDomain.Credential);
         Assert.AreEqual(options.JoinDomain.Domain, deserialized.JoinDomain.Domain);
+        Assert.AreEqual(options.JoinDomain.OUPath, deserialized.JoinDomain.OUPath);
+        CollectionAssert.AreEqual(options.JoinDomain.DomainAccounts, deserialized.JoinDomain.DomainAccounts);
         CollectionAssert.AreEqual(options.LocalAccounts, deserialized.LocalAccounts);
         Assert.AreEqual(options.DisplayResolution, deserialized.DisplayResolution);
         Assert.IsTrue(deserialized.EnableCloud);
