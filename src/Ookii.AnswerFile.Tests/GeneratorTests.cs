@@ -22,7 +22,8 @@ public class GeneratorTests
                 new DomainCredential(new DomainUser("somedomain", "domainuser"), "DomainPassword"))
             {
                 OUPath = "OU=SomeOU,DC=somedomain",
-                DomainAccounts = { new DomainUser("domainuser2") }
+                DomainAccounts = { new DomainUser("domainuser2"), new DomainUser("somedomain2", "domainuser4"),
+                    new DomainUser("somedomain", "domainuser3"), new DomainUser("somedomain2", "domainuser5") }
             },
             AutoLogon = new AutoLogonOptions(new DomainUser("somedomain", "domainuser2"), "DomainPassword2")
             {

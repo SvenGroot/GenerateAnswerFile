@@ -59,7 +59,22 @@
               <Name>domainuser2</Name>
               <Group>Administrators</Group>
             </DomainAccount>
+            <DomainAccount wcm:action="add">
+              <Name>domainuser3</Name>
+              <Group>Administrators</Group>
+            </DomainAccount>
             <Domain>somedomain</Domain>
+          </DomainAccountList>
+          <DomainAccountList wcm:action="add">
+            <DomainAccount wcm:action="add">
+              <Name>domainuser4</Name>
+              <Group>Administrators</Group>
+            </DomainAccount>
+            <DomainAccount wcm:action="add">
+              <Name>domainuser5</Name>
+              <Group>Administrators</Group>
+            </DomainAccount>
+            <Domain>somedomain2</Domain>
           </DomainAccountList>
         </DomainAccounts>
       </UserAccounts>

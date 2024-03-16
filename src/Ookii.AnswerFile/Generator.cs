@@ -242,21 +242,38 @@ public class Generator
             if (Options.JoinDomain?.DomainAccounts.Count > 0)
             {
                 using var domainAccounts = Writer.WriteAutoCloseElement("DomainAccounts");
-                using var domainAccountList = Writer.WriteAutoCloseElement("DomainAccountList", new { wcm_action = "add" });
-                foreach (var account in Options.JoinDomain.DomainAccounts)
+                string? lastDomain = null;
+                foreach (var account in Options.JoinDomain.DomainAccounts.Select(u => new DomainUser(u.Domain ?? Options.JoinDomain.Domain, u.UserName)).OrderBy(u => u.Domain))
                 {
+                    if (account.Domain != lastDomain)
+                    {
+                        if (lastDomain != null)
+                        {
+                            Writer.WriteElementString("Domain", lastDomain);
+                            Writer.WriteEndElement(); // DomainAccountList
+                        }
+
+                        Writer.WriteStartElement("DomainAccountList");
+                        Writer.WriteAttributeString("wcm", "action", null, "add");
+                        lastDomain = account.Domain;
+                    }
+
                     Writer.WriteElements(new
                     {
                         DomainAccount = new
                         {
                             _attributes = new { wcm_action = "add" },
-                            Name = account,
+                            Name = account.UserName,
                             Group = "Administrators",
                         }
                     });
                 }
 
-                Writer.WriteElementString("Domain", Options.JoinDomain.Domain);
+                if (lastDomain != null)
+                {
+                    Writer.WriteElementString("Domain", lastDomain);
+                    Writer.WriteEndElement(); // DomainAccountList
+                }
             }
         }
 
