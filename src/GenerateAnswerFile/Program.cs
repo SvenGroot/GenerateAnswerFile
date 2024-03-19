@@ -2,7 +2,9 @@
 using Ookii.AnswerFile;
 using Ookii.CommandLine;
 using Ookii.CommandLine.Terminal;
+using System.Text;
 
+Console.OutputEncoding = Encoding.UTF8;
 var options = new ParseOptions
 {
     UsageWriter = new CustomUsageWriter()
@@ -24,7 +26,14 @@ if (arguments == null)
 
 try
 {
-    Generator.Generate(arguments.OutputFile.FullName, arguments.ToOptions());
+    if (arguments.OutputFile != null)
+    {
+        Generator.Generate(arguments.OutputFile.FullName, arguments.ToOptions());
+    }
+    else
+    {
+        Generator.Generate(Console.Out, arguments.ToOptions());
+    }
 }
 catch (Exception ex)
 {
