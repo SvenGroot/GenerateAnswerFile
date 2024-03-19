@@ -17,8 +17,8 @@ public class GeneratorOptionsTests
                 OUPath = "OU=Computers",
                 DomainAccounts =
                 {
-                    new DomainUser("user"),
-                    new DomainUser("domain", "user2"),
+                    new(new("user")),
+                    new(new("domain", "user2"), "Users"),
                 }
             },
             CmdKeyAccount = new DomainCredential(new DomainUser("domain", "user"), "password"),

@@ -72,7 +72,7 @@
             </DomainAccount>
             <DomainAccount wcm:action="add">
               <Name>domainuser5</Name>
-              <Group>Administrators</Group>
+              <Group>Users</Group>
             </DomainAccount>
             <Domain>somedomain2</Domain>
           </DomainAccountList>
