@@ -186,7 +186,7 @@ partial class Arguments
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]
-    public DomainUser[]? DomainAccounts { get; set; }
+    public DomainUserGroup[]? DomainAccounts { get; set; }
 
     #endregion
 
