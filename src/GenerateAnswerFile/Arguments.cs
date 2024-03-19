@@ -17,7 +17,7 @@ partial class Arguments
     [ResourceDescription(nameof(Properties.Resources.OutputFileDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.PathValueDescription))]
     [Alias("o")]
-    public required FileInfo OutputFile { get; set; }
+    public FileInfo? OutputFile { get; set; }
 
     #region Installation options
 
