@@ -181,6 +181,7 @@ partial class Arguments
 
     [CommandLineArgument("DomainAccount")]
     [ResourceDescription(nameof(Properties.Resources.DomainAccountsDescription))]
+    [ResourceValueDescription(nameof(Properties.Resources.DomainUserGroupValueDescription))]
     [ArgumentCategory(ArgumentCategory.Domain)]
     [Alias("da")]
     [Requires(nameof(JoinDomain))]

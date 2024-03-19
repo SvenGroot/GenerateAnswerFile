@@ -205,11 +205,20 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of a domain account to add to the local administrators group. Must be in the domain you&apos;re joining. Can have multiple values..
+        ///   Looks up a localized string similar to The name of a domain account to add to a local group, using the format &apos;group:domain\user&apos;, &apos;domain\user&apos;, &apos;group:user&apos; or &apos;user&apos;. If no group is specified, the user is added to the local Administrators group. If no domain is specified, the user must be in the domain you&apos;re joining. Can have multiple values..
         /// </summary>
         internal static string DomainAccountsDescription {
             get {
                 return ResourceManager.GetString("DomainAccountsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Group:][Domain\]User.
+        /// </summary>
+        internal static string DomainUserGroupValueDescription {
+            get {
+                return ResourceManager.GetString("DomainUserGroupValueDescription", resourceCulture);
             }
         }
         

@@ -23,7 +23,9 @@ public record class DomainUserGroup
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainUserGroup"/> class.
     /// </summary>
-    /// <param name="domainUser">The <see cref="DomainUser"/> to add to the group.</param>
+    /// <param name="domainUser">
+    /// The <see cref="AnswerFile.DomainUser"/> to add to the group.
+    /// </param>
     /// <param name="group">The group to add the user to.</param>
     /// <remarks>
     /// <para>
@@ -47,7 +49,7 @@ public record class DomainUserGroup
     /// Gets the domain user that is being added to a group.
     /// </summary>
     /// <value>
-    /// An instance of the <see cref="DomainUser"/> class.
+    /// An instance of the <see cref="AnswerFile.DomainUser"/> class.
     /// </value>
     /// <remarks>
     /// <para>
@@ -65,6 +67,15 @@ public record class DomainUserGroup
     /// The name of a local group on the target computer.
     /// </value>
     public string Group { get; }
+
+    /// <summary>
+    /// Gets a string representation of the current <see cref="DomainUserGroup"/>.
+    /// </summary>
+    /// <returns>
+    /// A string in the format "group:domain\user", or "group:user" if the
+    /// <see cref="DomainUser.Domain" qualifyHint="true"/> property is <see langword="null"/>.
+    /// </returns>
+    public override string ToString() => $"{Group}:{DomainUser}";
 
     /// <summary>
     /// Parses the group, domain and user name from a string in the form '[group:][domain\]user'.
