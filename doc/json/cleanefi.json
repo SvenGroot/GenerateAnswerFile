@@ -1,0 +1,46 @@
+{
+    "$schema": "file:///E:/Code/GenerateAnswerFile/doc/json/schema.json?5",
+    "InstallOptions": {
+        "$type": "CleanEfi",
+        "Partitions": [
+            {
+                "Type": 1,
+                "Label": "System",
+                "Size": "128 GiB",
+                "FileSystem": null
+            },
+            {
+                "Type": 0,
+                "Label": "Windows",
+                "Size": null,
+                "FileSystem": null
+            }
+        ],
+        "CustomTargetPartitionId": 5,
+        "DiskId": 3,
+        "ImageIndex": 2,
+        "OptionalFeatures": {
+            "WindowsVersion": "10.0.22000.1",
+            "Features": [
+                "Microsoft-Windows-Subsystem-Linux",
+                "VirtualMachinePlatform"
+            ]
+        }
+    },
+    "JoinDomain": null,
+    "ComputerName": null,
+    "EnableDefender": true,
+    "EnableCloud": true,
+    "EnableRemoteDesktop": false,
+    "EnableServerManager": true,
+    "LocalAccounts": [],
+    "AutoLogon": null,
+    "CmdKeyAccount": null,
+    "DisplayResolution": null,
+    "Language": "en-US",
+    "ProductKey": null,
+    "ProcessorArchitecture": "amd64",
+    "TimeZone": "Pacific Standard Time",
+    "FirstLogonCommands": [],
+    "SetupScripts": []
+}
