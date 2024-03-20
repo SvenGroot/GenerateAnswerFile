@@ -36,6 +36,7 @@ public class GeneratorOptionsTests
         };
 
         var json = JsonSerializer.Serialize(options);
+        File.WriteAllText("preinstalled.json", json);
         var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNull(deserialized.InstallOptions);
@@ -77,6 +78,7 @@ public class GeneratorOptionsTests
         };
 
         var json = JsonSerializer.Serialize(options);
+        File.WriteAllText("cleanefi.json", json);
         var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
@@ -112,6 +114,7 @@ public class GeneratorOptionsTests
         };
 
         var json = JsonSerializer.Serialize(options);
+        File.WriteAllText("cleanbios.json", json);
         var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
@@ -142,6 +145,7 @@ public class GeneratorOptionsTests
         };
 
         var json = JsonSerializer.Serialize(options);
+        File.WriteAllText("existingpartition.json", json);
         var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
@@ -169,6 +173,7 @@ public class GeneratorOptionsTests
         };
 
         var json = JsonSerializer.Serialize(options);
+        File.WriteAllText("manual.json", json);
         var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);

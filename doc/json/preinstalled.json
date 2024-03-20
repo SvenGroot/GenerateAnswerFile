@@ -1,0 +1,80 @@
+{
+    "$schema": "file:///E:/Code/GenerateAnswerFile/doc/json/schema.json?4",
+    "InstallOptions": null,
+    "JoinDomain": {
+        "Domain": "domain",
+        "Credential": {
+            "UserAccount": {
+                "Domain": "domain",
+                "UserName": "user"
+            },
+            "Password": "password"
+        },
+        "OUPath": "OU=Computers",
+        "DomainAccounts": [
+            {
+                "DomainUser": {
+                    "Domain": null,
+                    "UserName": "user"
+                },
+                "Group": "Administrators"
+            },
+            {
+                "DomainUser": {
+                    "Domain": "domain",
+                    "UserName": "user2"
+                },
+                "Group": "Users"
+            }
+        ]
+    },
+    "ComputerName": "TestComputer",
+    "EnableDefender": false,
+    "EnableCloud": true,
+    "EnableRemoteDesktop": false,
+    "EnableServerManager": true,
+    "LocalAccounts": [
+        {
+            "UserName": "localuser",
+            "Password": "password"
+        },
+        {
+            "UserName": "localuser2",
+            "Password": "password"
+        }
+    ],
+    "AutoLogon": {
+        "Credential": {
+            "UserAccount": {
+                "Domain": "domain",
+                "UserName": "user"
+            },
+            "Password": "password"
+        },
+        "Count": 1
+    },
+    "CmdKeyAccount": {
+        "UserAccount": {
+            "Domain": "domain",
+            "UserName": "user"
+        },
+        "Password": "password"
+    },
+    "DisplayResolution": {
+        "IsEmpty": false,
+        "Width": 1280,
+        "Height": 1024
+    },
+    "Language": "en-US",
+    "ProductKey": null,
+    "ProcessorArchitecture": "amd64",
+    "TimeZone": "Pacific Standard Time",
+    "FirstLogonCommands": [
+        "Hello",
+        "Bye"
+    ],
+    "SetupScripts": [
+        "Foo",
+        "Bar"
+    ]
+}

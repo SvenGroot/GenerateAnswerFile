@@ -1,0 +1,603 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "GeneratorOptions",
+  "type": "object",
+  "description": "Provides options for generating an unattended Windows installation answer file using the\nGenerator class.",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "title": "Schema",
+      "description": "Pointer to the schema against which this document should be validated."
+    },
+    "InstallOptions": {
+      "description": "Gets or sets the installation method to use, along with the options for that method.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "properties": {
+            "$type": {
+              "enum": [
+                "CleanEfi",
+                "CleanBios",
+                "ExistingPartition",
+                "Manual"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "$type"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "CleanEfi"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/CleanEfiOptions"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "CleanBios"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/CleanBiosOptions"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "ExistingPartition"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/ExistingPartitionOptions"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "Manual"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/ManualInstallOptions"
+              }
+            }
+          ]    
+        }
+      ]
+    },
+    "JoinDomain": {
+      "description": "Gets or sets options for joining a domain.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/DomainOptions"
+        }
+      ]
+    },
+    "ComputerName": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "Gets or sets the computer name of the system."
+    },
+    "EnableDefender": {
+      "type": "boolean",
+      "description": "Gets or sets a value which indicates whether Windows Defender is enabled after installation."
+    },
+    "EnableCloud": {
+      "type": "boolean",
+      "description": "Gets or sets a value which indicates whether cloud consumer features are enabled after\ninstallation."
+    },
+    "EnableRemoteDesktop": {
+      "type": "boolean",
+      "description": "Gets or sets a value which indicates whether remote desktop accepts incoming connections\nafter installation."
+    },
+    "EnableServerManager": {
+      "type": "boolean",
+      "description": "Gets or sets a value which indicates whether server manager will be launched on logon on\nWindows Server."
+    },
+    "LocalAccounts": {
+      "type": "array",
+      "description": "Gets or sets a collection of local administrator accounts to create.",
+      "items": {
+        "$ref": "#/definitions/LocalCredential"
+      }
+    },
+    "AutoLogon": {
+      "description": "Gets or sets options for logging on automatically.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/AutoLogonOptions"
+        }
+      ]
+    },
+    "CmdKeyAccount": {
+      "description": "Gets or sets the credentials of an account that will be used to access all network\nlocations.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/DomainCredential"
+        }
+      ]
+    },
+    "DisplayResolution": {
+      "description": "Gets or sets the display resolution.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/Size"
+        }
+      ]
+    },
+    "Language": {
+      "type": "string",
+      "description": "Gets or sets the language used for the UI and culture settings."
+    },
+    "ProductKey": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "Gets or sets the Windows product key."
+    },
+    "ProcessorArchitecture": {
+      "type": "string",
+      "description": "Gets or sets the processor architecture of the Windows version being installed."
+    },
+    "TimeZone": {
+      "type": "string",
+      "description": "Gets or sets the time zone."
+    },
+    "FirstLogonCommands": {
+      "type": "array",
+      "description": "Gets or sets a collection of commands to run during first log-on.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "SetupScripts": {
+      "type": "array",
+      "description": "Gets or sets a collection of PowerShell scripts to run during first log-on.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "definitions": {
+    "InstallOptionsBase": {
+      "type": "object",
+      "description": "Base class for types that provide options for a specific installation method.",
+      "x-abstract": true,
+      "properties": {
+        "OptionalFeatures": {
+          "description": "Gets or sets the optional features to install.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/OptionalFeatures"
+            }
+          ]
+        },
+        "$type": {
+          "type": "string"
+        }
+      }
+    },
+    "OptionalFeatures": {
+      "type": "object",
+      "description": "Provides options for installing optional features.",
+      "additionalProperties": false,
+      "properties": {
+        "WindowsVersion": {
+          "description": "Gets the Windows version being installed.",
+          "type": "string",
+          "pattern": "\\d\\.\\d.\\d.\\d"
+        },
+        "Features": {
+          "type": "array",
+          "description": "Gets or sets the optional features to install.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CleanEfiOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CleanOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for a clean installation on UEFI-based systems.",
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "Gets the type of the installation options.",
+              "const": "CleanEfi"
+            },
+            "SystemPartitionType": {
+              "type": "string",
+              "description": "Gets the partition type to use for the system partition."
+            },
+            "SystemPartitionFileSystem": {
+              "type": "string",
+              "description": "Gets the file system to use for the system partition."
+            },
+            "UseExtendedPartition": {
+              "type": "boolean",
+              "description": "Gets a value which indicates whether an extended partition should be used if there are more\nthan 4 partitions."
+            },
+            "UtilityTypeId": {
+              "type": "string",
+              "description": "Gets the type ID that marks a partition as a utility partition."
+            }
+          }
+        }
+      ]
+    },
+    "CleanOptionsBase": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/TargetedInstallOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Base class for all install options that perform a clean installation on a specific disk.",
+          "x-abstract": true,
+          "properties": {
+            "Partitions": {
+              "type": "array",
+              "description": "Gets or sets a list of partitions to create.",
+              "items": {
+                "$ref": "#/definitions/Partition"
+              }
+            },
+            "CustomTargetPartitionId": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "Gets or sets the ID of the partition to install to.",
+              "format": "int32"
+            },
+            "TargetPartitionId": {
+              "type": "integer",
+              "description": "Gets the ID of the partition to install to.",
+              "format": "int32"
+            },
+            "SystemPartitionType": {
+              "type": "string",
+              "description": "When implemented in a derived class, gets the partition type to use for the system\npartition."
+            },
+            "SystemPartitionFileSystem": {
+              "type": "string",
+              "description": "When implemented in a derived class, gets the file system to use for the system partition."
+            },
+            "UseExtendedPartition": {
+              "type": "boolean",
+              "description": "When implemented in a derived class, gets a value which indicates whether an extended\npartition should be used if there are more than 4 partitions."
+            },
+            "UtilityTypeId": {
+              "type": "string",
+              "description": "When implemented in a derived class, gets the type ID that marks a partition as a utility \npartition."
+            }
+          }
+        }
+      ]
+    },
+    "Partition": {
+      "type": "object",
+      "description": "Specifies a partition to be created when using the CleanBiosOptions or\nCleanEfiOptions class.",
+      "additionalProperties": false,
+      "properties": {
+        "Type": {
+          "description": "Gets the type of the partition.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PartitionType"
+            }
+          ]
+        },
+        "Label": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Gets the label of the partition."
+        },
+        "Size": {
+          "description": "Gets or sets the size of the partition.",
+          "type": ["string", "null"]
+        },
+        "FileSystem": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Gets or sets the file system to format the partition with."
+        }
+      }
+    },
+    "PartitionType": {
+      "type": "integer",
+      "description": "Indicates the type of a partition.",
+      "x-enumNames": [
+        "Normal",
+        "System",
+        "Msr",
+        "Utility"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "TargetedInstallOptionsBase": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InstallOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Base class for all install options that target a specific disk and partition.",
+          "x-abstract": true,
+          "properties": {
+            "DiskId": {
+              "type": "integer",
+              "description": "Gets or sets the disk to which Windows will be installed.",
+              "format": "int32"
+            },
+            "ImageIndex": {
+              "type": "integer",
+              "description": "Gets or sets the index of the Windows image to install.",
+              "format": "int32"
+            },
+            "TargetPartitionId": {
+              "type": "integer",
+              "description": "When implemented in a derived class, gets the ID of the partition to install to.",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "CleanBiosOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CleanOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for a clean installation on BIOS-based systems.",
+          "properties": {
+            "SystemPartitionType": {
+              "type": "string",
+              "description": "Gets the partition type to use for the system partition."
+            },
+            "SystemPartitionFileSystem": {
+              "type": "string",
+              "description": "Gets the file system to use for the system partition."
+            },
+            "UseExtendedPartition": {
+              "type": "boolean",
+              "description": "Gets a value which indicates whether an extended partition should be used if there are more\nthan 4 partitions."
+            },
+            "UtilityTypeId": {
+              "type": "string",
+              "description": "Gets the type ID that marks a partition as a utility partition."
+            }
+          }
+        }
+      ]
+    },
+    "ExistingPartitionOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/TargetedInstallOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for installing to an existing partition.",
+          "properties": {
+            "PartitionId": {
+              "type": "integer",
+              "description": "Gets or sets the ID of the partition to install to.",
+              "format": "int32"
+            },
+            "TargetPartitionId": {
+              "type": "integer",
+              "description": "Gets the ID of the partition to install to.",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "ManualInstallOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InstallOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for an installation where the disk and partition to install to must be manually\nselected by the user."
+        }
+      ]
+    },
+    "DomainOptions": {
+      "type": "object",
+      "description": "Provides options for joining a domain.",
+      "additionalProperties": false,
+      "properties": {
+        "Domain": {
+          "type": "string",
+          "description": "Gets the name of the domain to join."
+        },
+        "Credential": {
+          "description": "Gets the credentials of a domain account that has permission to join the domain.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/DomainCredential"
+            }
+          ]
+        },
+        "OUPath": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Gets the path of the Organizational Unit that the computer account should be added to."
+        },
+        "DomainAccounts": {
+          "type": "array",
+          "description": "Gets a list of domain accounts that should be added to a local group.",
+          "items": {
+            "$ref": "#/definitions/DomainUserGroup"
+          }
+        }
+      }
+    },
+    "DomainCredential": {
+      "type": "object",
+      "description": "Represents a credential for a domain or local user.",
+      "additionalProperties": false,
+      "properties": {
+        "UserAccount": {
+          "description": "Gets the domain or local user account.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/DomainUser"
+            }
+          ]
+        },
+        "Password": {
+          "type": "string",
+          "description": "Gets the password for the account."
+        }
+      }
+    },
+    "DomainUser": {
+      "type": "object",
+      "description": "Represents a domain or local user.",
+      "additionalProperties": false,
+      "properties": {
+        "Domain": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Gets the domain for the user account."
+        },
+        "UserName": {
+          "type": "string",
+          "description": "Gets the account user name."
+        }
+      }
+    },
+    "DomainUserGroup": {
+      "type": "object",
+      "description": "Represents a domain user and the local group to which they should be added.",
+      "additionalProperties": false,
+      "properties": {
+        "DomainUser": {
+          "description": "Gets the domain user that is being added to a group.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/DomainUser"
+            }
+          ]
+        },
+        "Group": {
+          "type": "string",
+          "description": "The group to which the user will be added."
+        }
+      }
+    },
+    "LocalCredential": {
+      "type": "object",
+      "description": "Provides credentials for a local user account.",
+      "additionalProperties": false,
+      "properties": {
+        "UserName": {
+          "type": "string",
+          "description": "Gets the user name of the account."
+        },
+        "Password": {
+          "type": "string",
+          "description": "Gets the password of the account."
+        }
+      }
+    },
+    "AutoLogonOptions": {
+      "type": "object",
+      "description": "Provides options for logging on automatically.",
+      "additionalProperties": false,
+      "properties": {
+        "Credential": {
+          "description": "Gets the credentials used to log on automatically.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/DomainCredential"
+            }
+          ]
+        },
+        "Count": {
+          "type": "integer",
+          "description": "Gets or sets the number of times automatic log-on will be used.",
+          "format": "int32"
+        }
+      }
+    },
+    "Size": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "IsEmpty": {
+          "type": "boolean"
+        },
+        "Width": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Height": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}
