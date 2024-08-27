@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "title": "GeneratorOptions",
+  "title": "GenerateAnswerFile JSON options.",
   "type": "object",
-  "description": "Provides options for generating an unattended Windows installation answer file using the\nGenerator class.",
+  "description": "Provides options for generating an unattended Windows installation answer file using GenerateAnswerFile.",
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -11,7 +11,7 @@
       "description": "Pointer to the schema against which this document should be validated."
     },
     "InstallOptions": {
-      "description": "Gets or sets the installation method to use, along with the options for that method.",
+      "description": "Options for the installation method. This should be an object with a '$type' property, or null to generate an answer file intended for a preinstalled image. Other available options depend on the value of '$type'.",
       "oneOf": [
         {
           "type": "null"
@@ -25,7 +25,8 @@
                 "ExistingPartition",
                 "Manual"
               ],
-              "type": "string"
+              "type": "string",
+              "description": "The installation method to use."
             }
           },
           "required": [
@@ -85,7 +86,7 @@
       ]
     },
     "JoinDomain": {
-      "description": "Gets or sets options for joining a domain.",
+      "description": "Options for joining a domain, or null to not join a domain.",
       "oneOf": [
         {
           "type": "null"
@@ -100,33 +101,36 @@
         "null",
         "string"
       ],
-      "description": "Gets or sets the computer name of the system."
+      "description": "The computer name of the system, or null to let Windows generate one."
     },
     "EnableDefender": {
       "type": "boolean",
-      "description": "Gets or sets a value which indicates whether Windows Defender is enabled after installation."
+      "description": "Indicates whether Windows Defender is enabled after installation. The default value is true."
     },
     "EnableCloud": {
       "type": "boolean",
-      "description": "Gets or sets a value which indicates whether cloud consumer features are enabled after\ninstallation."
+      "description": "Indicates whether cloud consumer features are enabled after installation. The default value is true. This may have no effect depending on the Windows version and edition being installed."
     },
     "EnableRemoteDesktop": {
       "type": "boolean",
-      "description": "Gets or sets a value which indicates whether remote desktop accepts incoming connections\nafter installation."
+      "description": "Indicates whether remote desktop accepts incoming connections after installation. The default value is false."
     },
     "EnableServerManager": {
       "type": "boolean",
-      "description": "Gets or sets a value which indicates whether server manager will be launched on logon on\nWindows Server."
+      "description": "Indicates whether server manager will be launched on logon on Windows Server. The default value is true. This has no effect on non-Server editions of Windows."
     },
     "LocalAccounts": {
-      "type": "array",
-      "description": "Gets or sets a collection of local administrator accounts to create.",
+      "type": [ 
+        "null",
+        "array" 
+      ],
+      "description": "A list of local administrator accounts to create.",
       "items": {
         "$ref": "#/definitions/LocalCredential"
       }
     },
     "AutoLogon": {
-      "description": "Gets or sets options for logging on automatically.",
+      "description": "Options for logging on automatically, or null to not log on automatically.",
       "oneOf": [
         {
           "type": "null"
@@ -137,7 +141,7 @@
       ]
     },
     "CmdKeyAccount": {
-      "description": "Gets or sets the credentials of an account that will be used to access all network\nlocations.",
+      "description": "The credentials of an account that will be used to access all network locations, or null to not register any credentials for this.",
       "oneOf": [
         {
           "type": "null"
@@ -148,45 +152,48 @@
       ]
     },
     "DisplayResolution": {
-      "description": "Gets or sets the display resolution.",
-      "oneOf": [
-        {
-          "type": "null"
-        },
-        {
-          "$ref": "#/definitions/Size"
-        }
-      ]
+      "description": "The display resolution, or null to let Windows determine the default resolution.",
+      "type": [
+        "null",
+        "string"
+      ],
+      "pattern": "^\\d+,\\d+$"
     },
     "Language": {
       "type": "string",
-      "description": "Gets or sets the language used for the UI and culture settings."
+      "description": "The language used for the UI and culture settings. The default is 'en-US'."
     },
     "ProductKey": {
       "type": [
         "null",
         "string"
       ],
-      "description": "Gets or sets the Windows product key."
+      "description": "The product key used to determine the edition to install, and to activate Windows. This can be null when using a preinstalled image, or when installing an edition that does not require a product key such as a volume licensed edition."
     },
     "ProcessorArchitecture": {
       "type": "string",
-      "description": "Gets or sets the processor architecture of the Windows version being installed."
+      "description": "The processor architecture of the Windows version being installed. Valid values include 'amd64', 'x86', and 'arm64'. The default is 'amd64'."
     },
     "TimeZone": {
       "type": "string",
-      "description": "Gets or sets the time zone."
+      "description": "The system time zone. Use 'tzutil /l' in a command prompt to list available time zones. The default is 'Pacific Standard Time'."
     },
     "FirstLogonCommands": {
-      "type": "array",
-      "description": "Gets or sets a collection of commands to run during first log-on.",
+      "type": [ 
+        "null",
+        "array" 
+      ],
+      "description": "A list of commands to run during first log-on.",
       "items": {
         "type": "string"
       }
     },
     "SetupScripts": {
-      "type": "array",
-      "description": "Gets or sets a collection of PowerShell scripts to run during first log-on.",
+      "type": [ 
+        "null",
+        "array" 
+      ],
+      "description": "A list of PowerShell scripts to run during first log-on. These are executed on first logon after the commands in FirstLogonCommands.",
       "items": {
         "type": "string"
       }
@@ -195,11 +202,11 @@
   "definitions": {
     "InstallOptionsBase": {
       "type": "object",
-      "description": "Base class for types that provide options for a specific installation method.",
+      "description": "Base type for types that provide options for a specific installation method.",
       "x-abstract": true,
       "properties": {
         "OptionalFeatures": {
-          "description": "Gets or sets the optional features to install.",
+          "description": "Optional features to install, or null to not install any.",
           "oneOf": [
             {
               "type": "null"
@@ -208,60 +215,30 @@
               "$ref": "#/definitions/OptionalFeatures"
             }
           ]
-        },
-        "$type": {
-          "type": "string"
         }
       }
     },
-    "OptionalFeatures": {
-      "type": "object",
-      "description": "Provides options for installing optional features.",
-      "additionalProperties": false,
-      "properties": {
-        "WindowsVersion": {
-          "description": "Gets the Windows version being installed.",
-          "type": "string",
-          "pattern": "\\d\\.\\d.\\d.\\d"
-        },
-        "Features": {
-          "type": "array",
-          "description": "Gets or sets the optional features to install.",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "CleanEfiOptions": {
+    "TargetedInstallOptionsBase": {
       "allOf": [
         {
-          "$ref": "#/definitions/CleanOptionsBase"
+          "$ref": "#/definitions/InstallOptionsBase"
         },
         {
           "type": "object",
-          "description": "Provides options for a clean installation on UEFI-based systems.",
+          "description": "Base type for all install options that target a specific disk and partition.",
+          "x-abstract": true,
           "properties": {
-            "$type": {
-              "type": "string",
-              "description": "Gets the type of the installation options.",
-              "const": "CleanEfi"
+            "DiskId": {
+              "type": "integer",
+              "description": "The zero-based index of the disk to which Windows will be installed.",
+              "format": "int32",
+              "minimum": 0
             },
-            "SystemPartitionType": {
-              "type": "string",
-              "description": "Gets the partition type to use for the system partition."
-            },
-            "SystemPartitionFileSystem": {
-              "type": "string",
-              "description": "Gets the file system to use for the system partition."
-            },
-            "UseExtendedPartition": {
-              "type": "boolean",
-              "description": "Gets a value which indicates whether an extended partition should be used if there are more\nthan 4 partitions."
-            },
-            "UtilityTypeId": {
-              "type": "string",
-              "description": "Gets the type ID that marks a partition as a utility partition."
+            "ImageIndex": {
+              "type": "integer",
+              "description": "The index of the image in the WIM file to install. Use this for Windows editions not installed using a product key, such as those that use volume licensing. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.",
+              "format": "int32",
+              "minimum": 0
             }
           }
         }
@@ -274,122 +251,45 @@
         },
         {
           "type": "object",
-          "description": "Base class for all install options that perform a clean installation on a specific disk.",
+          "description": "Base type for all install options that perform a clean installation on a specific disk.",
           "x-abstract": true,
           "properties": {
             "Partitions": {
-              "type": "array",
-              "description": "Gets or sets a list of partitions to create.",
+              "type": [ 
+                "null",
+                "array" 
+              ],
+              "description": "A list of partitions to create, or null to use the default partition layout for the installation type.",
               "items": {
                 "$ref": "#/definitions/Partition"
               }
             },
-            "CustomTargetPartitionId": {
+            "TargetPartitionId": {
               "type": [
                 "integer",
                 "null"
               ],
-              "description": "Gets or sets the ID of the partition to install to.",
-              "format": "int32"
-            },
-            "TargetPartitionId": {
-              "type": "integer",
-              "description": "Gets the ID of the partition to install to.",
-              "format": "int32"
-            },
-            "SystemPartitionType": {
-              "type": "string",
-              "description": "When implemented in a derived class, gets the partition type to use for the system\npartition."
-            },
-            "SystemPartitionFileSystem": {
-              "type": "string",
-              "description": "When implemented in a derived class, gets the file system to use for the system partition."
-            },
-            "UseExtendedPartition": {
-              "type": "boolean",
-              "description": "When implemented in a derived class, gets a value which indicates whether an extended\npartition should be used if there are more than 4 partitions."
-            },
-            "UtilityTypeId": {
-              "type": "string",
-              "description": "When implemented in a derived class, gets the type ID that marks a partition as a utility \npartition."
+              "description": "The one-based index of the partition to install to, or null to install to the first regular data partition.",
+              "format": "int32",
+              "minimum": 1
             }
           }
         }
       ]
     },
-    "Partition": {
-      "type": "object",
-      "description": "Specifies a partition to be created when using the CleanBiosOptions or\nCleanEfiOptions class.",
-      "additionalProperties": false,
-      "properties": {
-        "Type": {
-          "description": "Gets the type of the partition.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/PartitionType"
-            }
-          ]
-        },
-        "Label": {
-          "type": [
-            "null",
-            "string"
-          ],
-          "description": "Gets the label of the partition."
-        },
-        "Size": {
-          "description": "Gets or sets the size of the partition.",
-          "type": ["string", "null"]
-        },
-        "FileSystem": {
-          "type": [
-            "null",
-            "string"
-          ],
-          "description": "Gets or sets the file system to format the partition with."
-        }
-      }
-    },
-    "PartitionType": {
-      "type": "integer",
-      "description": "Indicates the type of a partition.",
-      "x-enumNames": [
-        "Normal",
-        "System",
-        "Msr",
-        "Utility"
-      ],
-      "enum": [
-        0,
-        1,
-        2,
-        3
-      ]
-    },
-    "TargetedInstallOptionsBase": {
+    "CleanEfiOptions": {
       "allOf": [
         {
-          "$ref": "#/definitions/InstallOptionsBase"
+          "$ref": "#/definitions/CleanOptionsBase"
         },
         {
           "type": "object",
-          "description": "Base class for all install options that target a specific disk and partition.",
-          "x-abstract": true,
+          "description": "Provides options for a clean installation on UEFI-based systems.",
           "properties": {
-            "DiskId": {
-              "type": "integer",
-              "description": "Gets or sets the disk to which Windows will be installed.",
-              "format": "int32"
-            },
-            "ImageIndex": {
-              "type": "integer",
-              "description": "Gets or sets the index of the Windows image to install.",
-              "format": "int32"
-            },
-            "TargetPartitionId": {
-              "type": "integer",
-              "description": "When implemented in a derived class, gets the ID of the partition to install to.",
-              "format": "int32"
+            "$type": {
+              "type": "string",
+              "description": "The installation method to use.",
+              "const": "CleanEfi"
             }
           }
         }
@@ -404,21 +304,10 @@
           "type": "object",
           "description": "Provides options for a clean installation on BIOS-based systems.",
           "properties": {
-            "SystemPartitionType": {
+            "$type": {
               "type": "string",
-              "description": "Gets the partition type to use for the system partition."
-            },
-            "SystemPartitionFileSystem": {
-              "type": "string",
-              "description": "Gets the file system to use for the system partition."
-            },
-            "UseExtendedPartition": {
-              "type": "boolean",
-              "description": "Gets a value which indicates whether an extended partition should be used if there are more\nthan 4 partitions."
-            },
-            "UtilityTypeId": {
-              "type": "string",
-              "description": "Gets the type ID that marks a partition as a utility partition."
+              "description": "The installation method to use.",
+              "const": "CleanBios"
             }
           }
         }
@@ -432,16 +321,20 @@
         {
           "type": "object",
           "description": "Provides options for installing to an existing partition.",
+          "required": [
+            "TargetPartitionId"
+          ],
           "properties": {
-            "PartitionId": {
-              "type": "integer",
-              "description": "Gets or sets the ID of the partition to install to.",
-              "format": "int32"
+            "$type": {
+              "type": "string",
+              "description": "The installation method to use.",
+              "const": "ExistingPartition"
             },
             "TargetPartitionId": {
               "type": "integer",
-              "description": "Gets the ID of the partition to install to.",
-              "format": "int32"
+              "description": "Gets or sets the ID of the partition to install to.",
+              "format": "int32",
+              "minimum": 1
             }
           }
         }
@@ -454,37 +347,100 @@
         },
         {
           "type": "object",
-          "description": "Provides options for an installation where the disk and partition to install to must be manually\nselected by the user."
+          "description": "Provides options for an installation where the disk and partition to install to must be manually selected by the user.",
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The installation method to use.",
+              "const": "Manual"
+            }
+          }
         }
       ]
+    },
+    "OptionalFeatures": {
+      "type": "object",
+      "description": "Provides options for installing optional features.",
+      "required": [
+        "WindowsVersion"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "WindowsVersion": {
+          "description": "The Windows version being installed. If this value does not match the actual version of Windows being installed, installation will fail.",
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+.\\d+.\\d+$"
+        },
+        "Features": {
+          "type": "array",
+          "description": "A list of optional features to install.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Partition": {
+      "type": "object",
+      "description": "Specifies a partition to be created when using the CleanBiosOptions or\nCleanEfiOptions class.",
+      "additionalProperties": false,
+      "properties": {
+        "Type": {
+          "description": "The type of the partition. The default is 'Normal'.",
+          "enum": [
+            "Normal",
+            "System",
+            "Msr",
+            "Utility"
+          ]
+        },
+        "Label": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The label of the partition."
+        },
+        "Size": {
+          "description": "The size of the partition, which can be a value like '100MB', or null to fill the remaining space. Only the last partition may have a null size.",
+          "type": ["string", "null"]
+        },
+        "FileSystem": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The file system to format the partition with, or null to use the default file system for the partition type."
+        }
+      }
     },
     "DomainOptions": {
       "type": "object",
       "description": "Provides options for joining a domain.",
+      "required": [
+        "Domain",
+        "Credential"
+      ],
       "additionalProperties": false,
       "properties": {
         "Domain": {
           "type": "string",
-          "description": "Gets the name of the domain to join."
+          "description": "The name of the domain to join."
         },
         "Credential": {
-          "description": "Gets the credentials of a domain account that has permission to join the domain.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/DomainCredential"
-            }
-          ]
+          "description": "The credentials of a domain account that has permission to join the domain.",
+          "$ref": "#/definitions/DomainCredential"
         },
         "OUPath": {
           "type": [
             "null",
             "string"
           ],
-          "description": "Gets the path of the Organizational Unit that the computer account should be added to."
+          "description": "The path of the Organizational Unit that the computer account should be added to, or null to use the domain default."
         },
         "DomainAccounts": {
           "type": "array",
-          "description": "Gets a list of domain accounts that should be added to a local group.",
+          "description": "A list of domain accounts that should be added to a local group.",
           "items": {
             "$ref": "#/definitions/DomainUserGroup"
           }
@@ -495,36 +451,18 @@
       "type": "object",
       "description": "Represents a credential for a domain or local user.",
       "additionalProperties": false,
+      "required": [
+        "UserAccount",
+        "Password"
+      ],
       "properties": {
         "UserAccount": {
-          "description": "Gets the domain or local user account.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/DomainUser"
-            }
-          ]
+          "type": "string",
+          "description": "The domain or local user account, in the format 'domain\\user' or 'user'."
         },
         "Password": {
           "type": "string",
-          "description": "Gets the password for the account."
-        }
-      }
-    },
-    "DomainUser": {
-      "type": "object",
-      "description": "Represents a domain or local user.",
-      "additionalProperties": false,
-      "properties": {
-        "Domain": {
-          "type": [
-            "null",
-            "string"
-          ],
-          "description": "Gets the domain for the user account."
-        },
-        "UserName": {
-          "type": "string",
-          "description": "Gets the account user name."
+          "description": "The password for the account."
         }
       }
     },
@@ -532,18 +470,18 @@
       "type": "object",
       "description": "Represents a domain user and the local group to which they should be added.",
       "additionalProperties": false,
+      "required": [
+        "DomainUser",
+        "Group"
+      ],
       "properties": {
         "DomainUser": {
-          "description": "Gets the domain user that is being added to a group.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/DomainUser"
-            }
-          ]
+          "type": "string",
+          "description": "Gets the domain user that is being added to a group, in the format 'domain\\user' or 'user'. If no domain is specified, it's assumed to be the same as the domain being joined."
         },
         "Group": {
-          "type": "string",
-          "description": "The group to which the user will be added."
+          "type": ["string", "null"],
+          "description": "The group to which the user will be added. The default is 'Administrators'."
         }
       }
     },
@@ -551,14 +489,18 @@
       "type": "object",
       "description": "Provides credentials for a local user account.",
       "additionalProperties": false,
+      "required": [
+        "UserName",
+        "Password"
+      ],
       "properties": {
         "UserName": {
           "type": "string",
-          "description": "Gets the user name of the account."
+          "description": "The user name of the account."
         },
         "Password": {
           "type": "string",
-          "description": "Gets the password of the account."
+          "description": "The password of the account."
         }
       }
     },
@@ -566,36 +508,19 @@
       "type": "object",
       "description": "Provides options for logging on automatically.",
       "additionalProperties": false,
+      "required": [
+        "Credential"
+      ],
       "properties": {
         "Credential": {
-          "description": "Gets the credentials used to log on automatically.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/DomainCredential"
-            }
-          ]
+          "description": "The credentials used to log on automatically.",
+          "$ref": "#/definitions/DomainCredential"
         },
         "Count": {
           "type": "integer",
-          "description": "Gets or sets the number of times automatic log-on will be used.",
-          "format": "int32"
-        }
-      }
-    },
-    "Size": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "IsEmpty": {
-          "type": "boolean"
-        },
-        "Width": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "Height": {
-          "type": "integer",
-          "format": "int32"
+          "description": "The number of times automatic log-on will be used. The default value is 1.",
+          "format": "int32",
+          "minimum": 1
         }
       }
     }

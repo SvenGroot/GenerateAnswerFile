@@ -1,4 +1,6 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Text.Json.Serialization;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides options for installing to an existing partition.
@@ -30,6 +32,7 @@ public class ExistingPartitionOptions : TargetedInstallOptionsBase
     ///   partition 2.
     /// </para>
     /// </remarks>
+    [JsonPropertyName("TargetPartitionId")]
     public int PartitionId { get; set; }
 
     /// <summary>

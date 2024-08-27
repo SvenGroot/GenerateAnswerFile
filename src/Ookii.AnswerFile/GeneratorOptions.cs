@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace Ookii.AnswerFile;
 
@@ -8,6 +9,7 @@ namespace Ookii.AnswerFile;
 /// <see cref="Generator"/> class.
 /// </summary>
 /// <threadsafety instance="false" static="true"/>
+[JsonSourceGenerationOptions()]
 public class GeneratorOptions
 {
     private Collection<LocalCredential>? _localAccounts;
@@ -169,6 +171,7 @@ public class GeneratorOptions
     /// A <see cref="Size"/> value with the resolution, or <see langword="null"/> to let Windows
     /// determine the resolution. The default value is <see langword="null"/>.
     /// </value>
+    [JsonConverter(typeof(SizeJsonConverter))]
     public Size? DisplayResolution { get; set; }
 
     /// <summary>

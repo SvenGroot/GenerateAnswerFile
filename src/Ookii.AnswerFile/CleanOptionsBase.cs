@@ -1,5 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Ookii.AnswerFile;
 
@@ -36,6 +37,7 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// The one-based ID of the partition to install to, or <see langword="null"/> to install to
     /// the first primary non-utility partition. The default value is <see langword="null"/>.
     /// </value>
+    [JsonPropertyName("TargetPartitionId")]
     public int? CustomTargetPartitionId { get; set; }
 
     /// <summary>

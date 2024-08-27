@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ookii.AnswerFile;
 
@@ -12,8 +13,35 @@ namespace Ookii.AnswerFile;
 /// </para>
 /// </remarks>
 /// <threadsafety instance="false" static="true"/>
+[JsonConverter(typeof(DomainUserJsonConverter))]
 public record class DomainUser
 {
+    #region Nested types
+
+    private class DomainUserJsonConverter : JsonConverter<DomainUser>
+    {
+        public override DomainUser? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var value = reader.GetString();
+            if (value == null)
+            {
+                return null;
+            }
+
+            return Parse(value);
+        }
+
+        public override void Write(Utf8JsonWriter writer, DomainUser value, JsonSerializerOptions options)
+        {
+            ArgumentNullException.ThrowIfNull(writer);
+            ArgumentNullException.ThrowIfNull(value);
+
+            writer.WriteStringValue(value.ToString());
+        }
+    }
+
+    #endregion
+
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainUser"/> class.
     /// </summary>
@@ -24,7 +52,6 @@ public record class DomainUser
     /// <exception cref="ArgumentNullException">
     /// <paramref name="userName"/> is <see langword="null"/>.
     /// </exception>
-    [JsonConstructor]
     public DomainUser(string? domain, string userName)
     {
         ArgumentNullException.ThrowIfNull(userName);

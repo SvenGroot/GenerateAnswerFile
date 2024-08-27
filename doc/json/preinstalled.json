@@ -1,29 +1,20 @@
 {
-    "$schema": "file:///E:/Code/GenerateAnswerFile/doc/json/schema.json?4",
+    "$schema": "file:///E:/Code/GenerateAnswerFile/doc/json/schema.json?",
     "InstallOptions": null,
     "JoinDomain": {
         "Domain": "domain",
         "Credential": {
-            "UserAccount": {
-                "Domain": "domain",
-                "UserName": "user"
-            },
+            "UserAccount": "domain\\user",
             "Password": "password"
         },
         "OUPath": "OU=Computers",
         "DomainAccounts": [
             {
-                "DomainUser": {
-                    "Domain": null,
-                    "UserName": "user"
-                },
+                "DomainUser": "user",
                 "Group": "Administrators"
             },
             {
-                "DomainUser": {
-                    "Domain": "domain",
-                    "UserName": "user2"
-                },
+                "DomainUser": "domain\\user2",
                 "Group": "Users"
             }
         ]
@@ -45,26 +36,16 @@
     ],
     "AutoLogon": {
         "Credential": {
-            "UserAccount": {
-                "Domain": "domain",
-                "UserName": "user"
-            },
+            "UserAccount": "domain\\user",
             "Password": "password"
         },
         "Count": 1
     },
     "CmdKeyAccount": {
-        "UserAccount": {
-            "Domain": "domain",
-            "UserName": "user"
-        },
+        "UserAccount": "domain\\user",
         "Password": "password"
     },
-    "DisplayResolution": {
-        "IsEmpty": false,
-        "Width": 1280,
-        "Height": 1024
-    },
+    "DisplayResolution": "1280,1024",
     "Language": "en-US",
     "ProductKey": null,
     "ProcessorArchitecture": "amd64",

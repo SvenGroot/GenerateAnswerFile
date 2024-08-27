@@ -70,6 +70,15 @@ namespace Ookii.AnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid size value, expected format &apos;width,height&apos;..
+        /// </summary>
+        internal static string InvalidSize {
+            get {
+                return ResourceManager.GetString("InvalidSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not determine the partition to install to..
         /// </summary>
         internal static string UnknownTargetPartition {

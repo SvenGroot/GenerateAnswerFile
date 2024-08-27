@@ -1,10 +1,13 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Text.Json.Serialization;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Indicates the type of a partition.
 /// </summary>
 /// <seealso href="https://learn.microsoft.com/windows-hardware/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration-disk-createpartitions-createpartition-type">Partition Type in answer files.</seealso>
 /// <seealse href="https://learn.microsoft.com/windows-hardware/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration-disk-modifypartitions-modifypartition-typeid">Partition TypeId in answer files.</seealse>
+[JsonConverter(typeof(JsonStringEnumConverter<PartitionType>))]
 public enum PartitionType
 {
     /// <summary>
