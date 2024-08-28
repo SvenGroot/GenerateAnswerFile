@@ -32,7 +32,7 @@ static class Program
         }
         catch (Exception ex) when (debug)
         {
-            WriteError(ex.ToString());
+            VirtualTerminal.WriteLineErrorFormatted(ex.ToString());
             return 1;
         }
         catch (JsonException ex)
@@ -45,12 +45,12 @@ static class Program
                 message += $" Path: {ex.Path} | LineNumber: {ex.LineNumber} | BytePositionInLine: {ex.BytePositionInLine}";
             }
 
-            WriteError(message);
+            VirtualTerminal.WriteLineErrorFormatted(message);
             return 1;
         }
         catch (Exception ex)
         {
-            WriteError(ex.Message);
+            VirtualTerminal.WriteLineErrorFormatted(ex.Message);
             return 1;
         }
 
@@ -78,9 +78,9 @@ static class Program
                 IndentAfterEmptyLine = true,
             },
             DefaultValueDescriptions = new Dictionary<Type, string>()
-    {
-        { typeof(int), GenerateAnswerFile.Properties.Resources.NumberValueDescription }
-    }
+            {
+                { typeof(int), Properties.Resources.NumberValueDescription }
+            }
         };
 
         var arguments = Arguments.Parse(options);
@@ -114,23 +114,4 @@ static class Program
         var arguments = JsonArguments.Parse();
         return (arguments, options);
     }
-
-    private static void WriteError(string message)
-    {
-        using var support = VirtualTerminal.EnableColor(StandardStream.Error);
-        using var writer = LineWrappingTextWriter.ForConsoleError();
-        if (support.IsSupported)
-        {
-            writer.Write(TextFormat.ForegroundRed);
-        }
-
-        writer.Write(message);
-        if (support.IsSupported)
-        {
-            writer.Write(TextFormat.Default);
-        }
-
-        writer.WriteLine();
-    }
-
 }
