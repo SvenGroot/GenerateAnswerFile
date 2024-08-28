@@ -35,9 +35,9 @@ public class GeneratorOptionsTests
             SetupScripts = { "Foo", "Bar" },
         };
 
-        var json = JsonSerializer.Serialize(options);
+        var json = options.ToJson();
         File.WriteAllText("preinstalled.json", json);
-        var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
+        var deserialized = GeneratorOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNull(deserialized.InstallOptions);
         Assert.IsNotNull(deserialized.AutoLogon);
@@ -77,9 +77,9 @@ public class GeneratorOptionsTests
             },
         };
 
-        var json = JsonSerializer.Serialize(options);
+        var json = options.ToJson();
         File.WriteAllText("cleanefi.json", json);
-        var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
+        var deserialized = GeneratorOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
         var install = (CleanEfiOptions)deserialized.InstallOptions;
@@ -113,9 +113,9 @@ public class GeneratorOptionsTests
             },
         };
 
-        var json = JsonSerializer.Serialize(options);
+        var json = options.ToJson();
         File.WriteAllText("cleanbios.json", json);
-        var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
+        var deserialized = GeneratorOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
         var install = (CleanBiosOptions)deserialized.InstallOptions;
@@ -144,9 +144,9 @@ public class GeneratorOptionsTests
             },
         };
 
-        var json = JsonSerializer.Serialize(options);
+        var json = options.ToJson();
         File.WriteAllText("existingpartition.json", json);
-        var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
+        var deserialized = GeneratorOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
         var install = (ExistingPartitionOptions)deserialized.InstallOptions;
@@ -172,9 +172,9 @@ public class GeneratorOptionsTests
             },
         };
 
-        var json = JsonSerializer.Serialize(options);
+        var json = options.ToJson();
         File.WriteAllText("manual.json", json);
-        var deserialized = JsonSerializer.Deserialize<GeneratorOptions>(json);
+        var deserialized = GeneratorOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
         var install = (ManualInstallOptions)deserialized.InstallOptions;

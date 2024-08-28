@@ -18,7 +18,7 @@ public record class DomainUser
 {
     #region Nested types
 
-    private class DomainUserJsonConverter : JsonConverter<DomainUser>
+    internal class DomainUserJsonConverter : JsonConverter<DomainUser>
     {
         public override DomainUser? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

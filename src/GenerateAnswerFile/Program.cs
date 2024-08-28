@@ -105,7 +105,7 @@ static class Program
             return null;
         }
 
-        var options = JsonSerializer.Deserialize<GeneratorOptions>(json);
+        var options = GeneratorOptions.FromJson(json);
         if (options == null)
         {
             return null;

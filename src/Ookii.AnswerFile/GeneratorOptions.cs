@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Ookii.AnswerFile;
@@ -9,12 +10,26 @@ namespace Ookii.AnswerFile;
 /// <see cref="Generator"/> class.
 /// </summary>
 /// <threadsafety instance="false" static="true"/>
-[JsonSourceGenerationOptions()]
 public class GeneratorOptions
 {
     private Collection<LocalCredential>? _localAccounts;
     private Collection<string>? _firstLogonCommands;
     private Collection<string>? _setupScripts;
+
+#pragma warning disable CA1822 // Mark members as static
+
+    /// <summary>
+    /// Gets the schema that can be used for validation of the JSON representation of this object.
+    /// </summary>
+    /// <value>
+    /// The JSCON schema URL.
+    /// </value>
+    // This must be the first property and must not be static, so ToJson will insert the $schema
+    // property into the output.
+    [JsonPropertyName("$schema")]
+    public string JsonSchema => "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0";
+
+#pragma warning restore CA1822 // Mark members as static
 
     /// <summary>
     /// Gets or sets the installation method to use, along with the options for that method.
@@ -260,4 +275,26 @@ public class GeneratorOptions
         get => _setupScripts ??= new();
         set => _setupScripts = value;
     }
+
+    /// <summary>
+    /// Creates an instance of the <see cref="GeneratorOptions"/> class based on the specified JSON
+    /// value.
+    /// </summary>
+    /// <param name="json">The JSON value.</param>
+    /// <returns>
+    /// An instance of the <see cref="GeneratorOptions"/> class, or <see langword="null"/> if the
+    /// JSON contained a <see langword="null"/> value.
+    /// </returns>
+    /// <exception cref="JsonException">
+    /// The JSON value is invalid.
+    /// </exception>
+    public static GeneratorOptions? FromJson(ReadOnlySpan<char> json)
+        => JsonSerializer.Deserialize(json, SourceGenerationContext.Default.GeneratorOptions);
+
+    /// <summary>
+    /// Serializes the current instance to a JSON string.
+    /// </summary>
+    /// <returns>A JSON representation of the current instance.</returns>
+    public string ToJson()
+        => JsonSerializer.Serialize(this, typeof(GeneratorOptions), SourceGenerationContext.Default);
 }
