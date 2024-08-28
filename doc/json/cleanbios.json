@@ -1,5 +1,5 @@
 {
-    "$schema": "file:///E:/Code/GenerateAnswerFile/doc/json/schema.json?",
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
     "InstallOptions": {
         "$type": "CleanBios",
         "Foo": "Bar",
@@ -7,8 +7,7 @@
             {
                 "Type": "System",
                 "Label": "System",
-                "Size": "128 GiB",
-                "FileSystem": null
+                "Size": "100MB"
             },
             {
                 "Label": "Windows"

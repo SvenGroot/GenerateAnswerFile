@@ -331,6 +331,15 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JSON input was found; additional arguments are available if JSON input is not provided. For more information, see: https://github.com/SvenGroot/GenerateAnswerFile.
+        /// </summary>
+        internal static string JsonUsageFooter {
+            get {
+                return ResourceManager.GetString("JsonUsageFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The language used for the UI language, and the input, system and user locales..
         /// </summary>
         internal static string LanguageDescription {

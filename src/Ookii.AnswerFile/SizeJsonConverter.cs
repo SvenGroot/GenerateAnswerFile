@@ -14,10 +14,17 @@ internal class SizeJsonConverter : JsonConverter<Size>
         var (width, height) = reader.GetString()!.SplitOnce(',');
         if (width == null)
         {
-            throw new FormatException(Properties.Resources.InvalidSize);
+            throw new JsonException(Properties.Resources.InvalidSize);
         }
 
-        return new Size(int.Parse(width), int.Parse(height));
+        try
+        {
+            return new Size(int.Parse(width), int.Parse(height));
+        }
+        catch (FormatException ex)
+        {
+            throw new JsonException(Properties.Resources.InvalidSize, ex);
+        }
     }
 
     public override void Write(Utf8JsonWriter writer, Size value, JsonSerializerOptions options)

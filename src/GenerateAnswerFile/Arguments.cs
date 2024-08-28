@@ -2,7 +2,6 @@
 using Ookii.CommandLine;
 using Ookii.CommandLine.Conversion;
 using Ookii.CommandLine.Validation;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -10,15 +9,8 @@ using System.Globalization;
 namespace GenerateAnswerFile;
 
 [GeneratedParser]
-[ResourceDescription(nameof(Properties.Resources.ApplicationDescription))]
-partial class Arguments
+partial class Arguments : BaseArguments
 {
-    [CommandLineArgument(IsPositional = true)]
-    [ResourceDescription(nameof(Properties.Resources.OutputFileDescription))]
-    [ResourceValueDescription(nameof(Properties.Resources.PathValueDescription))]
-    [Alias("o")]
-    public FileInfo? OutputFile { get; set; }
-
     #region Installation options
 
     [CommandLineArgument("Feature")]
@@ -266,10 +258,6 @@ partial class Arguments
     [ArgumentCategory(ArgumentCategory.Other)]
     [ValidateNotWhiteSpace]
     public string TimeZone { get; set; } = "Pacific Standard Time";
-
-    // Shows detailed information if an exception occurs.
-    [CommandLineArgument(IsHidden = true)]
-    public bool Debug { get; set; }
 
     [CommandLineArgument]
     [Alias("oh")]

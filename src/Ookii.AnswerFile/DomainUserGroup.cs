@@ -1,4 +1,7 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Represents a domain user and the local group to which they should be added.
