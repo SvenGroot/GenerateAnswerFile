@@ -57,32 +57,35 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
         {
             if (ImageIndex != 0)
             {
-                generator.Writer.WriteElements(new
+                generator.Writer.WriteElements(new KeyValueList
                 {
-                    InstallFrom = new
+                    { "InstallFrom", new KeyValueList
                     {
-                        MetaData = new
+                        { "MetaData", new KeyValueList
                         {
-                            _attributes = new { wcm_action = "add" },
-                            Key = "/IMAGE/INDEX",
-                            Value = ImageIndex
+                            { "_attributes", new KeyValueList { { "wcm:action", "add" } } },
+                            { "Key", "/IMAGE/INDEX" },
+                            { "Value", ImageIndex },
                         }
+                        }
+                    }
                     }
                 });
             }
 
-            generator.Writer.WriteElements(new
+            generator.Writer.WriteElements(new KeyValueList
             {
-                InstallTo = new
+                { "InstallTo", new KeyValueList
                 {
-                    DiskID = DiskId,
-                    PartitionID = TargetPartitionId
+                    { "DiskID", DiskId },
+                    { "PartitionID", TargetPartitionId },
+                }
                 }
             });
         }
 
         using var diskConfiguration = generator.Writer.WriteAutoCloseElement("DiskConfiguration");
-        using var disk = generator.Writer.WriteAutoCloseElement("Disk", new { wcm_action = "add" });
+        using var disk = generator.Writer.WriteAutoCloseElement("Disk", new KeyValueList { { "wcm:action", "add" } });
         generator.Writer.WriteElementString("DiskID", DiskId.ToString());
         WriteDiskConfiguration(generator);
     }

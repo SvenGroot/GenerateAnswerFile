@@ -183,11 +183,10 @@ public class GeneratorOptions
     /// Gets or sets the display resolution.
     /// </summary>
     /// <value>
-    /// A <see cref="Size"/> value with the resolution, or <see langword="null"/> to let Windows
-    /// determine the resolution. The default value is <see langword="null"/>.
+    /// A <see cref="Resolution"/> value, or <see langword="null"/> to let Windows determine the
+    /// resolution. The default value is <see langword="null"/>.
     /// </value>
-    [JsonConverter(typeof(SizeJsonConverter))]
-    public Size? DisplayResolution { get; set; }
+    public Resolution? DisplayResolution { get; set; }
 
     /// <summary>
     /// Gets or sets the language used for the UI and culture settings.

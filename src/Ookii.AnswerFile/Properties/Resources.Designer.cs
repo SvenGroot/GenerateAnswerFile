@@ -70,11 +70,11 @@ namespace Ookii.AnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid size value, expected format &apos;width,height&apos;..
+        ///   Looks up a localized string similar to Invalid resolution value, expected format &apos;width,height&apos;..
         /// </summary>
-        internal static string InvalidSize {
+        internal static string InvalidResolution {
             get {
-                return ResourceManager.GetString("InvalidSize", resourceCulture);
+                return ResourceManager.GetString("InvalidResolution", resourceCulture);
             }
         }
         

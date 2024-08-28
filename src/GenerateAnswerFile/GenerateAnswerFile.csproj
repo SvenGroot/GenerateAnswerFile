@@ -8,6 +8,7 @@
     <AssemblyTitle>Windows Answer File Generator</AssemblyTitle>
     <Description>Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation.</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PublishAot>true</PublishAot>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">

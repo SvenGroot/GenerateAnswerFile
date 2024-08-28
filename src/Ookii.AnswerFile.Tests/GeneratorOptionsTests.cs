@@ -23,7 +23,7 @@ public class GeneratorOptionsTests
             },
             CmdKeyAccount = new DomainCredential(new DomainUser("domain", "user"), "password"),
             ComputerName = "TestComputer",
-            DisplayResolution = new Size(1280, 1024),
+            DisplayResolution = new(1280, 1024),
             EnableCloud = true,
             EnableDefender = false,
             LocalAccounts =

@@ -236,8 +236,7 @@ partial class Arguments : BaseArguments
     [ResourceDescription(nameof(Properties.Resources.DisplayResolutionDescription))]
     [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("res")]
-    [ArgumentConverter(typeof(WrappedDefaultTypeConverter<Size>))]
-    public Size? DisplayResolution { get; set; }
+    public Resolution? DisplayResolution { get; set; }
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.LanguageDescription))]

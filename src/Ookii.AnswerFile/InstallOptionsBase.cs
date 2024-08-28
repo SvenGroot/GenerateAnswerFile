@@ -40,18 +40,20 @@ public abstract class InstallOptionsBase
         using var setup = generator.WriteComponentStart("Microsoft-Windows-Setup");
         WriteInstallElements(generator);
 
-        generator.Writer.WriteElements(new
+        generator.Writer.WriteElements(new KeyValueList
         {
-            UserData = new
+            { "UserData", new KeyValueList
             {
-                AcceptEula = "true",
-                FullName = "",
-                Organization = "",
+                { "AcceptEula", "true" },
+                { "FullName", "" },
+                { "Organization", "" },
                 // This one chooses the edition
-                ProductKey = generator.Options.ProductKey == null ? null : new
+                { "ProductKey", generator.Options.ProductKey == null ? null : new KeyValueList
                 {
-                    Key = generator.Options.ProductKey,
+                    { "Key", generator.Options.ProductKey },
                 }
+                }
+            }
             }
         });
     }

@@ -34,7 +34,7 @@ public class GeneratorTests
             SetupScripts = { "\\\\machine\\shared\\script.ps1 -Arg" },
             ComputerName = "test-machine",
             EnableCloud = false,
-            DisplayResolution = new Size(1280, 1024)
+            DisplayResolution = new(1280, 1024)
         };
 
         Generator.Generate(actualPath, options);
