@@ -258,35 +258,6 @@ partial class Arguments : BaseArguments
     [ValidateNotWhiteSpace]
     public string TimeZone { get; set; } = "Pacific Standard Time";
 
-    [CommandLineArgument]
-    [Alias("oh")]
-    [Alias("??")]
-    [ResourceDescription(nameof(Properties.Resources.OnlineHelpDescription))]
-    public static CancelMode OnlineHelp(CommandLineParser parser)
-    {
-        try
-        {
-            var info = new ProcessStartInfo(Properties.Resources.OnlineHelpUrl)
-            {
-                UseShellExecute = true,
-            };
-
-            Process.Start(info);
-        }
-        catch (Exception ex)
-        {
-            if ((bool?)parser.GetArgument(nameof(Debug))!.Value ?? false)
-            {
-                Console.Error.WriteLine(ex.ToString());
-            }
-
-            Console.WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat,
-                CommandLineParser.GetExecutableName()));
-        }
-
-        return CancelMode.Abort;
-    }
-
 #if DEBUG
 
     // This argument is used to generate the bulk of CommandLine.md. It has no real value otherwise,
@@ -296,11 +267,15 @@ partial class Arguments : BaseArguments
     [CommandLineArgument(IsHidden = true)]
     public static CancelMode MarkdownHelp(CommandLineParser parser)
     {
-        var writer = ((CustomUsageWriter)parser.Options.UsageWriter);
-        writer.Markdown = true;
-        writer.IncludeApplicationDescription = false;
-        writer.UseAbbreviatedSyntax = false;
-        parser.HelpRequested = true;
+        using var writer = new LineWrappingTextWriter(Console.Out, 100, false);
+        var usageWriter = new CustomUsageWriter(writer)
+        {
+            Markdown = true,
+            IncludeApplicationDescription = false,
+            UseAbbreviatedSyntax = false,
+        };
+
+        usageWriter.WriteParserUsage(parser);
         return CancelMode.Abort;
     }
 

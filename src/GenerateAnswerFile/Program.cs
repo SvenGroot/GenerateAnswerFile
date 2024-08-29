@@ -72,11 +72,7 @@ static class Program
 
         var options = new ParseOptions
         {
-            UsageWriter = new CustomUsageWriter()
-            {
-                UseAbbreviatedSyntax = true,
-                IndentAfterEmptyLine = true,
-            },
+            UsageWriter = new CustomUsageWriter(),
             DefaultValueDescriptions = new Dictionary<Type, string>()
             {
                 { typeof(int), Properties.Resources.NumberValueDescription }

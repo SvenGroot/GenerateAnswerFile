@@ -8,6 +8,13 @@ namespace GenerateAnswerFile;
 
 class CustomUsageWriter : UsageWriter
 {
+    public CustomUsageWriter(LineWrappingTextWriter? writer = null)
+        : base(writer)
+    {
+        UseAbbreviatedSyntax = true;
+        IndentAfterEmptyLine = true;
+    }
+
     public bool Markdown { get; set; }
 
     protected override void WriteParserUsageFooter()
@@ -90,8 +97,8 @@ class CustomUsageWriter : UsageWriter
         WriteLine("## Usage syntax");
         WriteLine();
         WriteLine("<!-- markdownlint-disable MD033 -->");
-        SetIndent(4);
         Write($"<pre>{ExecutableName}");
+        SetIndent(4);
         foreach (var arg in GetArgumentsInUsageOrder())
         {
             WriteLine();
@@ -106,6 +113,7 @@ class CustomUsageWriter : UsageWriter
         }
 
         WriteLine("</pre>");
+        Writer.ResetIndent();
         WriteLine("<!-- markdownlint-enable MD033 -->");
         WriteLine();
     }

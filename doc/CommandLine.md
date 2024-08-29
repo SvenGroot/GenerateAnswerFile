@@ -47,7 +47,7 @@ The arguments are split into several categories:
 
 <!-- markdownlint-disable MD033 -->
 <pre>GenerateAnswerFile
-    [<a href="#-outputfile">-OutputFile</a>] &lt;Path&gt;
+    [[<a href="#-outputfile">-OutputFile</a>] &lt;Path&gt;]
     [<a href="#-autologoncount">-AutoLogonCount</a> &lt;Number&gt;]
     [<a href="#-autologonpassword">-AutoLogonPassword</a> &lt;String&gt;]
     [<a href="#-autologonuser">-AutoLogonUser</a> &lt;[Domain\]User&gt;]
@@ -57,8 +57,8 @@ The arguments are split into several categories:
     [<a href="#-disablecloud">-DisableCloud</a>]
     [<a href="#-disabledefender">-DisableDefender</a>]
     [<a href="#-disableservermanager">-DisableServerManager</a>]
-    [<a href="#-displayresolution">-DisplayResolution</a> &lt;Size&gt;]
-    [<a href="#-domainaccount">-DomainAccount</a> &lt;String&gt;...]
+    [<a href="#-displayresolution">-DisplayResolution</a> &lt;Resolution&gt;]
+    [<a href="#-domainaccount">-DomainAccount</a> &lt;[Group:][Domain\]User&gt;...]
     [<a href="#-enableremotedesktop">-EnableRemoteDesktop</a>]
     [<a href="#-feature">-Feature</a> &lt;String&gt;...]
     [<a href="#-firstlogoncommand">-FirstLogonCommand</a> &lt;String&gt;...]
@@ -71,7 +71,7 @@ The arguments are split into several categories:
     [<a href="#-joindomainpassword">-JoinDomainPassword</a> &lt;String&gt;]
     [<a href="#-joindomainuser">-JoinDomainUser</a> &lt;[Domain\]User&gt;]
     [<a href="#-language">-Language</a> &lt;String&gt;]
-    [<a href="#-localaccount">-LocalAccount</a> &lt;Name,Password&gt;...]
+    [<a href="#-localaccount">-LocalAccount</a> &lt;[Group:]Name,Password&gt;...]
     [<a href="#-onlinehelp">-OnlineHelp</a>]
     [<a href="#-oupath">-OUPath</a> &lt;String&gt;]
     [<a href="#-partition">-Partition</a> &lt;Label:Size&gt;...]
@@ -87,12 +87,12 @@ The arguments are split into several categories:
 
 ### `-OutputFile`
 
-The path and file name to write the answer file to.
+The path and file name to write the answer file to. If not specified, the generated answer file is
+written to the console.
 
 ```yaml
 Value: <Path>
 Aliases: -o
-Required: True
 Positional: True
 ```
 
@@ -263,7 +263,7 @@ Required arguments: -CmdKeyUser
 
 The name of a user used to access all network resources, in `domain\user` format. If present, the
 cmdkey.exe application will be used at first logon to save this user's credentials for all network
-paths
+paths.
 
 Must not be blank.
 
@@ -275,14 +275,17 @@ Required arguments: -CmdKeyPassword
 
 ### `-LocalAccount`
 
-A local account to create, using the format `name,password`. Can have multiple values. If no local
-accounts are created, the user will be asked to create one during OOBE, making setup not fully
-unattended.
+A local account to create, using the format group:name,password' or `name,password`. Can have
+multiple values. If no group is specified, the user will be added to the Administrators group. You
+can specify multiple groups by separating them with semicolons.
+
+If no local accounts are created, the user will be asked to create one during OOBE, making setup not
+fully unattended.
 
 See [creating a user during installation](../README.md#creating-a-user-during-installation).
 
 ```yaml
-Value: <Name,Password> (multiple allowed)
+Value: <[Group:]Name,Password> (multiple allowed)
 Aliases: -a
 ```
 
@@ -333,13 +336,15 @@ Required arguments: -AutoLogonPassword
 
 ### `-DomainAccount`
 
-The name of a domain account to add to the local administrators group. Must be in the domain you're
-joining. Can have multiple values.
+The name of a domain account to add to a local group, using the format `group:domain\user`,
+`domain\user`, `group:user` or `user`. If no group is specified, the user is added to the local
+Administrators group. You can specify multiple groups by separating them with semicolons. If no
+domain is specified, the user must be in the domain you're joining. Can have multiple values.
 
 Must not be blank.
 
 ```yaml
-Value: <String> (multiple allowed)
+Value: <[Group:][Domain\]User> (multiple allowed)
 Aliases: -da
 Required arguments: -JoinDomain
 ```
@@ -442,7 +447,7 @@ The display resolution, in the format `width,height`. For example, `1920,1080`. 
 the default resolution is determined by Windows.
 
 ```yaml
-Value: <Size>
+Value: <Resolution>
 Aliases: -res
 ```
 

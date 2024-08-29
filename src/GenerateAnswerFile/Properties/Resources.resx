@@ -234,7 +234,7 @@ If no local accounts are created, the user will be asked to create one during OO
     <value>The organizational unit to use when joining the domain specified by -JoinDomain.</value>
   </data>
   <data name="OutputFileDescription" xml:space="preserve">
-    <value>The path and file name to write the answer file to.</value>
+    <value>The path and file name to write the answer file to. If not specified, the generated answer file is written to the console.</value>
   </data>
   <data name="PartitionsDescription" xml:space="preserve">
     <value>A partition to create on the disk specified by -InstallToDisk. Can have multiple values.
@@ -266,7 +266,9 @@ If not specified, the default partition layout for the method specified by -Inst
     <value>The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.</value>
   </data>
   <data name="UsageHelpFooterFormat" xml:space="preserve">
-    <value>For more information, as well as usage examples, run '{0} -OnlineHelp', or see: https://github.com/SvenGroot/GenerateAnswerFile</value>
+    <value>Options can also be specified by piping a JSON file to the standard input. In this case, only the -OutputFile argument can be used.
+
+For more information, as well as usage examples, run '{0} -OnlineHelp', or see: https://github.com/SvenGroot/GenerateAnswerFile</value>
   </data>
   <data name="UsageHelpMoreInfoFormat" xml:space="preserve">
     <value>Run '{0} -Help' or '{0} -OnlineHelp' for more information, or see: https://github.com/SvenGroot/GenerateAnswerFile</value>

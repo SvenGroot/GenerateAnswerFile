@@ -414,7 +414,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The path and file name to write the answer file to..
+        ///   Looks up a localized string similar to The path and file name to write the answer file to. If not specified, the generated answer file is written to the console..
         /// </summary>
         internal static string OutputFileDescription {
             get {
@@ -490,7 +490,9 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For more information, as well as usage examples, run &apos;{0} -OnlineHelp&apos;, or see: https://github.com/SvenGroot/GenerateAnswerFile.
+        ///   Looks up a localized string similar to Options can also be specified by piping a JSON file to the standard input. In this case, only the -OutputFile argument can be used.
+        ///
+        ///For more information, as well as usage examples, run &apos;{0} -OnlineHelp&apos;, or see: https://github.com/SvenGroot/GenerateAnswerFile.
         /// </summary>
         internal static string UsageHelpFooterFormat {
             get {
