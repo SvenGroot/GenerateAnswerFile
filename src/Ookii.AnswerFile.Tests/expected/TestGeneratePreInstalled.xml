@@ -52,6 +52,16 @@
             <Group>Administrators</Group>
             <Name>MyAccount</Name>
           </LocalAccount>
+          <LocalAccount wcm:action="add">
+            <Password>
+              <Value>UABhAHMAcwB3AG8AcgBkADIAUABhAHMAcwB3AG8AcgBkAA==</Value>
+              <PlainText>false</PlainText>
+            </Password>
+            <Description>MyAccount2</Description>
+            <DisplayName>MyAccount2</DisplayName>
+            <Group>Users</Group>
+            <Name>MyAccount2</Name>
+          </LocalAccount>
         </LocalAccounts>
         <DomainAccounts>
           <DomainAccountList wcm:action="add">

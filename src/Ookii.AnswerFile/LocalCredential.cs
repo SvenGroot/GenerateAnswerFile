@@ -1,4 +1,6 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Text.RegularExpressions;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides credentials for a local user account.
@@ -17,10 +19,19 @@
 public record class LocalCredential
 {
     /// <summary>
+    /// The group that users will be added to if no group is explicitly specified.
+    /// </summary>
+    /// <value>
+    /// The "Administrators" group.
+    /// </value>
+    public const string DefaultGroup = "Administrators";
+
+    /// <summary>
     /// Creates a new instance of the <see cref="LocalCredential"/> class.
     /// </summary>
     /// <param name="userName">The user name of the account.</param>
     /// <param name="password">The password of the account.</param>
+    /// <param name="group">The group to add the user to.</param>
     /// <remarks>
     /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
@@ -28,14 +39,17 @@ public record class LocalCredential
     /// </note>
     /// </remarks>
     /// <exception cref="ArgumentNullException">
-    ///   <paramref name="userName"/> or <paramref name="password"/> is <see langword="null"/>.
+    ///   <paramref name="userName"/> or <paramref name="password"/> or <paramref name="group"/> is
+    ///   <see langword="null"/>.
     /// </exception>
-    public LocalCredential(string userName, string password)
+    public LocalCredential(string userName, string password, string group = DefaultGroup)
     {
         ArgumentNullException.ThrowIfNull(userName);
         ArgumentNullException.ThrowIfNull(password);
+        ArgumentNullException.ThrowIfNull(group);
         UserName = userName;
         Password = password;
+        Group = group;
     }
 
     /// <summary>
@@ -61,6 +75,14 @@ public record class LocalCredential
     public string Password { get; }
 
     /// <summary>
+    /// The group to which the user will be added.
+    /// </summary>
+    /// <value>
+    /// The name of a local group on the target computer.
+    /// </value>
+    public string Group { get; }
+
+    /// <summary>
     /// Parses the domain and user name from a string in the form 'user,password'.
     /// </summary>
     /// <param name="value">The value to parse.</param>
@@ -72,12 +94,13 @@ public record class LocalCredential
     public static LocalCredential Parse(string value)
     {
         ArgumentNullException.ThrowIfNull(value);
-        var (userName, password) = value.SplitOnce(',');
+        var (group, credential) = value.SplitOnce(':');
+        var (userName, password) = credential.SplitOnce(',');
         if (userName == null)
         {
             throw new FormatException(Properties.Resources.InvalidLocalCredential);
         }
 
-        return new LocalCredential(userName, password);
+        return new LocalCredential(userName, password, group ?? DefaultGroup);
     }
 }

@@ -29,7 +29,11 @@ public class GeneratorTests
             {
                 Count = 9999,
             },
-            LocalAccounts = { new LocalCredential("MyAccount", "Password") },
+            LocalAccounts =
+            { 
+                new LocalCredential("MyAccount", "Password"),
+                new LocalCredential("MyAccount2", "Password2", "Users")
+            },
             FirstLogonCommands = { "command1.exe", "command2.exe foo" },
             SetupScripts = { "\\\\machine\\shared\\script.ps1 -Arg" },
             ComputerName = "test-machine",

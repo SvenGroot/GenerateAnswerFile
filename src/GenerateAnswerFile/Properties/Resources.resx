@@ -148,7 +148,7 @@
     <value>The password of the user specified by -CmdKeyUser.</value>
   </data>
   <data name="CmdKeyUserDescription" xml:space="preserve">
-    <value>The name of a user used to access all network resources, in 'domain\user' format. If present, the cmdkey.exe application will be used at first logon to save this user's credentials for all network paths</value>
+    <value>The name of a user used to access all network resources, in 'domain\user' format. If present, the cmdkey.exe application will be used at first logon to save this user's credentials for all network paths.</value>
   </data>
   <data name="ComputerNameDescription" xml:space="preserve">
     <value>The network name for the computer.</value>
@@ -166,7 +166,7 @@
     <value>The display resolution, in the format 'width,height'. For example, '1920,1080'. If not specified, the default resolution is determined by Windows.</value>
   </data>
   <data name="DomainAccountsDescription" xml:space="preserve">
-    <value>The name of a domain account to add to a local group, using the format 'group:domain\user', 'domain\user', 'group:user' or 'user'. If no group is specified, the user is added to the local Administrators group. If no domain is specified, the user must be in the domain you're joining. Can have multiple values.</value>
+    <value>The name of a domain account to add to a local group, using the format 'group:domain\user', 'domain\user', 'group:user' or 'user'. If no group is specified, the user is added to the local Administrators group. You can specify multiple groups by separating them with semicolons. If no domain is specified, the user must be in the domain you're joining. Can have multiple values.</value>
   </data>
   <data name="DomainUserGroupValueDescription" xml:space="preserve">
     <value>[Group:][Domain\]User</value>
@@ -211,10 +211,12 @@
     <value>The language used for the UI language, and the input, system and user locales.</value>
   </data>
   <data name="LocalAccountsDescription" xml:space="preserve">
-    <value>A local account to create, using the format 'name,password'. Can have multiple values. If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended.</value>
+    <value>A local account to create, using the format group:name,password' or 'name,password'. Can have multiple values. If no group is specified, the user will be added to the Administrators group. You can specify multiple groups by separating them with semicolons.
+
+If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended.</value>
   </data>
   <data name="LocalCredentialValueDescription" xml:space="preserve">
-    <value>Name,Password</value>
+    <value>[Group:]Name,Password</value>
   </data>
   <data name="NumberValueDescription" xml:space="preserve">
     <value>Number</value>

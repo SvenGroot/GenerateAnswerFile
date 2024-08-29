@@ -238,7 +238,7 @@ public class Generator
                             },
                             { "Description", account.UserName },
                             { "DisplayName", account.UserName },
-                            { "Group", "Administrators" },
+                            { "Group", account.Group },
                             { "Name", account.UserName },
                         }
                         }

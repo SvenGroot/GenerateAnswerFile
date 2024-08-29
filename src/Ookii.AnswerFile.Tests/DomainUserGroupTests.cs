@@ -12,6 +12,11 @@ public class DomainUserGroupTests
         Assert.AreEqual("foo", target.DomainUser.Domain);
         Assert.AreEqual("bar", target.DomainUser.UserName);
         Assert.AreEqual("baz", target.Group);
+
+        target = new DomainUserGroup(new DomainUser("foo", "bar"));
+        Assert.AreEqual("foo", target.DomainUser.Domain);
+        Assert.AreEqual("bar", target.DomainUser.UserName);
+        Assert.AreEqual("Administrators", target.Group);
     }
 
     [TestMethod]

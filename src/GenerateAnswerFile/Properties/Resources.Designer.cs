@@ -151,7 +151,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of a user used to access all network resources, in &apos;domain\user&apos; format. If present, the cmdkey.exe application will be used at first logon to save this user&apos;s credentials for all network paths.
+        ///   Looks up a localized string similar to The name of a user used to access all network resources, in &apos;domain\user&apos; format. If present, the cmdkey.exe application will be used at first logon to save this user&apos;s credentials for all network paths..
         /// </summary>
         internal static string CmdKeyUserDescription {
             get {
@@ -205,7 +205,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of a domain account to add to a local group, using the format &apos;group:domain\user&apos;, &apos;domain\user&apos;, &apos;group:user&apos; or &apos;user&apos;. If no group is specified, the user is added to the local Administrators group. If no domain is specified, the user must be in the domain you&apos;re joining. Can have multiple values..
+        ///   Looks up a localized string similar to The name of a domain account to add to a local group, using the format &apos;group:domain\user&apos;, &apos;domain\user&apos;, &apos;group:user&apos; or &apos;user&apos;. If no group is specified, the user is added to the local Administrators group. You can specify multiple groups by separating them with semicolons. If no domain is specified, the user must be in the domain you&apos;re joining. Can have multiple values..
         /// </summary>
         internal static string DomainAccountsDescription {
             get {
@@ -349,7 +349,9 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A local account to create, using the format &apos;name,password&apos;. Can have multiple values. If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended..
+        ///   Looks up a localized string similar to A local account to create, using the format group:name,password&apos; or &apos;name,password&apos;. Can have multiple values. If no group is specified, the user will be added to the Administrators group. You can specify multiple groups by separating them with semicolons.
+        ///
+        ///If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended..
         /// </summary>
         internal static string LocalAccountsDescription {
             get {
@@ -358,7 +360,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name,Password.
+        ///   Looks up a localized string similar to [Group:]Name,Password.
         /// </summary>
         internal static string LocalCredentialValueDescription {
             get {

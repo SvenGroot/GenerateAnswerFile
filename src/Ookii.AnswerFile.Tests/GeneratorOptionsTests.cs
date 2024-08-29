@@ -29,7 +29,8 @@ public class GeneratorOptionsTests
             LocalAccounts =
             {
                 new LocalCredential("localuser", "password"),
-                new LocalCredential("localuser2", "password"),
+                new LocalCredential("localuser2", "password2"),
+                new LocalCredential("localuser3", "password3", "Users"),
             },
             FirstLogonCommands = { "Hello", "Bye" },
             SetupScripts = { "Foo", "Bar" },
