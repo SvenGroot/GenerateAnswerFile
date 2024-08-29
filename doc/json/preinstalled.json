@@ -1,10 +1,9 @@
 {
-    "$schema": "file:///E:/Code/GenerateAnswerFile/doc/json/schema.json?",
-    "InstallOptions": null,
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
     "JoinDomain": {
-        "Domain": "domain",
+        "Domain": "mydomain",
         "Credential": {
-            "UserAccount": "domain\\user",
+            "UserAccount": "mydomain\\user",
             "Password": "password"
         },
         "OUPath": "OU=Computers",
@@ -14,23 +13,17 @@
                 "Group": "Administrators"
             },
             {
-                "DomainUser": "domain\\user2",
+                "DomainUser": "otherdomain\\user2",
                 "Group": "Users"
             }
         ]
     },
     "ComputerName": "TestComputer",
-    "EnableDefender": false,
-    "EnableCloud": true,
-    "EnableRemoteDesktop": false,
-    "EnableServerManager": true,
+    "EnableRemoteDesktop": true,
+    "EnableServerManager": false,
     "LocalAccounts": [
         {
             "UserName": "localuser",
-            "Password": "password"
-        },
-        {
-            "UserName": "localuser2",
             "Password": "password"
         }
     ],
@@ -47,15 +40,13 @@
     },
     "DisplayResolution": "1280,1024",
     "Language": "en-US",
-    "ProductKey": null,
+    "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
     "ProcessorArchitecture": "amd64",
     "TimeZone": "Pacific Standard Time",
     "FirstLogonCommands": [
-        "Hello",
-        "Bye"
+        "\\\\server\\share\\script.cmd"
     ],
     "SetupScripts": [
-        "Foo",
-        "Bar"
+        "\\\\server\\share\\script.ps1 -SomeParameter"
     ]
 }

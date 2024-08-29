@@ -2,22 +2,9 @@
     "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
     "InstallOptions": {
         "$type": "CleanBios",
-        "Foo": "Bar",
-        "Partitions": [
-            {
-                "Type": "System",
-                "Label": "System",
-                "Size": "100MB"
-            },
-            {
-                "Label": "Windows"
-            }
-        ],
-        "DiskId": 3,
-        "ImageIndex": 2
+        "ImageIndex": 1
     },
     "DisplayResolution": "1920,1080",
     "Language": "en-US",
-    "ProcessorArchitecture": "amd64",
-    "TimeZone": "Pacific Standard Time"
+    "ProcessorArchitecture": "x86"
 }

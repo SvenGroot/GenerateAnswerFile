@@ -1,32 +1,19 @@
 {
-    "$schema": "file:///E:/Code/GenerateAnswerFile/doc/json/schema.json?",
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
     "InstallOptions": {
         "$type": "ExistingPartition",
         "TargetPartitionId": 5,
         "DiskId": 3,
-        "ImageIndex": 2,
         "OptionalFeatures": {
-            "WindowsVersion": "10.0.22000.1",
+            "WindowsVersion": "10.0.22631.1",
             "Features": [
                 "Microsoft-Windows-Subsystem-Linux",
                 "VirtualMachinePlatform"
             ]
         }
     },
-    "JoinDomain": null,
-    "ComputerName": null,
-    "EnableDefender": true,
-    "EnableCloud": true,
-    "EnableRemoteDesktop": false,
-    "EnableServerManager": true,
-    "LocalAccounts": [],
-    "AutoLogon": null,
-    "CmdKeyAccount": null,
-    "DisplayResolution": null,
     "Language": "en-US",
-    "ProductKey": null,
+    "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
     "ProcessorArchitecture": "amd64",
-    "TimeZone": "Pacific Standard Time",
-    "FirstLogonCommands": [],
-    "SetupScripts": []
+    "TimeZone": "Pacific Standard Time"
 }

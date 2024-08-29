@@ -64,7 +64,6 @@ public class GeneratorOptionsTests
             {
                 CustomTargetPartitionId = 5,
                 DiskId = 3,
-                ImageIndex = 2,
                 OptionalFeatures = new OptionalFeatures(new Version(10, 0, 22000, 1))
                 {
                     Features = { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }
@@ -73,8 +72,9 @@ public class GeneratorOptionsTests
                 {
                     new Partition() { Type = PartitionType.System, Label = "System", Size = BinarySize.FromGibi(128) },
                     new Partition() { Label = "Windows" }
-                }
+                },
             },
+            ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
         };
 
         var json = options.ToJson();
@@ -85,7 +85,7 @@ public class GeneratorOptionsTests
         var install = (CleanEfiOptions)deserialized.InstallOptions;
         Assert.AreEqual(5, install.CustomTargetPartitionId);
         Assert.AreEqual(3, install.DiskId);
-        Assert.AreEqual(2, install.ImageIndex);
+        Assert.AreEqual("ABCDE-12345-ABCDE-12345-ABCDE", options.ProductKey);
         Assert.IsNotNull(install.OptionalFeatures);
         Assert.AreEqual(new Version(10, 0, 22000, 1), install.OptionalFeatures.WindowsVersion);
         CollectionAssert.AreEqual(new[] { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }, install.OptionalFeatures.Features);
