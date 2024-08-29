@@ -1,4 +1,5 @@
 {
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
     "InstallOptions": {
         "$type": "Manual",
         "OptionalFeatures": {
@@ -9,20 +10,8 @@
             ]
         }
     },
-    "JoinDomain": null,
-    "ComputerName": null,
-    "EnableDefender": true,
-    "EnableCloud": true,
-    "EnableRemoteDesktop": false,
-    "EnableServerManager": true,
-    "LocalAccounts": [],
-    "AutoLogon": null,
-    "CmdKeyAccount": null,
-    "DisplayResolution": null,
     "Language": "en-US",
-    "ProductKey": null,
+    "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
     "ProcessorArchitecture": "amd64",
-    "TimeZone": "Pacific Standard Time",
-    "FirstLogonCommands": [],
-    "SetupScripts": []
+    "TimeZone": "Pacific Standard Time"
 }

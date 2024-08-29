@@ -34,7 +34,7 @@ var options = new GeneratorOptions()
     LocalAccounts = { new LocalCredential("MyUser", "Password") },
     AutoLogon = new AutoLogonOptions(new DomainUser(null, "MyUser"), "Password"),
     ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
-    DisplayResolution = new Size(1920, 1080)
+    DisplayResolution = new Resolution(1920, 1080)
 };
 
 Generator.Generate("unattend.xml", options);
@@ -42,6 +42,13 @@ Generator.Generate("unattend.xml", options);
 
 For more information, check out the
 [class library documentation](https://www.ookii.org/Link/GenerateAnswerFileDoc).
+
+## Breaking changes
+
+Version 2.0 of the library has a few breaking changes from version 1.x:
+
+- The `DomainOptions.DomainAccounts` property has a different type.
+- The `GeneratorOptions.DisplayResolution` property has a different type.
 
 [`CleanBiosOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_CleanBiosOptions.htm
 [`CleanEfiOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_CleanEfiOptions.htm

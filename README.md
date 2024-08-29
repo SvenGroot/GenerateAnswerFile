@@ -27,7 +27,8 @@ generated here will always skip the entire OOBE experience unless no local accou
 no domain was joined.
 
 Below, the core functionality is explained with several examples. You can also check the
-[full list of command line arguments](doc/CommandLine.md), or run `./GenerateAnswerFile -Help`.
+[full list of command line arguments](doc/CommandLine.md), or run `./GenerateAnswerFile -Help`. It's
+also possible to specify the options using a [JSON file](doc/Json.md).
 
 See [what's new in Answer File Generator](doc/ChangeLog.md).
 
@@ -261,6 +262,14 @@ the order they are supplied, but all commands will be executed before any script
 
 If you execute any scripts, they must be stored in a location that is accessible to the system after
 installation, such as a network share like the example above.
+
+## Using JSON to provide options
+
+Because the large number of command line arguments may get unwieldy, the Answer File Generator
+provides a custom JSON file format that can be used as an alternative way to provide the options
+for generating an answer file.
+
+For more information, see [the JSON file documentation](doc/Json.md).
 
 ## Using an answer file
 

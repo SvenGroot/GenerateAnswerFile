@@ -14,7 +14,7 @@
             },
             {
                 "DomainUser": "otherdomain\\user2",
-                "Group": "Users"
+                "Group": "Users;Hyper-V Administrators"
             }
         ]
     },
@@ -33,10 +33,6 @@
             "Password": "password"
         },
         "Count": 1
-    },
-    "CmdKeyAccount": {
-        "UserAccount": "domain\\user",
-        "Password": "password"
     },
     "DisplayResolution": "1280,1024",
     "Language": "en-US",

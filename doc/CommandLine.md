@@ -35,6 +35,9 @@ $arguments = @{
 ./GenerateAnswerFile @arguments
 ```
 
+You can also use [JSON files](Json.md) to specify options for generating an answer file. In this
+case, only the `-OutputFile` argument can be used.
+
 The arguments are split into several categories:
 
 - [General options](#general-options)

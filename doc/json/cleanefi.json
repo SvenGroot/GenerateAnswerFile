@@ -6,14 +6,21 @@
             {
                 "Type": "System",
                 "Label": "System",
-                "Size": "128 GiB",
-                "FileSystem": null
+                "Size": "100MB"
+            },
+            {
+                "Type": "Msr",
+                "Size": "128MB"
             },
             {
                 "Type": "Normal",
                 "Label": "Windows",
-                "Size": null,
-                "FileSystem": null
+                "Size": "256GB"
+            },
+            {
+                "Type": "Normal",
+                "Label": "Data",
+                "Size": null
             }
         ],
         "DiskId": 2,
@@ -28,5 +35,5 @@
     "Language": "en-US",
     "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
     "ProcessorArchitecture": "amd64",
-    "TimeZone": "Pacific Standard Time"
+    "TimeZone": "W. Europe Standard Time"
 }

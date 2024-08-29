@@ -7,8 +7,7 @@
         "OptionalFeatures": {
             "WindowsVersion": "10.0.22631.1",
             "Features": [
-                "Microsoft-Windows-Subsystem-Linux",
-                "VirtualMachinePlatform"
+                "Microsoft-Hyper-V-All"
             ]
         }
     },
