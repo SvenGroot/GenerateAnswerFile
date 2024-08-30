@@ -281,13 +281,13 @@ to see how to use an answer file during Windows setup.
 
 The core functionality for generating answer files is implemented in the
 [Ookii.AnswerFile library](doc/Library.md), which you can use in your own applications targeting
-.Net 7.0 or later.
+.Net 8.0 or later.
 
 ## Building and testing
 
 To build Answer File Generator, make sure you have the following installed:
 
-- [Microsoft .Net 7.0 SDK](https://dotnet.microsoft.com/download) or later
+- [Microsoft .Net 8.0 SDK](https://dotnet.microsoft.com/download) or later
 
 To build the application, library, and tests, simply use the `dotnet build` command in the `src`
 directory. You can run the unit tests using `dotnet test`.

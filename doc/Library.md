@@ -1,7 +1,7 @@
 # Ookii.AnswerFile library [![NuGet](https://img.shields.io/nuget/v/Ookii.AnswerFile)](https://nuget.org/packages/Ookii.AnswerFile)
 
 The core functionality of the Answer File Generator is implemented in the Ookii.AnswerFile library,
-which you can integrate into your own applications. The library requires .Net 7.0 or later, and is
+which you can integrate into your own applications. The library requires .Net 8.0 or later, and is
 available on [NuGet](https://nuget.org/packages/Ookii.AnswerFile).
 
 To generate an answer file, you invoke the [`Generator.Generate`][] method, passing in an instance
