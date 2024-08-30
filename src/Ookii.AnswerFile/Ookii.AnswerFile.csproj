@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/SvenGroot/GenerateAnswerFile</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>unattended answer windows unattend unattend.xml autounattend autounattend.xml install installation</PackageTags>
-    <PackageReleaseNotes>For details, see https://www.ookii.org/Link/GenerateAnswerFileVersionHistory</PackageReleaseNotes>
+    <PackageReleaseNotes>This version contains some breaking changes compared to version 1.x. For details, see https://www.ookii.org/Link/GenerateAnswerFileVersionHistory</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>

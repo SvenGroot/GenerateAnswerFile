@@ -75,15 +75,16 @@ their initial password must be set. To join a domain, the password of a domain a
 the appropriate permissions must be specified. For automatic log-on, you must specify the password
 of the account that will be logged on.
 
-:warning: **Passwords in answer files are not securely stored** :warning:
-
-They are at best base64-encoded (which is easily reversible), and at worst just stored in plain
-text. Do not store answer files with sensitive passwords in unsecure locations, and delete such
-files when you are done with them.
-
-The answer file generator also does not treat these passwords securely (it can't, to be able to
-write them out to the answer file in this fashion), so copies of the passwords may remain in system
-memory after the application is terminated.
+> [!WARNING]
+> Passwords in answer files are not securely stored!
+>
+> They are at best base64-encoded (which is easily reversible), and at worst just stored in plain
+> text. Do not store answer files with sensitive passwords in unsecure locations, and delete such
+> files when you are done with them.
+>
+> The answer file generator also does not treat these passwords securely (it can't, to be able to
+> write them out to the answer file in this fashion), so copies of the passwords may remain in system
+> memory after the application is terminated.
 
 ## Time zone
 
