@@ -296,7 +296,7 @@ Aliases: -a
 
 ### `-AutoLogonCount`
 
-The number of times the user specified by [`-AutoLogonCount`](#-autologoncount) will be
+The number of times the user specified by [`-AutoLogonUser`](#-autologonuser) will be
 automatically logged on.
 
 Must be at least 1.
@@ -310,7 +310,7 @@ Required arguments: -AutoLogonUser
 
 ### `-AutoLogonPassword`
 
-The password of the user specified by [`-AutoLogonCount`](#-autologoncount).
+The password of the user specified by [`-AutoLogonUser`](#-autologonuser).
 
 Must not be blank.
 

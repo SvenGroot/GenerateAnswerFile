@@ -121,10 +121,10 @@
     <value>Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation.</value>
   </data>
   <data name="AutoLogonCountDescription" xml:space="preserve">
-    <value>The number of times the user specified by -AutoLogonCount will be automatically logged on.</value>
+    <value>The number of times the user specified by -AutoLogonUser will be automatically logged on.</value>
   </data>
   <data name="AutoLogonPasswordDescription" xml:space="preserve">
-    <value>The password of the user specified by -AutoLogonCount.</value>
+    <value>The password of the user specified by -AutoLogonUser.</value>
   </data>
   <data name="AutoLogonUserDescription" xml:space="preserve">
     <value>The name of a user to automatically log on, in the format 'domain\user', or just 'user' for local users. If not specified, automatic logon will not be used.</value>

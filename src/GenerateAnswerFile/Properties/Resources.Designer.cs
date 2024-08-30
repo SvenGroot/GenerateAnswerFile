@@ -70,7 +70,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The number of times the user specified by -AutoLogonCount will be automatically logged on..
+        ///   Looks up a localized string similar to The number of times the user specified by -AutoLogonUser will be automatically logged on..
         /// </summary>
         internal static string AutoLogonCountDescription {
             get {
@@ -79,7 +79,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password of the user specified by -AutoLogonCount..
+        ///   Looks up a localized string similar to The password of the user specified by -AutoLogonUser..
         /// </summary>
         internal static string AutoLogonPasswordDescription {
             get {
