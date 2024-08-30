@@ -349,7 +349,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A local account to create, using the format group:name,password&apos; or &apos;name,password&apos;. Can have multiple values. If no group is specified, the user will be added to the Administrators group. You can specify multiple groups by separating them with semicolons.
+        ///   Looks up a localized string similar to A local account to create, using the format &apos;group:name,password&apos; or &apos;name,password&apos;. Can have multiple values. If no group is specified, the user will be added to the Administrators group. You can specify multiple groups by separating them with semicolons.
         ///
         ///If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended..
         /// </summary>

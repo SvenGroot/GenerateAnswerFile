@@ -211,7 +211,7 @@
     <value>The language used for the UI language, and the input, system and user locales.</value>
   </data>
   <data name="LocalAccountsDescription" xml:space="preserve">
-    <value>A local account to create, using the format group:name,password' or 'name,password'. Can have multiple values. If no group is specified, the user will be added to the Administrators group. You can specify multiple groups by separating them with semicolons.
+    <value>A local account to create, using the format 'group:name,password' or 'name,password'. Can have multiple values. If no group is specified, the user will be added to the Administrators group. You can specify multiple groups by separating them with semicolons.
 
 If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended.</value>
   </data>

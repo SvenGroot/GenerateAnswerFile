@@ -278,7 +278,7 @@ Required arguments: -CmdKeyPassword
 
 ### `-LocalAccount`
 
-A local account to create, using the format group:name,password' or `name,password`. Can have
+A local account to create, using the format `group:name,password` or `name,password`. Can have
 multiple values. If no group is specified, the user will be added to the Administrators group. You
 can specify multiple groups by separating them with semicolons.
 
