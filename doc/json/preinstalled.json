@@ -1,6 +1,7 @@
 {
     "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
     "JoinDomain": {
+        "$type": "Credential",
         "Domain": "mydomain",
         "Credential": {
             "UserAccount": "mydomain\\user",
