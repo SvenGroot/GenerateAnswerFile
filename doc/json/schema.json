@@ -501,6 +501,10 @@
         "Password": {
           "type": "string",
           "description": "The password of the account."
+        },
+        "Group": {
+          "type": ["null", "string"],
+          "description": "The group to which the user will be added. The default is 'Administrators'."
         }
       }
     },
