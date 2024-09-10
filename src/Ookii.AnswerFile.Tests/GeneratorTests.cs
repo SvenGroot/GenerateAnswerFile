@@ -4,14 +4,8 @@ using System.Runtime.CompilerServices;
 namespace Ookii.AnswerFile.Tests;
 
 [TestClass]
-public class GeneratorTests
+public class GeneratorTests : FileTestsBase
 {
-    [TestInitialize]
-    public void Initialize()
-    {
-        Directory.CreateDirectory(Path.Join(Path.GetDirectoryName(typeof(GeneratorTests).Assembly.Location), "actual"));
-    }
-
     [TestMethod]
     public void TestGeneratePreInstalled()
     {
@@ -243,20 +237,5 @@ public class GeneratorTests
 
         Generator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
-    }
-
-
-    private static void CheckFilesEqual(string expectedPath, string actualPath)
-    {
-        var expected = File.ReadAllText(expectedPath);
-        var actual = File.ReadAllText(actualPath);
-        Assert.AreEqual(expected, actual);
-    }
-
-    private static (string, string) GetPaths([CallerMemberName] string name = null!)
-    {
-        var basePath = Path.GetDirectoryName(typeof(GeneratorTests).Assembly.Location);
-        var file = name + ".xml";
-        return (Path.Join(basePath, "actual", file), Path.Join(basePath, "expected", file));
     }
 }

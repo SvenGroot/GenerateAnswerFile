@@ -1,0 +1,43 @@
+{
+  "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+  "InstallOptions": {
+    "$type": "CleanEfi",
+    "Partitions": [
+      {
+        "Type": "System",
+        "Label": "System",
+        "Size": "128 GiB"
+      },
+      {
+        "Type": "Normal",
+        "Label": "Windows"
+      }
+    ],
+    "TargetPartitionId": 5,
+    "DiskId": 3,
+    "ImageIndex": 0,
+    "OptionalFeatures": {
+      "WindowsVersion": "10.0.22000.1",
+      "Features": [
+        "Microsoft-Windows-Subsystem-Linux",
+        "VirtualMachinePlatform"
+      ]
+    }
+  },
+  "JoinDomain": {
+    "$type": "Provisioning",
+    "AccountData": "base64-data-goes-here",
+    "DomainAccounts": []
+  },
+  "EnableDefender": true,
+  "EnableCloud": true,
+  "EnableRemoteDesktop": false,
+  "EnableServerManager": true,
+  "LocalAccounts": [],
+  "Language": "en-US",
+  "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
+  "ProcessorArchitecture": "amd64",
+  "TimeZone": "Pacific Standard Time",
+  "FirstLogonCommands": [],
+  "SetupScripts": []
+}

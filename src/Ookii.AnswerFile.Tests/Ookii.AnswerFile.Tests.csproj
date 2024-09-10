@@ -19,6 +19,11 @@
     <None Remove="expected\TestGenerateExistingPartition.xml" />
     <None Remove="expected\TestGenerateManual.xml" />
     <None Remove="expected\TestGeneratePreInstalled.xml" />
+    <None Remove="expected\TestJsonSerializationBios.json" />
+    <None Remove="expected\TestJsonSerializationEfi.json" />
+    <None Remove="expected\TestJsonSerializationExisting.json" />
+    <None Remove="expected\TestJsonSerializationManual.json" />
+    <None Remove="expected\TestJsonSerializationPreInstalled.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,12 +57,27 @@
     <Content Include="expected\TestGeneratePreInstalled.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="expected\TestJsonSerializationBios.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="expected\TestJsonSerializationEfi.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="expected\TestJsonSerializationExisting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="expected\TestJsonSerializationManual.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="expected\TestJsonSerializationPreInstalled.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.4.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.4.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.5.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.5.2" />
     <PackageReference Include="coverlet.collector" Version="6.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
