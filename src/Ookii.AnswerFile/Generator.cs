@@ -113,7 +113,16 @@ public class Generator
 
     private void GenerateServicing()
     {
-        Options.InstallOptions?.GenerateServicingPass(this);
+        if (Options.InstallOptions != null)
+        {
+            Options.InstallOptions.GenerateServicingPass(this);
+            if (Options.InstallOptions.DomainJoinOffline && Options.JoinDomain != null)
+            {
+                using var pass = Writer.WriteAutoCloseElement("offlineServicing");
+                using var join = WriteComponentStart("Microsoft-Windows-UnattendedJoin");
+                Options.JoinDomain.WriteDomainElements(this, true);
+            }
+        }
     }
 
     private void GenerateWindowsPePass()
@@ -125,7 +134,7 @@ public class Generator
     {
         using var pass = WritePassStart("specialize");
         WriteInternationalCore();
-        if (Options.JoinDomain != null)
+        if (Options.JoinDomain != null && Options.InstallOptions?.DomainJoinOffline != true)
         {
             using var join = WriteComponentStart("Microsoft-Windows-UnattendedJoin");
             Options.JoinDomain.WriteDomainElements(this, false);

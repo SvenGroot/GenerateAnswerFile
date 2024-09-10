@@ -125,7 +125,9 @@ public class GeneratorTests : FileTestsBase
             {
                 DiskId = 1,
                 ImageIndex = 2,
+                DomainJoinOffline = true,
             },
+            JoinDomain = new ProvisionedDomainOptions("base64-data-goes-here"),
             EnableDefender = false,
             LocalAccounts = { new LocalCredential("MyUser", "Password") },
             ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
@@ -151,6 +153,7 @@ public class GeneratorTests : FileTestsBase
                     new Partition() { Type = PartitionType.Normal, Label = "Windows", Size = BinarySize.FromGibi(64) },
                     new Partition() { Type = PartitionType.Normal, Label = "Data", FileSystem = "FAT32" },
                 },
+                DomainJoinOffline = true, // This should be ignored
             },
             LocalAccounts = { new LocalCredential("MyUser", "Password") },
             ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",

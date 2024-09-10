@@ -22,6 +22,27 @@ public abstract class InstallOptionsBase
     public OptionalFeatures? OptionalFeatures { get; set; }
 
     /// <summary>
+    /// Gets or sets a value which indicates whether to join the domain during the offlineServicing
+    /// pass.
+    /// </summary>
+    /// <value>
+    /// <see langword="true"/> if the domain should be joined during the offlineServicing pass;
+    /// <see langword="false"/> if it should be joined during the specialize pass. The default
+    /// value is <see langword="false"/>.
+    /// </value>
+    /// <remarks>
+    /// <para>
+    ///   This property is ignored if the <see cref="GeneratorOptions.JoinDomain" qualifyHint="true"/>
+    ///   property is <see langword="null"/>.
+    /// </para>
+    /// <para>
+    ///   Setting this property to <see langword="true"/> is only supported when using the
+    ///   <see cref="ProvisionedDomainOptions"/> class.
+    /// </para>
+    /// </remarks>
+    public bool DomainJoinOffline { get; set; }
+
+    /// <summary>
     /// When implemented in a derived class, writes options specific to the install method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>

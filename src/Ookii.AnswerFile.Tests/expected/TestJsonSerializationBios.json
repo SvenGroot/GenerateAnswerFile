@@ -22,7 +22,8 @@
         "Microsoft-Windows-Subsystem-Linux",
         "VirtualMachinePlatform"
       ]
-    }
+    },
+    "DomainJoinOffline": false
   },
   "EnableDefender": true,
   "EnableCloud": true,

@@ -10,6 +10,11 @@ namespace Ookii.AnswerFile;
 ///   The password of the account used to join the domain is stored in plain text in the answer
 ///   file. Do not store answer files with sensitive passwords in public locations.
 /// </note>
+/// <para>
+///   This class cannot be used if the <see cref="InstallOptionsBase.DomainJoinOffline" qualifyHint="true"/>
+///   property is <see langword="true"/>. To join a domain during the offlineServicing pass, you
+///   must use the <see cref="ProvisionedDomainOptions"/> class instead.
+/// </para>
 /// </remarks>
 /// <threadsafety instance="false" static="true"/>
 public class DomainOptions : DomainOptionsBase

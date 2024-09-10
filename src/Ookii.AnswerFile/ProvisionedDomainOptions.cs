@@ -12,6 +12,10 @@ namespace Ookii.AnswerFile;
 ///   command: <c>djoin.exe /provision /domain domainname /machine machinename /savefile filename</c>.
 ///   The contents of the created file should be passed to the constructor of this class.
 /// </para>
+/// <para>
+///   Joining a domain using provisioning is supported both during the specialize and
+///   offlineServicing passes.
+/// </para>
 /// </remarks>
 public class ProvisionedDomainOptions : DomainOptionsBase
 {
