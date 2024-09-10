@@ -58,6 +58,7 @@ public class GeneratorTests
                     Features = { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }
                 }
             },
+            JoinDomain = new ProvisionedDomainOptions("base64-data-goes-here"),
             EnableRemoteDesktop = true,
             EnableServerManager = false,
             LocalAccounts = { new LocalCredential("MyUser", "Password") },

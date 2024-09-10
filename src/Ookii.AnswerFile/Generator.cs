@@ -128,23 +128,7 @@ public class Generator
         if (Options.JoinDomain != null)
         {
             using var join = WriteComponentStart("Microsoft-Windows-UnattendedJoin");
-            Writer.WriteElements(new KeyValueList
-            {
-                { "Identification", new KeyValueList
-                {
-                    { "UnsecureJoin", false },
-                    { "Credentials", new KeyValueList
-                    {
-                        { "Domain", Options.JoinDomain.Credential.UserAccount.Domain },
-                        { "Password", Options.JoinDomain.Credential.Password },
-                        { "Username", Options.JoinDomain.Credential.UserAccount.UserName }
-                    }
-                    },
-                    { "JoinDomain", Options.JoinDomain.Domain },
-                    { "MachineObjectOU", Options.JoinDomain.OUPath },
-                }
-                }
-            });
+            Options.JoinDomain.WriteDomainElements(this, false);
         }
 
         if (Options.ComputerName != null || Options.ProductKey != null)
@@ -252,7 +236,8 @@ public class Generator
                 string? lastDomain = null;
                 var accounts = Options.JoinDomain.DomainAccounts
                     .Select(u => u.DomainUser.Domain == null
-                        ? new DomainUserGroup(new DomainUser(Options.JoinDomain.Domain, u.DomainUser.UserName), u.Group)
+                        ? new DomainUserGroup(
+                            new DomainUser(Options.JoinDomain.DefaultDomainAccountDomain, u.DomainUser.UserName), u.Group)
                         : u)
                     .OrderBy(u => u.DomainUser.Domain);
 

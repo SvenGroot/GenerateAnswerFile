@@ -92,7 +92,45 @@
           "type": "null"
         },
         {
-          "$ref": "#/definitions/DomainOptions"
+          "properties": {
+            "$type": {
+              "enum": [
+                "Credential",
+                "Provisioning"
+              ],
+              "type": "string",
+              "description": "The type of domain join options to use."
+            }
+          },
+          "required": [
+            "$type"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "Credential"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/DomainOptions"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "Provisioning"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/ProvisionedDomainOptions"
+              }
+            }
+          ]
         }
       ]
     },
@@ -414,38 +452,92 @@
         }
       }
     },
-    "DomainOptions": {
+    "DomainOptionsBase": {
       "type": "object",
-      "description": "Provides options for joining a domain.",
-      "required": [
-        "Domain",
-        "Credential"
-      ],
-      "additionalProperties": false,
+      "description": "Base type for types that provide options for joining a domain.",
+      "x-abstract": true,
       "properties": {
-        "Domain": {
-          "type": "string",
-          "description": "The name of the domain to join."
-        },
-        "Credential": {
-          "description": "The credentials of a domain account that has permission to join the domain.",
-          "$ref": "#/definitions/DomainCredential"
-        },
-        "OUPath": {
-          "type": [
-            "null",
-            "string"
-          ],
-          "description": "The path of the Organizational Unit that the computer account should be added to, or null to use the domain default."
-        },
         "DomainAccounts": {
-          "type": "array",
-          "description": "A list of domain accounts that should be added to a local group.",
-          "items": {
-            "$ref": "#/definitions/DomainUserGroup"
-          }
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "description": "A list of domain accounts that should be added to a local group.",
+              "items": {
+                "$ref": "#/definitions/DomainUserGroup"
+              }
+            }
+          ]
         }
       }
+    },
+    "DomainOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/DomainOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for joining a domain.",
+          "required": [
+            "$type",
+            "Domain",
+            "Credential"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The type of domain join options to use.",
+              "const": "Credential"
+            },
+            "Domain": {
+              "type": "string",
+              "description": "The name of the domain to join."
+            },
+            "Credential": {
+              "description": "The credentials of a domain account that has permission to join the domain.",
+              "$ref": "#/definitions/DomainCredential"
+            },
+            "OUPath": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The path of the Organizational Unit that the computer account should be added to, or null to use the domain default."
+            }
+          }
+        }
+      ]
+    },
+    "ProvisionedDomainOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/DomainOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for joining a domain using provisioned account data.",
+          "required": [
+            "$type",
+            "AccountData"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The type of domain join options to use.",
+              "const": "Provisioning"
+            },
+            "AccountData": {
+              "type": "string",
+              "description": "The account data used to join the domain. This is a base64-encoded string returned by the djoin.exe command."
+            }
+          }
+        }
+      ]
     },
     "DomainCredential": {
       "type": "object",

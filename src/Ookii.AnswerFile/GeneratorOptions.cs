@@ -56,7 +56,7 @@ public class GeneratorOptions
     ///   file. Do not store answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
-    public DomainOptions? JoinDomain { get; set; }
+    public DomainOptionsBase? JoinDomain { get; set; }
 
     /// <summary>
     /// Gets or sets the computer name of the system.

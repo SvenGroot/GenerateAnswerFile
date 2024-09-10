@@ -126,4 +126,10 @@
   <data name="InvalidResolution" xml:space="preserve">
     <value>Invalid resolution value, expected format 'width,height'.</value>
   </data>
+  <data name="UnsupportedDomainOptionsPass" xml:space="preserve">
+    <value>You cannot use credentials to join a domain during the offlineServicing pass.</value>
+  </data>
+  <data name="DomainAccountWithoutDomain" xml:space="preserve">
+    <value>You must specify a domain for all domain users to add to a local group when using provisioning to join a domain.</value>
+  </data>
 </root>

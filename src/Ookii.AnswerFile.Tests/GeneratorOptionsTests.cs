@@ -44,10 +44,10 @@ public class GeneratorOptionsTests
         Assert.IsNotNull(deserialized.AutoLogon);
         Assert.AreEqual(options.AutoLogon.Credential, deserialized.AutoLogon.Credential);
         Assert.IsNotNull(deserialized.JoinDomain);
-        Assert.AreEqual(options.JoinDomain.Credential, deserialized.JoinDomain.Credential);
-        Assert.AreEqual(options.JoinDomain.Domain, deserialized.JoinDomain.Domain);
-        Assert.AreEqual(options.JoinDomain.OUPath, deserialized.JoinDomain.OUPath);
-        CollectionAssert.AreEqual(options.JoinDomain.DomainAccounts, deserialized.JoinDomain.DomainAccounts);
+        Assert.AreEqual(((DomainOptions)options.JoinDomain).Credential, ((DomainOptions)deserialized.JoinDomain).Credential);
+        Assert.AreEqual(((DomainOptions)options.JoinDomain).Domain, ((DomainOptions)deserialized.JoinDomain).Domain);
+        Assert.AreEqual(((DomainOptions)options.JoinDomain).OUPath, ((DomainOptions)deserialized.JoinDomain).OUPath);
+        CollectionAssert.AreEqual(((DomainOptions)options.JoinDomain).DomainAccounts, ((DomainOptions)deserialized.JoinDomain).DomainAccounts);
         CollectionAssert.AreEqual(options.LocalAccounts, deserialized.LocalAccounts);
         Assert.AreEqual(options.DisplayResolution, deserialized.DisplayResolution);
         Assert.IsTrue(deserialized.EnableCloud);
@@ -75,6 +75,7 @@ public class GeneratorOptionsTests
                     new Partition() { Label = "Windows" }
                 },
             },
+            JoinDomain = new ProvisionedDomainOptions("base64-data-goes-here"),
             ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
         };
 
