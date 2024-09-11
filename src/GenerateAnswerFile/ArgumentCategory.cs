@@ -4,7 +4,6 @@ enum ArgumentCategory
 {
     Install,
     UserAccounts,
-    AutoLogon,
     Domain,
     Other,
 }

@@ -89,30 +89,9 @@ partial class Arguments : BaseArguments
     public LocalCredential[]? LocalAccounts { get; set; }
 
     [CommandLineArgument]
-    [ResourceDescription(nameof(Properties.Resources.CmdKeyUserDescription))]
-    [ResourceValueDescription(nameof(Properties.Resources.DomainUserValueDescription))]
-    [ArgumentCategory(ArgumentCategory.UserAccounts)]
-    [Alias("cku")]
-    [Requires(nameof(CmdKeyPassword))]
-    [ValidateNotWhiteSpace]
-    public DomainUser? CmdKeyUser { get; set; }
-
-    [CommandLineArgument]
-    [ResourceDescription(nameof(Properties.Resources.CmdKeyPasswordDescription))]
-    [ArgumentCategory(ArgumentCategory.UserAccounts)]
-    [Alias("ckp")]
-    [Requires(nameof(CmdKeyUser))]
-    [ValidateNotWhiteSpace]
-    public string? CmdKeyPassword { get; set; }
-
-    #endregion
-
-    #region AutoLogon options
-
-    [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonUserDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.OptionalDomainUserValueDescription))]
-    [ArgumentCategory(ArgumentCategory.AutoLogon)]
+    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alu")]
     [Requires(nameof(AutoLogonPassword))]
     [ValidateNotWhiteSpace]
@@ -120,7 +99,7 @@ partial class Arguments : BaseArguments
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonPasswordDescription))]
-    [ArgumentCategory(ArgumentCategory.AutoLogon)]
+    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alp")]
     [Requires(nameof(AutoLogonUser))]
     [ValidateNotWhiteSpace]
@@ -128,7 +107,7 @@ partial class Arguments : BaseArguments
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonCountDescription))]
-    [ArgumentCategory(ArgumentCategory.AutoLogon)]
+    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alc")]
     [Requires(nameof(AutoLogonUser))]
     [ValidateRange(1, null)]
@@ -311,7 +290,6 @@ partial class Arguments : BaseArguments
             EnableRemoteDesktop = EnableRemoteDesktop,
             EnableServerManager = !DisableServerManager,
             AutoLogon = ToAutoLogonOptions(),
-            CmdKeyAccount = ToCmdKeyOptions(),
             DisplayResolution = DisplayResolution,
             Language = Language,
             ProductKey = ProductKey,
@@ -421,15 +399,5 @@ partial class Arguments : BaseArguments
         {
             Count = AutoLogonCount,
         };
-    }
-
-    private DomainCredential? ToCmdKeyOptions()
-    {
-        if (CmdKeyUser == null)
-        {
-            return null;
-        }
-
-        return new DomainCredential(CmdKeyUser, CmdKeyPassword!);
     }
 }

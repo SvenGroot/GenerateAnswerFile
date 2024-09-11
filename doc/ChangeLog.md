@@ -6,6 +6,11 @@
   you're joining.
 - The [`-LocalAccount`][] and [`-DomainAccount`][] allow you to customize which groups the account
   is added to.
+- You can join a domain using provisioning with the [`-JoinDomainProvisioningFile`][] argument, and
+  do it during the offlineServicing pass with the [`-JoinDomainOffline`][] argument.
+- The `-CmdKeyUser` and `-CmdKeyPassword` arguments have been removed; this was a bad security
+  practice that I don't wish to promote. You can still get identical behavior using the
+  [`-FirstLogonCommand`][] if desired.
 - You can specify options using a [custom JSON file format](Json.md), as an alternative to using
   command line arguments.
 - If no output file argument is provided, the answer file is now written to the console.
@@ -40,6 +45,8 @@
 [`-DomainAccount`]: CommandLine.md#-domainaccount
 [`-FirstLogonCommand`]: CommandLine.md#-firstlogoncommand
 [`-JoinDomain`]: CommandLine.md#-joindomain
+[`-JoinDomainOffline`]: doc/CommandLine.md#-joindomainoffline
+[`-JoinDomainProvisioningFile`]: doc/CommandLine.md#-joindomainprovisioningfile
 [`-JoinDomainUser`]: CommandLine.md#-joindomainuser
 [`-LocalAccount`]: CommandLine.md#-localaccount
 [`-Partition`]: CommandLine.md#-partition

@@ -342,12 +342,6 @@ public class Generator
                 ++order;
             }
 
-            if (Options.CmdKeyAccount is DomainCredential cmdKeyOptions)
-            {
-                WriteSynchronousCommand($"cmdkey.exe /add:* /user:{cmdKeyOptions.UserAccount} /pass:{cmdKeyOptions.Password}", "CmdKey", order);
-                ++order;
-            }
-
             foreach (var command in Options.FirstLogonCommands)
             {
                 WriteSynchronousCommand(command, "Custom command", order);

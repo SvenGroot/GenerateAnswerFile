@@ -54,8 +54,6 @@ The arguments are split into several categories:
     [<a href="#-autologoncount">-AutoLogonCount</a> &lt;Number&gt;]
     [<a href="#-autologonpassword">-AutoLogonPassword</a> &lt;String&gt;]
     [<a href="#-autologonuser">-AutoLogonUser</a> &lt;[Domain\]User&gt;]
-    [<a href="#-cmdkeypassword">-CmdKeyPassword</a> &lt;String&gt;]
-    [<a href="#-cmdkeyuser">-CmdKeyUser</a> &lt;Domain\User&gt;]
     [<a href="#-computername">-ComputerName</a> &lt;String&gt;]
     [<a href="#-disablecloud">-DisableCloud</a>]
     [<a href="#-disabledefender">-DisableDefender</a>]
@@ -252,50 +250,6 @@ Aliases: -v
 
 ## User account options
 
-### `-CmdKeyPassword`
-
-The password of the user specified by [`-CmdKeyUser`](#-cmdkeyuser).
-
-Must not be blank.
-
-```yaml
-Value: <String>
-Aliases: -ckp
-Required arguments: -CmdKeyUser
-```
-
-### `-CmdKeyUser`
-
-The name of a user used to access all network resources, in `domain\user` format. If present, the
-cmdkey.exe application will be used at first logon to save this user's credentials for all network
-paths.
-
-Must not be blank.
-
-```yaml
-Value: <Domain\User>
-Aliases: -cku
-Required arguments: -CmdKeyPassword
-```
-
-### `-LocalAccount`
-
-A local account to create, using the format `group:name,password` or `name,password`. Can have
-multiple values. If no group is specified, the user will be added to the Administrators group. You
-can specify multiple groups by separating them with semicolons.
-
-If no local accounts are created, the user will be asked to create one during OOBE, making setup not
-fully unattended.
-
-See [creating a user during installation](../README.md#creating-a-user-during-installation).
-
-```yaml
-Value: <[Group:]Name,Password> (multiple allowed)
-Aliases: -a
-```
-
-## Automatic logon options
-
 ### `-AutoLogonCount`
 
 The number of times the user specified by [`-AutoLogonUser`](#-autologonuser) will be automatically
@@ -335,6 +289,22 @@ See [joining a domain and automatic logon](../README.md#joining-a-domain-and-aut
 Value: <[Domain\]User>
 Aliases: -alu
 Required arguments: -AutoLogonPassword
+```
+
+### `-LocalAccount`
+
+A local account to create, using the format `group:name,password` or `name,password`. Can have
+multiple values. If no group is specified, the user will be added to the Administrators group. You
+can specify multiple groups by separating them with semicolons.
+
+If no local accounts are created, the user will be asked to create one during OOBE, making setup not
+fully unattended.
+
+See [creating a user during installation](../README.md#creating-a-user-during-installation).
+
+```yaml
+Value: <[Group:]Name,Password> (multiple allowed)
+Aliases: -a
 ```
 
 ## Domain options

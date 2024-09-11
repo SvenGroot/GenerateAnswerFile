@@ -178,17 +178,6 @@
         }
       ]
     },
-    "CmdKeyAccount": {
-      "description": "The credentials of an account that will be used to access all network locations, or null to not register any credentials for this.",
-      "oneOf": [
-        {
-          "type": "null"
-        },
-        {
-          "$ref": "#/definitions/DomainCredential"
-        }
-      ]
-    },
     "DisplayResolution": {
       "description": "The display resolution, or null to let Windows determine the default resolution.",
       "type": [

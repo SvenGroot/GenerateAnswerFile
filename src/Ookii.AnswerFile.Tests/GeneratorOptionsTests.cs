@@ -22,7 +22,6 @@ public class GeneratorOptionsTests : FileTestsBase
                     new(new("domain", "user2"), "Users"),
                 }
             },
-            CmdKeyAccount = new DomainCredential(new DomainUser("domain", "user"), "password"),
             ComputerName = "TestComputer",
             DisplayResolution = new(1280, 1024),
             EnableCloud = true,

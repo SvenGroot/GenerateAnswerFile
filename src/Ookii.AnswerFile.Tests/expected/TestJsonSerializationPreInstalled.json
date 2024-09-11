@@ -49,10 +49,6 @@
     },
     "Count": 1
   },
-  "CmdKeyAccount": {
-    "UserAccount": "domain\\user",
-    "Password": "password"
-  },
   "DisplayResolution": "1280,1024",
   "Language": "en-US",
   "ProcessorArchitecture": "amd64",

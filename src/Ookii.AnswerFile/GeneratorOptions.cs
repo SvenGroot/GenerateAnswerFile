@@ -158,28 +158,6 @@ public class GeneratorOptions
     public AutoLogonOptions? AutoLogon { get; set; }
 
     /// <summary>
-    /// Gets or sets the credentials of an account that will be used to access all network
-    /// locations.
-    /// </summary>
-    /// <value>
-    /// A instance of the <see cref="DomainCredential"/> class, or <see langword="null"/> to not
-    /// set up a cmdkey user. The default value is <see langword="null"/>.
-    /// </value>
-    /// <remarks>
-    /// <para>
-    ///   Setting this property to a value other than <see langword="null"/> will add a first log-on
-    ///   command to the answer file that uses 'cmdkey.exe' to use the specified account for all
-    ///   network destinations. Using this is not very secure and should only be done in test
-    ///   environments.
-    /// </para>
-    /// <note type="security">
-    ///   The password of this account is stored in plain text in the answer file. Do not store
-    ///   answer files with sensitive passwords in public locations.
-    /// </note>
-    /// </remarks>
-    public DomainCredential? CmdKeyAccount { get; set; }
-
-    /// <summary>
     /// Gets or sets the display resolution.
     /// </summary>
     /// <value>

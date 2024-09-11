@@ -49,6 +49,8 @@ Version 2.0 of the library has a few breaking changes from version 1.x:
 
 - The `DomainOptions.DomainAccounts` property has a different type.
 - The `GeneratorOptions.DisplayResolution` property has a different type.
+- The `GeneratorOptions.JoinDomain` property has a different type.
+- The `GeneratorOptions.CmdKeyAccount` property has been removed.
 
 [`CleanBiosOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_CleanBiosOptions.htm
 [`CleanEfiOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_CleanEfiOptions.htm

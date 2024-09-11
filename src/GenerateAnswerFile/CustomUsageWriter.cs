@@ -261,7 +261,6 @@ class CustomUsageWriter : UsageWriter
         {
             ArgumentCategory.Install => Properties.Resources.CategoryInstall,
             ArgumentCategory.UserAccounts => Properties.Resources.CategoryUserAccounts,
-            ArgumentCategory.AutoLogon => Properties.Resources.CategoryAutoLogon,
             ArgumentCategory.Domain => Properties.Resources.CategoryDomain,
             _ => Properties.Resources.CategoryOther,
         };

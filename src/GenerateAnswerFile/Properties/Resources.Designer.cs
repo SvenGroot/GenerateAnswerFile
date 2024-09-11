@@ -97,15 +97,6 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Automatic logon options:.
-        /// </summary>
-        internal static string CategoryAutoLogon {
-            get {
-                return ResourceManager.GetString("CategoryAutoLogon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Domain options:.
         /// </summary>
         internal static string CategoryDomain {
@@ -138,24 +129,6 @@ namespace GenerateAnswerFile.Properties {
         internal static string CategoryUserAccounts {
             get {
                 return ResourceManager.GetString("CategoryUserAccounts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The password of the user specified by -CmdKeyUser..
-        /// </summary>
-        internal static string CmdKeyPasswordDescription {
-            get {
-                return ResourceManager.GetString("CmdKeyPasswordDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The name of a user used to access all network resources, in &apos;domain\user&apos; format. If present, the cmdkey.exe application will be used at first logon to save this user&apos;s credentials for all network paths..
-        /// </summary>
-        internal static string CmdKeyUserDescription {
-            get {
-                return ResourceManager.GetString("CmdKeyUserDescription", resourceCulture);
             }
         }
         

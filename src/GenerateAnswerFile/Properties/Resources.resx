@@ -129,9 +129,6 @@
   <data name="AutoLogonUserDescription" xml:space="preserve">
     <value>The name of a user to automatically log on, in the format 'domain\user', or just 'user' for local users. If not specified, automatic logon will not be used.</value>
   </data>
-  <data name="CategoryAutoLogon" xml:space="preserve">
-    <value>Automatic logon options:</value>
-  </data>
   <data name="CategoryDomain" xml:space="preserve">
     <value>Domain options:</value>
   </data>
@@ -143,12 +140,6 @@
   </data>
   <data name="CategoryUserAccounts" xml:space="preserve">
     <value>User account options:</value>
-  </data>
-  <data name="CmdKeyPasswordDescription" xml:space="preserve">
-    <value>The password of the user specified by -CmdKeyUser.</value>
-  </data>
-  <data name="CmdKeyUserDescription" xml:space="preserve">
-    <value>The name of a user used to access all network resources, in 'domain\user' format. If present, the cmdkey.exe application will be used at first logon to save this user's credentials for all network paths.</value>
   </data>
   <data name="ComputerNameDescription" xml:space="preserve">
     <value>The network name for the computer.</value>
