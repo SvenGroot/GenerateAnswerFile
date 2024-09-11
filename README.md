@@ -98,7 +98,7 @@ syntax to continue a command on the next line.
 
 ### Clean installation using UEFI
 
-```pwsh
+```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanEfi `
     -ProductKey ABCDE-12345-ABCDE-12345-ABCDE
@@ -109,7 +109,7 @@ system, using the default UEFI partition layout, and activates it using the spec
 
 ### Installing a 32 bit OS
 
-```pwsh
+```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanBios `
     -ProcessorArchitecture x86 `
@@ -122,7 +122,7 @@ such as "x86" for 32 bit processors, or "arm64" for ARM based systems.
 
 ### Creating a user during installation
 
-```pwsh
+```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanEfi `
     -LocalAccount "John,Password" "Steve,OtherPassword" `
@@ -138,7 +138,7 @@ All accounts created during this method will be members of the local Administrat
 
 ### Joining a domain and automatic log-on
 
-```pwsh
+```text
 ./GenerateAnswerFile unattend.xml `
     -ComputerName mypc `
     -JoinDomain mydomain `
@@ -164,7 +164,7 @@ the [`-AutoLogonCount`][] argument[^1].
 
 ### Joining a domain using provisioning
 
-```pwsh
+```text
 ./GenerateAnswerFile unattend.xml `
     -Install CleanEfi
     -JoinDomainProvisioningFile AccountData.txt `
@@ -198,7 +198,7 @@ size is the size of the partition. The size can use multiple-byte units, such as
 will be rounded down to a whole number of megabytes. If the size is `*`, it indicates the partition
 will fill the remainder of the disk.
 
-```pwsh
+```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanEFI `
     -ProductKey ABCDE-12345-ABCDE-12345-ABCDE `
@@ -238,7 +238,7 @@ volumes in that partition.
 Answer files can be used to enable optional features during installation. To do this, use the
 [`-Feature`][] argument. This argument can take multiple values to enable multiple features.
 
-```pwsh
+```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanEfi `
     -Feature Microsoft-Windows-Subsystem-Linux VirtualMachinePlatform `
@@ -264,7 +264,7 @@ using sysprep, or by using DISM tools.
 
 ### First log-on commands and scripts
 
-```pwsh
+```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanEfi `
     -FirstLogonCommand "reg add HKCU\Software\MyCompany /v ImportantRegistryKey /t REG_DWORD /d 1 /f" `
@@ -272,7 +272,7 @@ using sysprep, or by using DISM tools.
     -LocalAccount "John,Password" `
     -AutoLogonUser John `
     -AutoLogonPassword Password `
-    -ProductKey "ABCDE-12345-ABCDE-12345-ABCDE"
+    -ProductKey ABCDE-12345-ABCDE-12345-ABCDE
 ```
 
 The [`-FirstLogonCommand`][] argument can be used to execute a command when a user first logs on to the
