@@ -10,7 +10,7 @@
   do it during the offlineServicing pass with the [`-JoinDomainOffline`][] argument.
 - The `-CmdKeyUser` and `-CmdKeyPassword` arguments have been removed; this was a bad security
   practice that I don't wish to promote. You can still get identical behavior using the
-  [`-FirstLogonCommand`][] if desired.
+  [`-FirstLogonCommand`][] argument if desired.
 - You can specify options using a [custom JSON file format](Json.md), as an alternative to using
   command line arguments.
 - If no output file argument is provided, the answer file is now written to the console.
