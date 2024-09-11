@@ -71,7 +71,9 @@ The arguments are split into several categories:
     [<a href="#-installtodisk">-InstallToDisk</a> &lt;Number&gt;]
     [<a href="#-installtopartition">-InstallToPartition</a> &lt;Number&gt;]
     [<a href="#-joindomain">-JoinDomain</a> &lt;String&gt;]
+    [<a href="#-joindomainoffline">-JoinDomainOffline</a>]
     [<a href="#-joindomainpassword">-JoinDomainPassword</a> &lt;String&gt;]
+    [<a href="#-joindomainprovisioningfile">-JoinDomainProvisioningFile</a> &lt;Path&gt;]
     [<a href="#-joindomainuser">-JoinDomainUser</a> &lt;[Domain\]User&gt;]
     [<a href="#-language">-Language</a> &lt;String&gt;]
     [<a href="#-localaccount">-LocalAccount</a> &lt;[Group:]Name,Password&gt;...]
@@ -296,8 +298,8 @@ Aliases: -a
 
 ### `-AutoLogonCount`
 
-The number of times the user specified by [`-AutoLogonUser`](#-autologonuser) will be
-automatically logged on.
+The number of times the user specified by [`-AutoLogonUser`](#-autologonuser) will be automatically
+logged on.
 
 Must be at least 1.
 
@@ -349,7 +351,7 @@ Must not be blank.
 ```yaml
 Value: <[Group:][Domain\]User> (multiple allowed)
 Aliases: -da
-Required arguments: -JoinDomain
+Requires one of: -JoinDomain, -JoinDomainProvisioningFile
 ```
 
 ### `-JoinDomain`
@@ -366,6 +368,17 @@ Aliases: -jd
 Required arguments: -JoinDomainUser, -JoinDomainPassword
 ```
 
+### `-JoinDomainOffline`
+
+Join the domain during the offlineServicing pass of Windows setup, rather than the specialize pass.
+
+```yaml
+Value: [<Boolean>]
+Aliases: -jdo
+Required arguments: -JoinDomainProvisioningFile
+Allowed -Install values: ExistingPartition, CleanBios, CleanEfi, Manual
+```
+
 ### `-JoinDomainPassword`
 
 The password of the user specified by [`-JoinDomainUser`](#-joindomainuser). Will be stored in plain
@@ -377,6 +390,19 @@ Must not be blank.
 Value: <String>
 Aliases: -jdp
 Required arguments: -JoinDomain
+```
+
+### `-JoinDomainProvisioningFile`
+
+The path to a file containing provisioned account data to join the domain. This file can be created
+using the command `djoin.exe /provision /domain domainname /machine machinename /savefile filename`.
+
+See [joining a domain using provisioning](../README.md#joining-a-domain-using-provisioning).
+
+```yaml
+Value: <Path>
+Aliases: -jdpf
+Prohibited arguments: -JoinDomain
 ```
 
 ### `-JoinDomainUser`

@@ -165,7 +165,8 @@ class CustomUsageWriter : UsageWriter
         WriteLine();
         foreach (var validator in argument.Validators)
         {
-            if (validator is not (RequiresAttribute or ValidateInstallMethodAttribute or ValidateEnumValueAttribute))
+            if (validator is not (RequiresAttribute or ProhibitsAttribute or RequiresAnyOtherAttribute or 
+                    ValidateInstallMethodAttribute or ValidateEnumValueAttribute))
             {
                 var help = validator.GetUsageHelp(argument);
                 if (!string.IsNullOrEmpty(help))
@@ -225,6 +226,18 @@ class CustomUsageWriter : UsageWriter
         if (requiresAttribute != null)
         {
             WriteLine($"Required arguments: {string.Join(", ", requiresAttribute.Arguments.Select(a => prefix + a))}");
+        }
+
+        var requiresAnyOtherAttribute = argument.Validators.OfType<RequiresAnyOtherAttribute>().FirstOrDefault();
+        if (requiresAnyOtherAttribute != null)
+        {
+            WriteLine($"Requires one of: {string.Join(", ", requiresAnyOtherAttribute.Arguments.Select(a => prefix + a))}");
+        }
+
+        var prohibitsAttribute = argument.Validators.OfType<ProhibitsAttribute>().FirstOrDefault();
+        if (prohibitsAttribute != null)
+        {
+            WriteLine($"Prohibited arguments: {string.Join(", ", prohibitsAttribute.Arguments.Select(a => prefix + a))}");
         }
 
         var installMethodAttribute = argument.Validators.OfType<ValidateInstallMethodAttribute>().FirstOrDefault();
