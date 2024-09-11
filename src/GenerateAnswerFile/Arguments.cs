@@ -171,12 +171,28 @@ partial class Arguments : BaseArguments
     [ValidateNotWhiteSpace]
     public string? OUPath { get; set; }
 
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.JoinDomainProvisioningFileDescription))]
+    [ArgumentCategory(ArgumentCategory.Domain)]
+    [ResourceValueDescription(nameof(Properties.Resources.PathValueDescription))]
+    [Prohibits(nameof(JoinDomain))]
+    [Alias("jdpf")]
+    public FileInfo? JoinDomainProvisioningFile { get; set; }
+
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.JoinDomainOfflineDescription))]
+    [ArgumentCategory(ArgumentCategory.Domain)]
+    [Requires(nameof(JoinDomainProvisioningFile))]
+    [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanBios, InstallMethod.CleanEfi, InstallMethod.Manual)]
+    [Alias("jdo")]
+    public bool JoinDomainOffline { get; set; }
+
     [CommandLineArgument("DomainAccount")]
     [ResourceDescription(nameof(Properties.Resources.DomainAccountsDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.DomainUserGroupValueDescription))]
     [ArgumentCategory(ArgumentCategory.Domain)]
     [Alias("da")]
-    [Requires(nameof(JoinDomain))]
+    [RequiresAnyOther(nameof(JoinDomain), nameof(JoinDomainProvisioningFile))]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]
     public DomainUserGroup[]? DomainAccounts { get; set; }
@@ -347,10 +363,14 @@ partial class Arguments : BaseArguments
             _ => null,
         };
 
-        if (options != null && Features?.Length > 0)
+        if (options != null)
         {
-            options.OptionalFeatures = new OptionalFeatures(WindowsVersion!);
-            options.OptionalFeatures.Features.AddRange(Features);
+            options.JoinDomainOffline = JoinDomainOffline;
+            if (Features?.Length > 0)
+            {
+                options.OptionalFeatures = new OptionalFeatures(WindowsVersion!);
+                options.OptionalFeatures.Features.AddRange(Features);
+            }
         }
 
         if (options is CleanOptionsBase cleanOptions && Partitions?.Length > 0)
@@ -361,23 +381,26 @@ partial class Arguments : BaseArguments
         return options;
     }
 
-    private DomainOptions? ToDomainOptions()
+    private DomainOptionsBase? ToDomainOptions()
     {
-        if (JoinDomain == null)
+        DomainOptionsBase? options;
+        if (JoinDomainProvisioningFile != null)
+        {
+            // Files created by djoin.exe have a null character at the end for some reason, which
+            // must be removed because XmlWriter doesn't like it.
+            options = new ProvisionedDomainOptions(File.ReadAllText(JoinDomainProvisioningFile.FullName).Trim('\0'));
+        }
+        else if (JoinDomain != null)
+        {
+            options = new DomainOptions(JoinDomain, new DomainCredential(JoinDomainUser!, JoinDomainPassword!))
+            {
+                OUPath = OUPath,
+            };
+        }
+        else
         {
             return null;
         }
-
-        var user = JoinDomainUser!;
-        if (user.Domain ==  null)
-        {
-            user = new DomainUser(JoinDomain, user.UserName);
-        }
-
-        var options = new DomainOptions(JoinDomain, new DomainCredential(user, JoinDomainPassword!))
-        {
-            OUPath = OUPath,
-        };
 
         if (DomainAccounts != null)
         {

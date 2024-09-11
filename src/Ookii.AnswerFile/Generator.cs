@@ -116,7 +116,7 @@ public class Generator
         if (Options.InstallOptions != null)
         {
             Options.InstallOptions.GenerateServicingPass(this);
-            if (Options.InstallOptions.DomainJoinOffline && Options.JoinDomain != null)
+            if (Options.InstallOptions.JoinDomainOffline && Options.JoinDomain != null)
             {
                 using var pass = Writer.WriteAutoCloseElement("offlineServicing");
                 using var join = WriteComponentStart("Microsoft-Windows-UnattendedJoin");
@@ -134,7 +134,7 @@ public class Generator
     {
         using var pass = WritePassStart("specialize");
         WriteInternationalCore();
-        if (Options.JoinDomain != null && Options.InstallOptions?.DomainJoinOffline != true)
+        if (Options.JoinDomain != null && Options.InstallOptions?.JoinDomainOffline != true)
         {
             using var join = WriteComponentStart("Microsoft-Windows-UnattendedJoin");
             Options.JoinDomain.WriteDomainElements(this, false);

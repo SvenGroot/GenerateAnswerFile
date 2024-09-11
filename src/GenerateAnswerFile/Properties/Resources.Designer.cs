@@ -313,11 +313,29 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Join the domain during the offlineServicing pass of Windows setup, rather than the specialize pass..
+        /// </summary>
+        internal static string JoinDomainOfflineDescription {
+            get {
+                return ResourceManager.GetString("JoinDomainOfflineDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password of the user specified by -JoinDomainUser. Will be stored in plain text..
         /// </summary>
         internal static string JoinDomainPasswordDescription {
             get {
                 return ResourceManager.GetString("JoinDomainPasswordDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The path to a file containing provisioned account data to join the domain. This file can be created using the command &apos;djoin.exe /provision /domain domainname /machine machinename /savefile filename&apos;..
+        /// </summary>
+        internal static string JoinDomainProvisioningFileDescription {
+            get {
+                return ResourceManager.GetString("JoinDomainProvisioningFileDescription", resourceCulture);
             }
         }
         
@@ -468,6 +486,24 @@ namespace GenerateAnswerFile.Properties {
         internal static string ProductKeyDescription {
             get {
                 return ResourceManager.GetString("ProductKeyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be used together with one of: {1}..
+        /// </summary>
+        internal static string RequiresAnyOtherErrorFormat {
+            get {
+                return ResourceManager.GetString("RequiresAnyOtherErrorFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must be used with one of: {0}..
+        /// </summary>
+        internal static string RequiresAnyOtherUsageHelpFormat {
+            get {
+                return ResourceManager.GetString("RequiresAnyOtherUsageHelpFormat", resourceCulture);
             }
         }
         

@@ -40,7 +40,7 @@ public abstract class InstallOptionsBase
     ///   <see cref="ProvisionedDomainOptions"/> class.
     /// </para>
     /// </remarks>
-    public bool DomainJoinOffline { get; set; }
+    public bool JoinDomainOffline { get; set; }
 
     /// <summary>
     /// When implemented in a derived class, writes options specific to the install method.

@@ -285,4 +285,16 @@ For more information, as well as usage examples, run '{0} -OnlineHelp', or see: 
   <data name="JsonUsageFooter" xml:space="preserve">
     <value>JSON input was found; additional arguments are available if JSON input is not provided. For more information, see: https://github.com/SvenGroot/GenerateAnswerFile</value>
   </data>
+  <data name="JoinDomainProvisioningFileDescription" xml:space="preserve">
+    <value>The path to a file containing provisioned account data to join the domain. This file can be created using the command 'djoin.exe /provision /domain domainname /machine machinename /savefile filename'.</value>
+  </data>
+  <data name="RequiresAnyOtherErrorFormat" xml:space="preserve">
+    <value>The argument '{0}' must be used together with one of: {1}.</value>
+  </data>
+  <data name="RequiresAnyOtherUsageHelpFormat" xml:space="preserve">
+    <value>Must be used with one of: {0}.</value>
+  </data>
+  <data name="JoinDomainOfflineDescription" xml:space="preserve">
+    <value>Join the domain during the offlineServicing pass of Windows setup, rather than the specialize pass.</value>
+  </data>
 </root>

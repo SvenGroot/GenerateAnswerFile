@@ -11,7 +11,7 @@ namespace Ookii.AnswerFile;
 ///   file. Do not store answer files with sensitive passwords in public locations.
 /// </note>
 /// <para>
-///   This class cannot be used if the <see cref="InstallOptionsBase.DomainJoinOffline" qualifyHint="true"/>
+///   This class cannot be used if the <see cref="InstallOptionsBase.JoinDomainOffline" qualifyHint="true"/>
 ///   property is <see langword="true"/>. To join a domain during the offlineServicing pass, you
 ///   must use the <see cref="ProvisionedDomainOptions"/> class instead.
 /// </para>
