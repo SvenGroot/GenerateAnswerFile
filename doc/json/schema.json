@@ -243,7 +243,7 @@
             }
           ]
         },
-        "DomainJoinOffline": {
+        "JoinDomainOffline": {
           "type": "boolean",
           "description": "Indicates whether the domain join should be performed during the offlineServicing pass. The default value is false. This has no effect if JoinDomain is null. Setting this to true is only supported when using provisioning to join the domain."
         }

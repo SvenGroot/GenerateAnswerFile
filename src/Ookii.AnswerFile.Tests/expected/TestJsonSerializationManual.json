@@ -9,7 +9,7 @@
         "VirtualMachinePlatform"
       ]
     },
-    "DomainJoinOffline": false
+    "JoinDomainOffline": false
   },
   "EnableDefender": true,
   "EnableCloud": true,

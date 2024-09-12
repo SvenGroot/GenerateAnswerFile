@@ -23,7 +23,7 @@
         "VirtualMachinePlatform"
       ]
     },
-    "DomainJoinOffline": false
+    "JoinDomainOffline": false
   },
   "JoinDomain": {
     "$type": "Provisioning",
