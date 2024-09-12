@@ -14,7 +14,7 @@ available through this tool. Customizations supported by the Answer File Generat
 - The installation method, partition layout, and target disk and partition.
 - Enabling optional features during installation.
 - Creation of local user accounts.
-- Joining a domain and adding domain accounts to the local Administrators group.
+- Joining a domain, and adding domain accounts to a local security group.
 - Configuring automatic log-on.
 - The product key, computer name, language/culture, and time zone.
 - Display resolution.
@@ -125,7 +125,7 @@ such as "x86" for 32 bit processors, or "arm64" for ARM based systems.
 ```text
 ./GenerateAnswerFile autounattend.xml `
     -Install CleanEfi `
-    -LocalAccount "John,Password" "Steve,OtherPassword" `
+    -LocalAccount "John,Password" "Users:Steve,OtherPassword" `
     -ProductKey ABCDE-12345-ABCDE-12345-ABCDE
 ```
 
@@ -134,7 +134,12 @@ password, obviously), and a user named "Steve" with the password "OtherPassword"
 [`-LocalAccount`][] argument takes one or more values, allowing the creation of any number of
 accounts.
 
-All accounts created during this method will be members of the local Administrators group.
+By default, accounts created using this method will be added to the local Administrators group.
+You can customize which group(s) to add them to by prefixing the account name with the group,
+separated by a colon. You can use multiple groups by separating them with a semicolon.
+
+In the above example, John is an administrator, but Steve is added to the Users group, so they will
+be a restricted user.
 
 ### Joining a domain and automatic log-on
 

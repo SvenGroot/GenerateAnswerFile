@@ -54,14 +54,14 @@
     <IndentHtml>False</IndentHtml>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
-    <HelpTitle>Ookii.AnswerFile 1.1 Documentation</HelpTitle>
+    <HelpTitle>Ookii.AnswerFile 2.0 Documentation</HelpTitle>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <NamingMethod>MemberName</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceContainer>False</RootNamespaceContainer>
     <NamespaceGrouping>False</NamespaceGrouping>
     <MaximumGroupParts>2</MaximumGroupParts>
-    <Preliminary>False</Preliminary>
+    <Preliminary>True</Preliminary>
     <CopyrightHref>https://github.com/SvenGroot/GenerateAnswerFile</CopyrightHref>
     <CopyrightText>Copyright %28c%29 Sven Groot %28Ookii.org%29</CopyrightText>
     <SdkLinkTarget>Blank</SdkLinkTarget>

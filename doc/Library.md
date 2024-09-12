@@ -47,15 +47,21 @@ For more information, check out the
 
 Version 2.0 of the library has a few breaking changes from version 1.x:
 
-- The `DomainOptions.DomainAccounts` property has a different type.
-- The `GeneratorOptions.DisplayResolution` property has a different type.
-- The `GeneratorOptions.JoinDomain` property has a different type.
+- The [`GeneratorOptions.DisplayResolution`][] property has a different type.
+- The [`GeneratorOptions.JoinDomain`][] property has a different type.
 - The `GeneratorOptions.CmdKeyAccount` property has been removed.
+- The [`DomainOptions`][] class now derives from the [`DomainOptionsBase`][] class.
+- The [`DomainOptionsBase.DomainAccounts`][] property has a different type.
 
-[`CleanBiosOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_CleanBiosOptions.htm
-[`CleanEfiOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_CleanEfiOptions.htm
-[`ExistingPartitionOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_ExistingPartitionOptions.htm
-[`Generator.Generate`]: https://www.ookii.org/docs/answerfile-1.1/html/Overload_Ookii_AnswerFile_Generator_Generate.htm
-[`GeneratorOptions.InstallOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/P_Ookii_AnswerFile_GeneratorOptions_InstallOptions.htm
-[`GeneratorOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_GeneratorOptions.htm
-[`ManualInstallOptions`]: https://www.ookii.org/docs/answerfile-1.1/html/T_Ookii_AnswerFile_ManualInstallOptions.htm
+[`CleanBiosOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_CleanBiosOptions.htm
+[`CleanEfiOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_CleanEfiOptions.htm
+[`DomainOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_DomainOptions.htm
+[`DomainOptionsBase.DomainAccounts`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_DomainOptionsBase_DomainAccounts.htm
+[`DomainOptionsBase`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_DomainOptionsBase.htm
+[`ExistingPartitionOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_ExistingPartitionOptions.htm
+[`Generator.Generate`]: https://www.ookii.org/docs/answerfile-2.0/html/Overload_Ookii_AnswerFile_Generator_Generate.htm
+[`GeneratorOptions.DisplayResolution`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_GeneratorOptions_DisplayResolution.htm
+[`GeneratorOptions.InstallOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_GeneratorOptions_InstallOptions.htm
+[`GeneratorOptions.JoinDomain`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_GeneratorOptions_JoinDomain.htm
+[`GeneratorOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_GeneratorOptions.htm
+[`ManualInstallOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_ManualInstallOptions.htm
