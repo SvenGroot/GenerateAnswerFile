@@ -52,6 +52,7 @@ Version 2.0 of the library has a few breaking changes from version 1.x:
 - The `GeneratorOptions.CmdKeyAccount` property has been removed.
 - The [`DomainOptions`][] class now derives from the [`DomainOptionsBase`][] class.
 - The [`DomainOptionsBase.DomainAccounts`][] property has a different type.
+- The `GeneratorOptions.SetupScripts` property was renamed to [`FirstLogonScripts`][].
 
 [`CleanBiosOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_CleanBiosOptions.htm
 [`CleanEfiOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_CleanEfiOptions.htm
@@ -59,6 +60,7 @@ Version 2.0 of the library has a few breaking changes from version 1.x:
 [`DomainOptionsBase.DomainAccounts`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_DomainOptionsBase_DomainAccounts.htm
 [`DomainOptionsBase`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_DomainOptionsBase.htm
 [`ExistingPartitionOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_ExistingPartitionOptions.htm
+[`FirstLogonScripts`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_GeneratorOptions_FirstLogonScripts.htm
 [`Generator.Generate`]: https://www.ookii.org/docs/answerfile-2.0/html/Overload_Ookii_AnswerFile_Generator_Generate.htm
 [`GeneratorOptions.DisplayResolution`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_GeneratorOptions_DisplayResolution.htm
 [`GeneratorOptions.InstallOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_GeneratorOptions_InstallOptions.htm

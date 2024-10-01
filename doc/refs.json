@@ -8,11 +8,13 @@
   "DomainOptionsBase": "T_Ookii_AnswerFile_DomainOptionsBase",
   "DomainOptionsBase.DomainAccounts": "P_Ookii_AnswerFile_DomainOptionsBase_DomainAccounts",
   "ExistingPartitionOptions": "T_Ookii_AnswerFile_ExistingPartitionOptions",
+  "FirstLogonScripts": "P_Ookii_AnswerFile_GeneratorOptions_FirstLogonScripts",
   "Generator.Generate": "Overload_Ookii_AnswerFile_Generator_Generate",
   "GeneratorOptions": "T_Ookii_AnswerFile_GeneratorOptions",
   "GeneratorOptions.CmdKeyAccount": null,
   "GeneratorOptions.DisplayResolution": "P_Ookii_AnswerFile_GeneratorOptions_DisplayResolution",
   "GeneratorOptions.InstallOptions": "P_Ookii_AnswerFile_GeneratorOptions_InstallOptions",
   "GeneratorOptions.JoinDomain": "P_Ookii_AnswerFile_GeneratorOptions_JoinDomain",
+  "GeneratorOptions.SetupScripts": null,
   "ManualInstallOptions": "T_Ookii_AnswerFile_ManualInstallOptions"
 }
