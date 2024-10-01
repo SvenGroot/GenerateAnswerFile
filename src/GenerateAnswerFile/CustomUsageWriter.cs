@@ -2,6 +2,7 @@
 using Ookii.CommandLine.Validation;
 using System.Globalization;
 using System.Reflection;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace GenerateAnswerFile;
@@ -150,16 +151,41 @@ class CustomUsageWriter : UsageWriter
         WriteLine($"### `-{argument.ArgumentName}`");
         WriteLine();
 
-        // Put backticks around install method values.
-        var values = string.Join("|", typeof(InstallMethod).GetEnumNames());
-        var description = Regex.Replace(argument.Description, $@"(?<!')\b({values})\b(?!')", "`$1`").ReplaceLineEndings();
+        var json = JsonDocument.Parse(File.OpenRead("mdhelp.json"));
+        string? description = null;
+        string? additionalDescription = null;
+        if (json.RootElement.TryGetProperty(argument.ArgumentName, out var argumentInfo))
+        {
+            if (argumentInfo.ValueKind == JsonValueKind.Object)
+            {
+                if (argumentInfo.GetProperty("Override").GetBoolean())
+                {
+                    description = argumentInfo.GetProperty("Text").GetString();
+                }
+                else
+                {
+                    additionalDescription = argumentInfo.GetProperty("Text").GetString();
+                }
+            }
+            else
+            {
+                additionalDescription = argumentInfo.GetString();
+            }
+        }
 
-        // Replace single quotes terms with backticks (but avoid changing apostrophes).
-        description = Regex.Replace(description, @"(^|\s)'([^']*)'(\s|$|\.|,|\))", "$1`$2`$3");
+        if (description == null)
+        {
+            // Put backticks around install method values.
+            var values = string.Join("|", typeof(InstallMethod).GetEnumNames());
+            description = Regex.Replace(argument.Description, $@"(?<!')\b({values})\b(?!')", "`$1`").ReplaceLineEndings();
 
-        // Make links for arguments.
-        description = Regex.Replace(description, @"(?<=^|\s)-([A-Z][a-zA-Z]*)(?=\s|$|\.|,|\))",
-            m => $"[`-{m.Groups[1]}`](#-{m.Groups[1].Value.ToLowerInvariant()})");
+            // Replace single quoted terms with backticks (but avoid changing apostrophes).
+            description = Regex.Replace(description, @"(^|\s)'([^']*)'(\s|$|\.|,|\))", "$1`$2`$3");
+
+            // Make links for arguments.
+            description = Regex.Replace(description, @"(?<=^|\s)-([A-Z][a-zA-Z]*)(?=\s|$|\.|,|\))",
+                m => $"[`-{m.Groups[1]}`](#-{m.Groups[1].Value.ToLowerInvariant()})");
+        }
 
         WriteLine(description);
         WriteLine();
@@ -175,6 +201,12 @@ class CustomUsageWriter : UsageWriter
                     WriteLine();
                 }
             }
+        }
+
+        if (additionalDescription != null)
+        {
+            WriteLine(additionalDescription);
+            WriteLine();
         }
 
         // Since GitHub markdown doesn't support tables without header rows, we take a page out of

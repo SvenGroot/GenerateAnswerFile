@@ -1,0 +1,18 @@
+{
+  "Help": {
+    "Override": true,
+    "Text": "Displays a help message."
+  },
+  "Feature": "See [optional features](../README.md#optional-features).",
+  "ImageIndex": "See [selecting the edition to install](../README.md#selecting-the-edition-to-install).",
+  "Install": "See [installation method](../README.md#installation-method).",
+  "Partition": "See [custom partition layout](../README.md#custom-partition-layout).",
+  "ProductKey": "See [selecting the edition to install](../README.md#selecting-the-edition-to-install).",
+  "AutoLogonUser": "See [joining a domain and automatic logon](../README.md#joining-a-domain-and-automatic-log-on).",
+  "LocalAccount": "See [creating a user during installation](../README.md#creating-a-user-during-installation).",
+  "JoinDomain": "See [joining a domain and automatic logon](../README.md#joining-a-domain-and-automatic-log-on).",
+  "JoinDomainProvisioningFile": "See [joining a domain using provisioning](../README.md#joining-a-domain-using-provisioning).",
+  "FirstLogonCommand": "See [first log-on commands and scripts](../README.md#first-log-on-commands-and-scripts).",
+  "FirstLogonScript": "See [first log-on commands and scripts](../README.md#first-log-on-commands-and-scripts).",
+  "ProcessorArchitecture": "See [installing a 32 bit OS](../README.md#installing-a-32-bit-os)."
+}

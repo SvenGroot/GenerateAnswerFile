@@ -37,4 +37,10 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
+    <None Update="mdhelp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
