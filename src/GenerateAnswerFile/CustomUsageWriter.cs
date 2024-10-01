@@ -235,8 +235,8 @@ class CustomUsageWriter : UsageWriter
         var prefix = Parser.ArgumentNamePrefixes[0];
         if (argument.Aliases.Length > 0)
         {
-            Write($"Aliases: {string.Join(", ", argument.Aliases.Select(a => prefix + a))}");
-            WriteLine();
+            var plural = argument.Aliases.Length > 1 ? "es" : "";
+            WriteLine($"Alias{plural}: {string.Join(", ", argument.Aliases.Select(a => prefix + a))}");
         }
 
         if (argument.IsRequired)
@@ -257,7 +257,8 @@ class CustomUsageWriter : UsageWriter
         var requiresAttribute = argument.Validators.OfType<RequiresAttribute>().FirstOrDefault();
         if (requiresAttribute != null)
         {
-            WriteLine($"Required arguments: {string.Join(", ", requiresAttribute.Arguments.Select(a => prefix + a))}");
+            var plural = requiresAttribute.Arguments.Length > 1 ? "s" : "";
+            WriteLine($"Required argument{plural}: {string.Join(", ", requiresAttribute.Arguments.Select(a => prefix + a))}");
         }
 
         var requiresAnyOtherAttribute = argument.Validators.OfType<RequiresAnyOtherAttribute>().FirstOrDefault();
@@ -269,13 +270,15 @@ class CustomUsageWriter : UsageWriter
         var prohibitsAttribute = argument.Validators.OfType<ProhibitsAttribute>().FirstOrDefault();
         if (prohibitsAttribute != null)
         {
-            WriteLine($"Prohibited arguments: {string.Join(", ", prohibitsAttribute.Arguments.Select(a => prefix + a))}");
+            var plural = prohibitsAttribute.Arguments.Length > 1 ? "s" : "";
+            WriteLine($"Prohibited argument{plural}: {string.Join(", ", prohibitsAttribute.Arguments.Select(a => prefix + a))}");
         }
 
         var installMethodAttribute = argument.Validators.OfType<ValidateInstallMethodAttribute>().FirstOrDefault();
         if (installMethodAttribute != null)
         {
-            WriteLine($"Allowed -Install values: {string.Join(", ", installMethodAttribute.Methods)}");
+            var plural = installMethodAttribute.Methods.Length > 1 ? "s" : "";
+            WriteLine($"Allowed -Install value{plural}: {string.Join(", ", installMethodAttribute.Methods)}");
         }
 
         WriteLine("```");

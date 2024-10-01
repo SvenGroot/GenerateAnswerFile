@@ -1,51 +1,3 @@
-# Command line arguments
-
-This page describes the command line arguments supported by the Answer File Generator, which are
-used to customize the generated answer file. All argument names are case insensitive.
-
-Argument values can be specified as either e.g. `-JoinDomain mydomain`, `-JoinDomain:mydomain` or
-`-JoinDomain=mydomain`.
-
-Some arguments can be specified multiple times. This can be done by listing several values after
-the argument:
-
-```text
--LocalAccount "John,Password" "Dave,OtherPassword" -EnableRemoteDesktop
-```
-
-Or, by repeating the argument multiple times, potentially interleaving other arguments:
-
-```text
--LocalAccount "John,Password" -EnableRemoteDesktop -LocalAccount "Dave,OtherPassword"
-```
-
-This syntax makes Answer File Generator compatible with
-[PowerShell hash table splatting](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_splatting),
-which can be a convenient way to handle invocations with many arguments.
-
-```powershell
-$arguments = @{
-    "OutputPath" = "unattend.xml"
-    "InstallMethod" = "CleanEfi"
-    "Feature" = "Microsoft-Windows-Subsystem-Linux","VirtualMachinePlatform"
-    "WindowsVersion" = "10.0.22621.1"
-    "EnableRemoteDesktop" = $true
-}
-
-./GenerateAnswerFile @arguments
-```
-
-You can also use [JSON files](Json.md) to specify options for generating an answer file. In this
-case, only the `-OutputFile` argument can be used.
-
-The arguments are split into several categories:
-
-- [General options](#general-options)
-- [Installation options](#installation-options)
-- [User account options](#user-account-options)
-- [Domain options](#domain-options)
-- [Other setup options](#other-setup-options)
-
 ## Usage syntax
 
 <!-- markdownlint-disable MD033 -->
@@ -95,7 +47,7 @@ written to the console.
 
 ```yaml
 Value: <Path>
-Aliases: -o
+Alias: -o
 Positional: True
 ```
 
@@ -138,8 +90,8 @@ See [optional features](../README.md#optional-features).
 
 ```yaml
 Value: <String> (multiple allowed)
-Aliases: -c
-Required arguments: -WindowsVersion
+Alias: -c
+Required argument: -WindowsVersion
 Allowed -Install values: ExistingPartition, CleanBios, CleanEfi, Manual
 ```
 
@@ -153,7 +105,7 @@ See [selecting the edition to install](../README.md#selecting-the-edition-to-ins
 
 ```yaml
 Value: <Number>
-Aliases: -wim
+Alias: -wim
 Allowed -Install values: ExistingPartition, CleanEfi, CleanBios
 ```
 
@@ -165,7 +117,7 @@ See [installation method](../README.md#installation-method).
 
 ```yaml
 Value: PreInstalled, ExistingPartition, CleanEfi, CleanBios, Manual
-Aliases: -i
+Alias: -i
 Default value: PreInstalled
 ```
 
@@ -179,7 +131,7 @@ Must be at least 0.
 
 ```yaml
 Value: <Number>
-Aliases: -disk
+Alias: -disk
 Default value: 0
 Allowed -Install values: ExistingPartition, CleanEfi, CleanBios
 ```
@@ -196,7 +148,7 @@ Must be at least 1.
 
 ```yaml
 Value: <Number>
-Aliases: -part
+Alias: -part
 Allowed -Install values: CleanEfi, CleanBios, ExistingPartition
 ```
 
@@ -221,7 +173,7 @@ See [custom partition layout](../README.md#custom-partition-layout).
 
 ```yaml
 Value: <Label:Size> (multiple allowed)
-Aliases: -p
+Alias: -p
 Allowed -Install values: CleanEfi, CleanBios
 ```
 
@@ -235,7 +187,7 @@ See [selecting the edition to install](../README.md#selecting-the-edition-to-ins
 
 ```yaml
 Value: <String>
-Aliases: -key
+Alias: -key
 ```
 
 ### `-WindowsVersion`
@@ -245,7 +197,7 @@ only used when [`-Feature`](#-feature) is specified.
 
 ```yaml
 Value: <Version>
-Aliases: -v
+Alias: -v
 ```
 
 ## User account options
@@ -259,9 +211,9 @@ Must be at least 1.
 
 ```yaml
 Value: <Number>
-Aliases: -alc
+Alias: -alc
 Default value: 1
-Required arguments: -AutoLogonUser
+Required argument: -AutoLogonUser
 ```
 
 ### `-AutoLogonPassword`
@@ -272,8 +224,8 @@ Must not be blank.
 
 ```yaml
 Value: <String>
-Aliases: -alp
-Required arguments: -AutoLogonUser
+Alias: -alp
+Required argument: -AutoLogonUser
 ```
 
 ### `-AutoLogonUser`
@@ -287,8 +239,8 @@ See [joining a domain and automatic logon](../README.md#joining-a-domain-and-aut
 
 ```yaml
 Value: <[Domain\]User>
-Aliases: -alu
-Required arguments: -AutoLogonPassword
+Alias: -alu
+Required argument: -AutoLogonPassword
 ```
 
 ### `-LocalAccount`
@@ -304,7 +256,7 @@ See [creating a user during installation](../README.md#creating-a-user-during-in
 
 ```yaml
 Value: <[Group:]Name,Password> (multiple allowed)
-Aliases: -a
+Alias: -a
 ```
 
 ## Domain options
@@ -320,7 +272,7 @@ Must not be blank.
 
 ```yaml
 Value: <[Group:][Domain\]User> (multiple allowed)
-Aliases: -da
+Alias: -da
 Requires one of: -JoinDomain, -JoinDomainProvisioningFile
 ```
 
@@ -334,7 +286,7 @@ See [joining a domain and automatic logon](../README.md#joining-a-domain-and-aut
 
 ```yaml
 Value: <String>
-Aliases: -jd
+Alias: -jd
 Required arguments: -JoinDomainUser, -JoinDomainPassword
 ```
 
@@ -344,8 +296,8 @@ Join the domain during the offlineServicing pass of Windows setup, rather than t
 
 ```yaml
 Value: [<Boolean>]
-Aliases: -jdo
-Required arguments: -JoinDomainProvisioningFile
+Alias: -jdo
+Required argument: -JoinDomainProvisioningFile
 Allowed -Install values: ExistingPartition, CleanBios, CleanEfi, Manual
 ```
 
@@ -358,8 +310,8 @@ Must not be blank.
 
 ```yaml
 Value: <String>
-Aliases: -jdp
-Required arguments: -JoinDomain
+Alias: -jdp
+Required argument: -JoinDomain
 ```
 
 ### `-JoinDomainProvisioningFile`
@@ -371,8 +323,8 @@ See [joining a domain using provisioning](../README.md#joining-a-domain-using-pr
 
 ```yaml
 Value: <Path>
-Aliases: -jdpf
-Prohibited arguments: -JoinDomain
+Alias: -jdpf
+Prohibited argument: -JoinDomain
 ```
 
 ### `-JoinDomainUser`
@@ -384,8 +336,8 @@ Must not be blank.
 
 ```yaml
 Value: <[Domain\]User>
-Aliases: -jdu
-Required arguments: -JoinDomain
+Alias: -jdu
+Required argument: -JoinDomain
 ```
 
 ### `-OUPath`
@@ -396,8 +348,8 @@ Must not be blank.
 
 ```yaml
 Value: <String>
-Aliases: -ou
-Required arguments: -JoinDomain
+Alias: -ou
+Required argument: -JoinDomain
 ```
 
 ## Other setup options
@@ -410,7 +362,7 @@ Must not be blank.
 
 ```yaml
 Value: <String>
-Aliases: -n
+Alias: -n
 ```
 
 ### `-DisableCloud`
@@ -419,7 +371,7 @@ Disable Windows cloud consumer features. This prevents auto-installation of reco
 
 ```yaml
 Value: [<Boolean>]
-Aliases: -dc
+Alias: -dc
 ```
 
 ### `-DisableDefender`
@@ -428,7 +380,7 @@ Disable Windows Defender virus and threat protection.
 
 ```yaml
 Value: [<Boolean>]
-Aliases: -d
+Alias: -d
 ```
 
 ### `-DisableServerManager`
@@ -437,7 +389,7 @@ Do not automatically start Server Manager when logging on (Windows Server only).
 
 ```yaml
 Value: [<Boolean>]
-Aliases: -dsm
+Alias: -dsm
 ```
 
 ### `-DisplayResolution`
@@ -447,7 +399,7 @@ the default resolution is determined by Windows.
 
 ```yaml
 Value: <Resolution>
-Aliases: -res
+Alias: -res
 ```
 
 ### `-EnableRemoteDesktop`
@@ -456,7 +408,7 @@ Turn on remote desktop, and create a Windows Defender Firewall rule to allow inc
 
 ```yaml
 Value: [<Boolean>]
-Aliases: -rdp
+Alias: -rdp
 ```
 
 ### `-FirstLogonCommand`
@@ -470,7 +422,7 @@ See [first log-on commands and scripts](../README.md#first-log-on-commands-and-s
 
 ```yaml
 Value: <String> (multiple allowed)
-Aliases: -cmd
+Alias: -cmd
 ```
 
 ### `-FirstLogonScript`
@@ -495,7 +447,7 @@ Must not be blank.
 
 ```yaml
 Value: <String>
-Aliases: -lang
+Alias: -lang
 Default value: en-US
 ```
 
@@ -510,7 +462,7 @@ See [installing a 32 bit OS](../README.md#installing-a-32-bit-os).
 
 ```yaml
 Value: <String>
-Aliases: -arch
+Alias: -arch
 Default value: amd64
 ```
 
