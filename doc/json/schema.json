@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "title": "GenerateAnswerFile JSON options.",
+  "title": "Answer File Generator JSON options.",
   "type": "object",
-  "description": "Provides options for generating an unattended Windows installation answer file using GenerateAnswerFile.",
+  "description": "Provides options for generating an unattended Windows installation answer file using the Answer File Generator.",
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -162,7 +162,7 @@
         "null",
         "array" 
       ],
-      "description": "A list of local administrator accounts to create.",
+      "description": "A list of local accounts to create.",
       "items": {
         "$ref": "#/definitions/LocalCredential"
       }
@@ -179,7 +179,7 @@
       ]
     },
     "DisplayResolution": {
-      "description": "The display resolution, or null to let Windows determine the default resolution.",
+      "description": "The display resolution, in the format 'width,height' (e.g. '1920,1080'), or null to let Windows determine the default resolution.",
       "type": [
         "null",
         "string"
@@ -188,29 +188,29 @@
     },
     "Language": {
       "type": "string",
-      "description": "The language used for the UI and culture settings. The default is 'en-US'."
+      "description": "The language used for the UI and culture settings. The default value is 'en-US'."
     },
     "ProductKey": {
       "type": [
         "null",
         "string"
       ],
-      "description": "The product key used to determine the edition to install, and to activate Windows. This can be null when using a preinstalled image, or when installing an edition that does not require a product key such as a volume licensed edition."
+      "description": "The product key used to determine the edition to install, and to activate Windows. This can be null when using a preinstalled image, or when installing an edition that does not require a product key, such as a volume licensed edition."
     },
     "ProcessorArchitecture": {
       "type": "string",
-      "description": "The processor architecture of the Windows version being installed. Valid values include 'amd64', 'x86', and 'arm64'. The default is 'amd64'."
+      "description": "The processor architecture of the Windows version being installed. Valid values include 'amd64', 'x86', and 'arm64'. The default value is 'amd64'."
     },
     "TimeZone": {
       "type": "string",
-      "description": "The system time zone. Use 'tzutil /l' in a command prompt to list available time zones. The default is 'Pacific Standard Time'."
+      "description": "The system time zone. Use 'tzutil /l' in a command prompt to list possible time zones. The default value is 'Pacific Standard Time'."
     },
     "FirstLogonCommands": {
       "type": [ 
         "null",
         "array" 
       ],
-      "description": "A list of commands to run during first log-on.",
+      "description": "A list of commands to run during first log-on. These are executed on first log-on before the scripts in SetupScripts.",
       "items": {
         "type": "string"
       }
@@ -220,7 +220,7 @@
         "null",
         "array" 
       ],
-      "description": "A list of PowerShell scripts to run during first log-on. These are executed on first logon after the commands in FirstLogonCommands.",
+      "description": "A list of PowerShell scripts to run during first log-on. These are executed on first log-on after the commands in FirstLogonCommands.",
       "items": {
         "type": "string"
       }
@@ -229,7 +229,7 @@
   "definitions": {
     "InstallOptionsBase": {
       "type": "object",
-      "description": "Base type for types that provide options for a specific installation method.",
+      "description": "Common options for all installation method.",
       "x-abstract": true,
       "properties": {
         "OptionalFeatures": {
@@ -256,7 +256,7 @@
         },
         {
           "type": "object",
-          "description": "Base type for all install options that target a specific disk and partition.",
+          "description": "Common options for all installation methods that target a specific disk and partition.",
           "x-abstract": true,
           "properties": {
             "DiskId": {
@@ -282,7 +282,7 @@
         },
         {
           "type": "object",
-          "description": "Base type for all install options that perform a clean installation on a specific disk.",
+          "description": "Common options for installation methods that perform a clean installation on a specific disk and partition.",
           "x-abstract": true,
           "properties": {
             "Partitions": {
@@ -363,7 +363,7 @@
             },
             "TargetPartitionId": {
               "type": "integer",
-              "description": "Gets or sets the ID of the partition to install to.",
+              "description": "The one-based index of the partition to install to.",
               "format": "int32",
               "minimum": 1
             }
@@ -413,11 +413,11 @@
     },
     "Partition": {
       "type": "object",
-      "description": "Specifies a partition to be created when using the CleanBiosOptions or\nCleanEfiOptions class.",
+      "description": "Specifies a partition to be created when using the CleanBiosOptions or CleanEfiOptions class.",
       "additionalProperties": false,
       "properties": {
         "Type": {
-          "description": "The type of the partition. The default is 'Normal'.",
+          "description": "The type of the partition. The default value is 'Normal'.",
           "enum": [
             "Normal",
             "System",
@@ -447,7 +447,7 @@
     },
     "DomainOptionsBase": {
       "type": "object",
-      "description": "Base type for types that provide options for joining a domain.",
+      "description": "Common options for joining a domain.",
       "x-abstract": true,
       "properties": {
         "DomainAccounts": {
@@ -473,7 +473,7 @@
         },
         {
           "type": "object",
-          "description": "Provides options for joining a domain.",
+          "description": "Provides options for joining a domain using credentials.",
           "required": [
             "$type",
             "Domain",
@@ -555,17 +555,16 @@
       "description": "Represents a domain user and the local group to which they should be added.",
       "additionalProperties": false,
       "required": [
-        "DomainUser",
-        "Group"
+        "DomainUser"
       ],
       "properties": {
         "DomainUser": {
           "type": "string",
-          "description": "Gets the domain user that is being added to a group, in the format 'domain\\user' or 'user'. If no domain is specified, it's assumed to be the same as the domain being joined."
+          "description": "The domain user that is being added to a group, in the format 'domain\\user' or 'user'. If no domain is specified, the user is assumed to be a member of the domain being joined."
         },
         "Group": {
-          "type": ["string", "null"],
-          "description": "The group to which the user will be added. The default is 'Administrators'."
+          "type": "string",
+          "description": "The group to which the user will be added. The default value is 'Administrators'."
         }
       }
     },
@@ -587,8 +586,8 @@
           "description": "The password of the account."
         },
         "Group": {
-          "type": ["null", "string"],
-          "description": "The group to which the user will be added. The default is 'Administrators'."
+          "type": "string",
+          "description": "The group to which the user will be added. The default value is 'Administrators'."
         }
       }
     },
