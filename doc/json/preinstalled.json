@@ -43,7 +43,7 @@
     "FirstLogonCommands": [
         "\\\\server\\share\\script.cmd"
     ],
-    "SetupScripts": [
+    "FirstLogonScripts": [
         "\\\\server\\share\\script.ps1 -SomeParameter"
     ]
 }

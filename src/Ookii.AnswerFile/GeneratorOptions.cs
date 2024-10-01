@@ -14,7 +14,7 @@ public class GeneratorOptions
 {
     private Collection<LocalCredential>? _localAccounts;
     private Collection<string>? _firstLogonCommands;
-    private Collection<string>? _setupScripts;
+    private Collection<string>? _firstLogonScripts;
 
 #pragma warning disable CA1822 // Mark members as static
 
@@ -224,13 +224,13 @@ public class GeneratorOptions
     /// </value>
     /// <remarks>
     /// <para>
-    ///   These commands will run before any scripts specified by the <see cref="SetupScripts"/>
+    ///   These commands will run before any scripts specified by the <see cref="FirstLogonScripts"/>
     ///   property.
     /// </para>
     /// </remarks>
     public Collection<string> FirstLogonCommands
     {
-        get => _firstLogonCommands ??= new();
+        get => _firstLogonCommands ??= [];
         set => _firstLogonCommands = value;
     }
 
@@ -243,14 +243,20 @@ public class GeneratorOptions
     /// </value>
     /// <remarks>
     /// <para>
-    ///   These scripts will run after any commands specified by the <see cref="FirstLogonCommands"/>
+    ///   The scripts specified by this property will be executed by invoking Windows PowerShell
+    ///   using <c>PowerShell.exe -ExecutionPolicy Bypass</c>. This is provided for convenience,
+    ///   and there is no difference between this property and using the <see cref="FirstLogonCommands"/>
+    ///   property to explicitly invoke PowerShell.
+    /// </para>
+    /// <para>
+    ///   The scripts will run after any commands specified by the <see cref="FirstLogonCommands"/>
     ///   property.
     /// </para>
     /// </remarks>
-    public Collection<string> SetupScripts
+    public Collection<string> FirstLogonScripts
     {
-        get => _setupScripts ??= new();
-        set => _setupScripts = value;
+        get => _firstLogonScripts ??= [];
+        set => _firstLogonScripts = value;
     }
 
     /// <summary>

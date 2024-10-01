@@ -16,6 +16,8 @@
 - If no output file argument is provided, the answer file is now written to the console.
 - The Answer File Generator is now available in standalone single-file versions, that do not require
   you to install the .Net Runtime.
+- The `-SetupScript` argument has been renamed to [`-FirstLogonScript`][] for consistency with the
+  [`-FirstLogonCommand`][] argument. A `-SetupScript` alias is provided for compatibility.
 - There are some breaking changes to the [Ookii.AnswerFile library](Library.md#breaking-changes).
 
 ## Answer File Generator 1.1 (2023-10-10)
@@ -50,4 +52,5 @@
 [`-JoinDomainUser`]: CommandLine.md#-joindomainuser
 [`-LocalAccount`]: CommandLine.md#-localaccount
 [`-Partition`]: CommandLine.md#-partition
-[`-SetupScript`]: CommandLine.md#-setupscript
+[`-FirstLogonScript`]: CommandLine.md#-firstlogonscript
+[`-SetupScript`]: CommandLine.md#-firstlogonscript

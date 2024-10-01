@@ -348,7 +348,7 @@ public class Generator
                 ++order;
             }
 
-            foreach (var script in Options.SetupScripts)
+            foreach (var script in Options.FirstLogonScripts)
             {
                 WriteSynchronousCommand($"PowerShell.exe -ExecutionPolicy Bypass {script}", "Setup script", order);
                 ++order;

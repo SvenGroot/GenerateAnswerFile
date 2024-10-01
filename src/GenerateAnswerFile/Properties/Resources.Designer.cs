@@ -223,11 +223,20 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. Commands are executed before the scripts specified by -SetupScript..
+        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. Commands are executed before the scripts specified by -FirstLogonScript..
         /// </summary>
         internal static string FirstLogonCommandsDescription {
             get {
                 return ResourceManager.GetString("FirstLogonCommandsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand..
+        /// </summary>
+        internal static string FirstLogonScriptsDescription {
+            get {
+                return ResourceManager.GetString("FirstLogonScriptsDescription", resourceCulture);
             }
         }
         
@@ -477,15 +486,6 @@ namespace GenerateAnswerFile.Properties {
         internal static string RequiresAnyOtherUsageHelpFormat {
             get {
                 return ResourceManager.GetString("RequiresAnyOtherUsageHelpFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand..
-        /// </summary>
-        internal static string SetupScriptsDescription {
-            get {
-                return ResourceManager.GetString("SetupScriptsDescription", resourceCulture);
             }
         }
         

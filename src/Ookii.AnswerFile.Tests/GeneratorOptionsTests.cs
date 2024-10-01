@@ -33,7 +33,7 @@ public class GeneratorOptionsTests : FileTestsBase
                 new LocalCredential("localuser3", "password3", "Users"),
             },
             FirstLogonCommands = { "Hello", "Bye" },
-            SetupScripts = { "Foo", "Bar" },
+            FirstLogonScripts = { "Foo", "Bar" },
         };
 
         var json = options.ToJson();
@@ -54,7 +54,7 @@ public class GeneratorOptionsTests : FileTestsBase
         Assert.IsTrue(deserialized.EnableCloud);
         Assert.IsFalse(deserialized.EnableDefender);
         CollectionAssert.AreEqual(options.FirstLogonCommands, deserialized.FirstLogonCommands);
-        CollectionAssert.AreEqual(options.SetupScripts, deserialized.SetupScripts);
+        CollectionAssert.AreEqual(options.FirstLogonScripts, deserialized.FirstLogonScripts);
     }
 
     [TestMethod]

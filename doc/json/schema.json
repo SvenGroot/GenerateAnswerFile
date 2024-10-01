@@ -210,12 +210,12 @@
         "null",
         "array" 
       ],
-      "description": "A list of commands to run during first log-on. These are executed on first log-on before the scripts in SetupScripts.",
+      "description": "A list of commands to run during first log-on. These are executed on first log-on before the scripts in FirstLogonScripts.",
       "items": {
         "type": "string"
       }
     },
-    "SetupScripts": {
+    "FirstLogonScripts": {
       "type": [ 
         "null",
         "array" 

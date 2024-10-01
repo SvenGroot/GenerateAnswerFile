@@ -63,6 +63,7 @@ The arguments are split into several categories:
     [<a href="#-enableremotedesktop">-EnableRemoteDesktop</a>]
     [<a href="#-feature">-Feature</a> &lt;String&gt;...]
     [<a href="#-firstlogoncommand">-FirstLogonCommand</a> &lt;String&gt;...]
+    [<a href="#-firstlogonscript">-FirstLogonScript</a> &lt;String&gt;...]
     [<a href="#-help">-Help</a>]
     [<a href="#-imageindex">-ImageIndex</a> &lt;Number&gt;]
     [<a href="#-install">-Install</a> &lt;InstallMethod&gt;]
@@ -80,7 +81,6 @@ The arguments are split into several categories:
     [<a href="#-partition">-Partition</a> &lt;Label:Size&gt;...]
     [<a href="#-processorarchitecture">-ProcessorArchitecture</a> &lt;String&gt;]
     [<a href="#-productkey">-ProductKey</a> &lt;String&gt;]
-    [<a href="#-setupscript">-SetupScript</a> &lt;String&gt;...]
     [<a href="#-timezone">-TimeZone</a> &lt;String&gt;]
     [<a href="#-version">-Version</a>]
     [<a href="#-windowsversion">-WindowsVersion</a> &lt;Version&gt;]</pre>
@@ -462,7 +462,7 @@ Aliases: -rdp
 ### `-FirstLogonCommand`
 
 A command to run during first logon. Can have multiple values. Commands are executed before the
-scripts specified by [`-SetupScript`](#-setupscript).
+scripts specified by [`-FirstLogonScript`](#-firstlogonscript).
 
 Must not be blank.
 
@@ -471,6 +471,20 @@ See [first log-on commands and scripts](../README.md#first-log-on-commands-and-s
 ```yaml
 Value: <String> (multiple allowed)
 Aliases: -cmd
+```
+
+### `-FirstLogonScript`
+
+The full path of a Windows PowerShell script to run during first logon. Can have multiple values.
+Scripts are executed after the commands specified by [`-FirstLogonCommand`](#-firstlogoncommand).
+
+Must not be blank.
+
+See [first log-on commands and scripts](../README.md#first-log-on-commands-and-scripts).
+
+```yaml
+Value: <String> (multiple allowed)
+Aliases: -SetupScript, -s
 ```
 
 ### `-Language`
@@ -498,20 +512,6 @@ See [installing a 32 bit OS](../README.md#installing-a-32-bit-os).
 Value: <String>
 Aliases: -arch
 Default value: amd64
-```
-
-### `-SetupScript`
-
-The full path of a Windows PowerShell script to run during first logon. Can have multiple values.
-Scripts are executed after the commands specified by [`-FirstLogonCommand`](#-firstlogoncommand).
-
-Must not be blank.
-
-See [first log-on commands and scripts](../README.md#first-log-on-commands-and-scripts).
-
-```yaml
-Value: <String> (multiple allowed)
-Aliases: -s
 ```
 
 ### `-TimeZone`

@@ -213,13 +213,14 @@ partial class Arguments : BaseArguments
     [MultiValueSeparator]
     public string[]? FirstLogonCommands { get; set; }
 
-    [CommandLineArgument("SetupScript")]
-    [ResourceDescription(nameof(Properties.Resources.SetupScriptsDescription))]
+    [CommandLineArgument("FirstLogonScript")]
+    [ResourceDescription(nameof(Properties.Resources.FirstLogonScriptsDescription))]
     [ArgumentCategory(ArgumentCategory.Other)]
+    [Alias("SetupScript")]
     [Alias("s")]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]
-    public string[]? SetupScripts { get; set; }
+    public string[]? FirstLogonScripts { get; set; }
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.EnableRemoteDesktopDescriptoin))]
@@ -307,9 +308,9 @@ partial class Arguments : BaseArguments
             options.FirstLogonCommands.AddRange(FirstLogonCommands);
         }
 
-        if (SetupScripts != null)
+        if (FirstLogonScripts != null)
         {
-            options.SetupScripts.AddRange(SetupScripts);
+            options.FirstLogonScripts.AddRange(FirstLogonScripts);
         }
 
         return options;

@@ -40,5 +40,5 @@
   "ProcessorArchitecture": "amd64",
   "TimeZone": "Pacific Standard Time",
   "FirstLogonCommands": [],
-  "SetupScripts": []
+  "FirstLogonScripts": []
 }

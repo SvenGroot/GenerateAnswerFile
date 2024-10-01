@@ -29,7 +29,7 @@ public class GeneratorTests : FileTestsBase
                 new LocalCredential("MyAccount2", "Password2", "Users")
             },
             FirstLogonCommands = { "command1.exe", "command2.exe foo" },
-            SetupScripts = { "\\\\machine\\shared\\script.ps1 -Arg" },
+            FirstLogonScripts = { "\\\\machine\\shared\\script.ps1 -Arg" },
             ComputerName = "test-machine",
             EnableCloud = false,
             DisplayResolution = new(1280, 1024)
