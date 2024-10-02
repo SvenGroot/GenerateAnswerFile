@@ -1,3 +1,51 @@
+# Command line arguments
+
+This page describes the command line arguments supported by the Answer File Generator, which are
+used to customize the generated answer file. All argument names are case insensitive.
+
+Argument values can be specified as either e.g. `-JoinDomain mydomain`, `-JoinDomain:mydomain` or
+`-JoinDomain=mydomain`.
+
+Some arguments can be specified multiple times. This can be done by listing several values after
+the argument:
+
+```text
+-LocalAccount "John,Password" "Dave,OtherPassword" -EnableRemoteDesktop
+```
+
+Or, by repeating the argument multiple times, potentially interleaving other arguments:
+
+```text
+-LocalAccount "John,Password" -EnableRemoteDesktop -LocalAccount "Dave,OtherPassword"
+```
+
+This syntax makes Answer File Generator compatible with
+[PowerShell hash table splatting](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_splatting),
+which can be a convenient way to handle invocations with many arguments.
+
+```powershell
+$arguments = @{
+    "OutputPath" = "unattend.xml"
+    "InstallMethod" = "CleanEfi"
+    "Feature" = "Microsoft-Windows-Subsystem-Linux","VirtualMachinePlatform"
+    "WindowsVersion" = "10.0.22621.1"
+    "EnableRemoteDesktop" = $true
+}
+
+./GenerateAnswerFile @arguments
+```
+
+You can also use [JSON files](Json.md) to specify options for generating an answer file. In this
+case, only the `-OutputFile` argument can be used.
+
+The arguments are split into several categories:
+
+- [General options](#general-options)
+- [Installation options](#installation-options)
+- [User account options](#user-account-options)
+- [Domain options](#domain-options)
+- [Other setup options](#other-setup-options)
+
 ## Usage syntax
 
 <!-- markdownlint-disable MD033 -->
@@ -231,7 +279,7 @@ Required argument: -AutoLogonUser
 ### `-AutoLogonUser`
 
 The name of a user to automatically log on, in the format `domain\user`, or just `user` for local
-users. If not specified, automatic logon will not be used.
+users. If not specified, automatic log-on will not be used.
 
 Must not be blank.
 
@@ -303,8 +351,8 @@ Allowed -Install values: ExistingPartition, CleanBios, CleanEfi, Manual
 
 ### `-JoinDomainPassword`
 
-The password of the user specified by [`-JoinDomainUser`](#-joindomainuser). Will be stored in plain
-text.
+The password of the user specified by [`-JoinDomainUser`](#-joindomainuser). This will be stored in
+plain text in the answer file.
 
 Must not be blank.
 
@@ -356,7 +404,7 @@ Required argument: -JoinDomain
 
 ### `-ComputerName`
 
-The network name for the computer.
+The network name for the computer. If not specified, Windows will generate a default name.
 
 Must not be blank.
 
@@ -413,8 +461,8 @@ Alias: -rdp
 
 ### `-FirstLogonCommand`
 
-A command to run during first logon. Can have multiple values. Commands are executed before the
-scripts specified by [`-FirstLogonScript`](#-firstlogonscript).
+A command to run during first logon. Can have multiple values. All commands are executed before the
+scripts specified by [`-FirstLogonScript`](#-firstlogonscript), in the order specified.
 
 Must not be blank.
 
@@ -427,8 +475,9 @@ Alias: -cmd
 
 ### `-FirstLogonScript`
 
-The full path of a Windows PowerShell script to run during first logon. Can have multiple values.
-Scripts are executed after the commands specified by [`-FirstLogonCommand`](#-firstlogoncommand).
+The full path of a Windows PowerShell script to run during first log-on, plus arguments. Can have
+multiple values. Scripts are executed after the commands specified by
+[`-FirstLogonCommand`](#-firstlogoncommand), in the order specified.
 
 Must not be blank.
 

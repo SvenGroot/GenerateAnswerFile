@@ -127,7 +127,7 @@
     <value>The password of the user specified by -AutoLogonUser.</value>
   </data>
   <data name="AutoLogonUserDescription" xml:space="preserve">
-    <value>The name of a user to automatically log on, in the format 'domain\user', or just 'user' for local users. If not specified, automatic logon will not be used.</value>
+    <value>The name of a user to automatically log on, in the format 'domain\user', or just 'user' for local users. If not specified, automatic log-on will not be used.</value>
   </data>
   <data name="CategoryDomain" xml:space="preserve">
     <value>Domain options:</value>
@@ -142,7 +142,7 @@
     <value>User account options:</value>
   </data>
   <data name="ComputerNameDescription" xml:space="preserve">
-    <value>The network name for the computer.</value>
+    <value>The network name for the computer. If not specified, Windows will generate a default name.</value>
   </data>
   <data name="DisableCloudDescription" xml:space="preserve">
     <value>Disable Windows cloud consumer features. This prevents auto-installation of recommended store apps.</value>
@@ -172,7 +172,7 @@
     <value>The name of an optional feature to install. Use the PowerShell 'Get-WindowsOptionalFeature' command to get a list of valid feature names. Can have multiple values.</value>
   </data>
   <data name="FirstLogonCommandsDescription" xml:space="preserve">
-    <value>A command to run during first logon. Can have multiple values. Commands are executed before the scripts specified by -FirstLogonScript.</value>
+    <value>A command to run during first logon. Can have multiple values. All commands are executed before the scripts specified by -FirstLogonScript, in the order specified.</value>
   </data>
   <data name="ImageIndexDescription" xml:space="preserve">
     <value>The index of the image in the WIM file to install. Use this for Windows editions not installed using a product key, such as those that use volume licensing. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.</value>
@@ -187,13 +187,13 @@
     <value>The one-based ID of the partition to install to, on the disk specified by -InstallToDisk. If not specified and -Install is CleanEfi or CleanBios, Windows will be installed on the first regular data partition. If -Install is ExistingPartition, the default value is 3, which is appropriate for UEFI systems with the default partition layout.</value>
   </data>
   <data name="InvalidMethodCount" xml:space="preserve">
-    <value>Need at least one method.</value>
+    <value>At least one installation method must be provided.</value>
   </data>
   <data name="JoinDomainDescription" xml:space="preserve">
     <value>The name of a domain to join. If not specified, the system will not be joined to a domain.</value>
   </data>
   <data name="JoinDomainPasswordDescription" xml:space="preserve">
-    <value>The password of the user specified by -JoinDomainUser. Will be stored in plain text.</value>
+    <value>The password of the user specified by -JoinDomainUser. This will be stored in plain text in the answer file.</value>
   </data>
   <data name="JoinDomainUserDescription" xml:space="preserve">
     <value>The name of a user with permission to join the domain specified by -JoinDomain. Use the format 'domain\user', or just 'user' if the user is a member of the domain you are joining.</value>
@@ -251,7 +251,7 @@ If not specified, the default partition layout for the method specified by -Inst
     <value>The product key used to select what edition to install, and to activate Windows.</value>
   </data>
   <data name="FirstLogonScriptsDescription" xml:space="preserve">
-    <value>The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand.</value>
+    <value>The full path of a Windows PowerShell script to run during first log-on, plus arguments. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand, in the order specified.</value>
   </data>
   <data name="TimeZoneDescription" xml:space="preserve">
     <value>The time zone that Windows will use. Run 'tzutil /l' for a list of valid values.</value>
@@ -274,7 +274,7 @@ For more information, as well as usage examples, run '{0} -OnlineHelp', or see: 
     <value>The exact version and build number (e.g. '10.0.22621.1') of the OS being installed. This argument is only used when -Feature is specified.</value>
   </data>
   <data name="JsonUsageFooter" xml:space="preserve">
-    <value>JSON input was found; additional arguments are available if JSON input is not provided. For more information, see: https://github.com/SvenGroot/GenerateAnswerFile</value>
+    <value>JSON input was found; additional command line arguments are available if JSON input is not provided. For more information, see: https://github.com/SvenGroot/GenerateAnswerFile</value>
   </data>
   <data name="JoinDomainProvisioningFileDescription" xml:space="preserve">
     <value>The path to a file containing provisioned account data to join the domain. This file can be created using the command 'djoin.exe /provision /domain domainname /machine machinename /savefile filename'.</value>
