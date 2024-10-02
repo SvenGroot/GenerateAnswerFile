@@ -10,7 +10,6 @@ namespace Ookii.AnswerFile;
 ///   When using this installation method, the disk specified by <see cref="TargetedInstallOptionsBase.DiskId"/>
 ///   will be wiped, and repartitioned as a GPT disk with partitions created according to the
 ///   <see cref="CleanOptionsBase.Partitions"/> property.
-///   property.
 /// </para>
 /// <para>
 ///   If the <see cref="CleanOptionsBase.Partitions"/> property is an empty list, the default layout
@@ -58,7 +57,7 @@ public class CleanEfiOptions : CleanOptionsBase
     /// </value>
     /// <remarks>
     /// <para>
-    ///   BIOS systems use GPT, which has a 128 partition limit, so an extended partition with
+    ///   UEFI systems use GPT, which has a 128 partition limit, so an extended partition with
     ///   logical volumes is not required for more than four partitions. Creating more than 128
     ///   partitions is not supported.
     /// </para>

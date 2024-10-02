@@ -21,7 +21,8 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// <remarks>
     /// <para>
     ///   If this property is an empty list, the default layout returned by the
-    ///   <see cref="GetDefaultPartitions"/> method will be used, which depends on the system type.
+    ///   <see cref="GetDefaultPartitions"/> method will be used, which depends on the system type
+    ///   (UEFI or BIOS).
     /// </para>
     /// </remarks>
     public Collection<Partition> Partitions

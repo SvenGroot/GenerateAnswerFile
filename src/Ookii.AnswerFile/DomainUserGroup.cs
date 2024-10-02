@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Ookii.AnswerFile;
 
 /// <summary>
-/// Represents a domain user and the local group to which they should be added.
+/// Represents a domain user and the local group to which the user should be added.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -34,7 +34,9 @@ public record class DomainUserGroup
     /// <para>
     ///   If the <see cref="DomainUser.Domain" qualifyHint="true"/> property of
     ///   <paramref name="domainUser"/> is <see langword="null"/>, this refers to a user that is
-    ///   a member of the domain that is being joined, not a local account.
+    ///   a member of the domain that is being joined, not a local account. When using the
+    ///   <see cref="ProvisionedDomainOptions"/> class, the <see cref="DomainUser.Domain" qualifyHint="true"/>
+    ///   property may not be <see langword="null"/>.
     /// </para>
     /// </remarks>
     /// <exception cref="ArgumentNullException">
@@ -58,7 +60,9 @@ public record class DomainUserGroup
     /// <para>
     ///   If the <see cref="DomainUser.Domain" qualifyHint="true"/> property is
     ///   <see langword="null"/>, this refers to a user that is a member of the domain that is being
-    ///   joined, not a local account.
+    ///   joined, not a local account. When using the <see cref="ProvisionedDomainOptions"/> class,
+    ///   the <see cref="DomainUser.Domain" qualifyHint="true"/> property may not be
+    ///   <see langword="null"/>.
     /// </para>
     /// </remarks>
     public DomainUser DomainUser { get; }
@@ -90,9 +94,10 @@ public record class DomainUserGroup
     /// </exception>
     /// <remarks>
     /// <para>
-    ///   If the string does not contain a group, the value of the <see cref="DefaultGroup"/> field
-    ///   is used. If the string does not contain a domain, this indicates the user is a member of
-    ///   the domain that the target computer is joining.
+    ///   If the string does not contain a group, the value of the <see cref="DefaultGroup"/>
+    ///   constant is used. If the string does not contain a domain, this indicates the user is a
+    ///   member of the domain that the target computer is joining. When using the
+    ///   <see cref="ProvisionedDomainOptions"/> class, the value must contain a domain.
     /// </para>
     /// </remarks>
     public static DomainUserGroup Parse(string value)

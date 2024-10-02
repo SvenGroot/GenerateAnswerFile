@@ -63,7 +63,7 @@ public class DomainOptions : DomainOptionsBase
     /// Gets the path of the Organizational Unit that the computer account should be added to.
     /// </summary>
     /// <value>
-    /// The organizational unit path, or <see langword="null"/> to not join a specific OU. The
+    /// The organizational unit path, or <see langword="null"/> to join the domain's default OU. The
     /// default value is <see langword="null"/>.
     /// </value>
     public string? OUPath { get; set; }
@@ -71,7 +71,7 @@ public class DomainOptions : DomainOptionsBase
     /// <summary>
     /// Gets the name of the domain to use for an account in the
     /// <see cref="DomainOptionsBase.DomainAccounts" qualifyHInt="true"/> property where the
-    /// <see cref="DomainUser.Domain" qualifyHint="true"/> is <see langword="null"/>.
+    /// <see cref="DomainUser.Domain" qualifyHint="true"/> property is <see langword="null"/>.
     /// </summary>
     /// <value>
     /// The value of the <see cref="Domain"/> property.
@@ -96,7 +96,9 @@ public class DomainOptions : DomainOptionsBase
     /// <paramref name="generator"/> is <see langword="null"/>.
     /// </exception>
     /// <exception cref="NotSupportedException">
-    /// <paramref name="offlineServicing"/> is <see langword="true"/>.
+    /// <paramref name="offlineServicing"/> is <see langword="true"/>. Only the
+    /// <see cref="ProvisionedDomainOptions"/> class can be used to join a domain during the
+    /// offlineServicing pass.
     /// </exception>
     public override void WriteDomainElements(Generator generator, bool offlineServicing)
     {

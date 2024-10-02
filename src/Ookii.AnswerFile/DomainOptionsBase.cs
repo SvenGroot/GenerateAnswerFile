@@ -21,11 +21,12 @@ public abstract class DomainOptionsBase
     /// </value>
     /// <remarks>
     /// <para>
-    ///   If the <see cref="DomainUser.Domain" qualifyHint="true"/> property is
-    ///   <see langword="null"/>, the account is assumed to belong to the domain specified in the
-    ///   <see cref="DomainOptions.Domain" qualifyHint="true"/> property, rather than a local
-    ///   account. If this is not an instance of the <see cref="DomainOptions"/> class, then
-    ///   the <see cref="DomainUser.Domain" qualityHint="true"/> property may not be <see langword="null"/>.
+    ///   If the <see cref="DomainUser.Domain" qualifyHint="true"/> property of an element in this
+    ///   collection is <see langword="null"/>, the account is assumed to belong to the domain
+    ///   specified in the <see cref="DomainOptions.Domain" qualifyHint="true"/> property, rather
+    ///   than a local account. If this object is not an instance of the <see cref="DomainOptions"/>
+    ///   class, then the <see cref="DomainUser.Domain" qualifyHint="true"/> property may not be
+    ///   <see langword="null"/>.
     /// </para>
     /// </remarks>
     public Collection<DomainUserGroup> DomainAccounts
@@ -36,7 +37,7 @@ public abstract class DomainOptionsBase
 
     /// <summary>
     /// Gets the name of the domain to use for an account in the <see cref="DomainAccounts"/>
-    /// property where the <see cref="DomainUser.Domain" qualifyHint="true"/> is
+    /// property where the <see cref="DomainUser.Domain" qualifyHint="true"/> property is
     /// <see langword="null"/>.
     /// </summary>
     /// <value>

@@ -54,9 +54,9 @@ public class AutoLogonOptions
     /// <remarks>
     /// <para>
     ///   A workaround is applied for an issue where Windows adds 1 to the count specified in the
-    ///   answer file. If the count is 1, a first-logon command is used to clear the count to ensure
-    ///   exactly one logon. If the count is larger than 1, the count written to the answer file
-    ///   will be one less than the value specified here.
+    ///   answer file. If the count is 1, a first-log-on command is used to clear the count to
+    ///   ensure exactly one log-on. If the count is larger than 1, the count written to the answer
+    ///   file will be one less than the value specified here.
     /// </para>
     /// </remarks>
     public int Count { get; set; } = 1;
