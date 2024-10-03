@@ -22,7 +22,7 @@ public class GeneratorOptions
     /// Gets the schema that can be used for validation of the JSON representation of this object.
     /// </summary>
     /// <value>
-    /// The JSCON schema URL.
+    /// The JSON schema URL.
     /// </value>
     // This must be the first property and must not be static, so ToJson will insert the $schema
     // property into the output.
@@ -47,8 +47,9 @@ public class GeneratorOptions
     /// Gets or sets options for joining a domain.
     /// </summary>
     /// <value>
-    /// An instance of the <see cref="DomainOptions"/> class, or <see langword="null"/> to not join
-    /// a domain. The default value is <see langword="null"/>.
+    /// An instance of the <see cref="DomainOptions"/> class, the <see cref="ProvisionedDomainOptions"/>
+    /// class, or <see langword="null"/> to not join a domain. The default value is
+    /// <see langword="null"/>.
     /// </value>
     /// <remarks>
     /// <note type="security">
@@ -62,7 +63,8 @@ public class GeneratorOptions
     /// Gets or sets the computer name of the system.
     /// </summary>
     /// <value>
-    /// The computer name, or <see langword="null"/> to let Windows pick a computer name.
+    /// The computer name, or <see langword="null"/> to let Windows pick a computer name. The
+    /// default value is <see langword="null"/>.
     /// </value>
     public string? ComputerName { get; set; }
 
@@ -111,8 +113,8 @@ public class GeneratorOptions
     public bool EnableRemoteDesktop { get; set; }
 
     /// <summary>
-    /// Gets or sets a value which indicates whether server manager will be launched on logon on
-    /// Windows Server.
+    /// Gets or sets a value which indicates whether server manager will be launched when logging
+    /// in on Windows Server.
     /// </summary>
     /// <value>
     /// <see langword="true"/> to enable server manager; otherwise, <see langword="false"/>. the
@@ -126,16 +128,12 @@ public class GeneratorOptions
     public bool EnableServerManager { get; set; } = true;
 
     /// <summary>
-    /// Gets or sets a collection of local administrator accounts to create.
+    /// Gets or sets a collection of local accounts to create.
     /// </summary>
     /// <value>
     /// A collection of local user accounts.
     /// </value>
     /// <remarks>
-    /// <para>
-    ///   All accounts specified by this property will be created as members of the local
-    ///   Administrators group.
-    /// </para>
     /// <note type="security">
     ///   The passwords for the local accounts are stored using base64 encoding in the answer file;
     ///   they are not encrypted. Do not store answer files with sensitive passwords in public
@@ -155,6 +153,13 @@ public class GeneratorOptions
     /// An instance of the <see cref="AutoLogonOptions"/> class, or <see langword="null"/> to not
     /// use automatic log-on. The default value is <see langword="null"/>.
     /// </value>
+    /// <remarks>
+    /// <note type="security">
+    ///   The password of the account used to log on automatically is stored using base64 encoding
+    ///   in the answer file; it is not encrypted. Do not store answer files with sensitive
+    ///   passwords in public locations.
+    /// </note>
+    /// </remarks>
     public AutoLogonOptions? AutoLogon { get; set; }
 
     /// <summary>
@@ -206,7 +211,7 @@ public class GeneratorOptions
     public string ProcessorArchitecture { get; set; } = "amd64";
 
     /// <summary>
-    /// Gets or sets the time zone.
+    /// Gets or sets the system time zone.
     /// </summary>
     /// <value>
     /// The standard name of a time zone. The default value is "Pacific Standard Time".
@@ -265,11 +270,12 @@ public class GeneratorOptions
     /// </summary>
     /// <param name="json">The JSON value.</param>
     /// <returns>
-    /// An instance of the <see cref="GeneratorOptions"/> class, or <see langword="null"/> if the
-    /// JSON contained a <see langword="null"/> value.
+    /// An instance of the <see cref="GeneratorOptions"/> class, or <see langword="null"/> if
+    /// <paramref name="json"/> is a single <see langword="null"/> value.
     /// </returns>
     /// <exception cref="JsonException">
-    /// The JSON value is invalid.
+    /// <paramref name="json"/> is not a valid JSON representation of the
+    /// <see cref="GeneratorOptions"/> class.
     /// </exception>
     public static GeneratorOptions? FromJson(ReadOnlySpan<char> json)
         => JsonSerializer.Deserialize(json, SourceGenerationContext.Default.GeneratorOptions);

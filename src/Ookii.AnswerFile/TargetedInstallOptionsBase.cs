@@ -10,7 +10,7 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// Gets or sets the disk to which Windows will be installed.
     /// </summary>
     /// <value>
-    /// The zero-based disk ID.
+    /// The zero-based disk ID. The default value is zero.
     /// </value>
     public int DiskId { get; set; }
 

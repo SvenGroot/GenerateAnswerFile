@@ -24,7 +24,8 @@ public enum PartitionType
     System,
     /// <summary>
     /// A Microsoft reserved (MSR) partition. This partition type is only used for EFI/GPT.
-    /// Partitions of this type will not be formatted using a file system.
+    /// Partitions of this type will not be formatted using a file system, and will not be assigned
+    /// a drive letter.
     /// </summary>
     Msr,
     /// <summary>

@@ -53,7 +53,7 @@ public class Generator
     public XmlWriter Writer { get; }
 
     /// <summary>
-    /// Generates an unattended installation answer file and writes it to the specified
+    /// Generates an unattended installation answer file, and writes it to the specified
     /// <see cref="XmlWriter"/>.
     /// </summary>
     /// <param name="writer">The <see cref="XmlWriter"/> to write to.</param>
@@ -68,7 +68,7 @@ public class Generator
     }
 
     /// <summary>
-    /// Generates an unattended installation answer file and writes it to the specified file.
+    /// Generates an unattended installation answer file, and writes it to the specified file.
     /// </summary>
     /// <param name="outputPath">The path of the file to write to.</param>
     /// <param name="options">The options for the unattended installation.</param>
@@ -82,7 +82,7 @@ public class Generator
     }
 
     /// <summary>
-    /// Generates an unattended installation answer file and writes it to the specified
+    /// Generates an unattended installation answer file, and writes it to the specified
     /// <see cref="TextWriter"/>.
     /// </summary>
     /// <param name="writer">The <see cref="TextWriter"/> to write to.</param>

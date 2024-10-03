@@ -8,7 +8,7 @@ namespace Ookii.AnswerFile;
 /// <remarks>
 /// <para>
 ///   While the <see cref="DomainCredential"/> class can represent either a domain or local user
-///   account, this class is used when only local accounts can be used.
+///   account, this class can only represent a local user account.
 /// </para>
 /// <note type="security">
 ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
@@ -31,7 +31,9 @@ public record class LocalCredential
     /// </summary>
     /// <param name="userName">The user name of the account.</param>
     /// <param name="password">The password of the account.</param>
-    /// <param name="group">The group to add the user to.</param>
+    /// <param name="group">
+    /// The group to add the user to. Multiple groups may be separated by semicolons.
+    /// </param>
     /// <remarks>
     /// <note type="security">
     ///   Passwords in answer files are not encrypted. They are plain text at worst, and base64 encoded
@@ -75,18 +77,25 @@ public record class LocalCredential
     public string Password { get; }
 
     /// <summary>
-    /// The group to which the user will be added.
+    /// Gets the group to which the user will be added.
     /// </summary>
     /// <value>
-    /// The name of a local group on the target computer.
+    /// The name of a local group on the target computer, or multiple group names separated by
+    /// semicolons.
     /// </value>
     public string Group { get; }
 
     /// <summary>
-    /// Parses the domain and user name from a string in the form 'user,password'.
+    /// Parses the domain and user name from a string in the form 'user,password' or 'group:user,password'.
     /// </summary>
     /// <param name="value">The value to parse.</param>
     /// <returns>An instance of the <see cref="LocalCredential"/> class.</returns>
+    /// <remarks>
+    /// <para>
+    ///   If the string does not contain a group, the value of the <see cref="DefaultGroup"/>
+    ///   constant is used.
+    /// </para>
+    /// </remarks>
     /// <exception cref="ArgumentNullException">
     ///   <paramref name="value"/> is <see langword="null"/>.
     /// </exception>

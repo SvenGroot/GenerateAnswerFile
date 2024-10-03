@@ -17,7 +17,7 @@ public abstract class InstallOptionsBase
     /// </summary>
     /// <value>
     /// An instance of the <see cref="OptionalFeatures"/> class, or <see langword="null"/> if no
-    /// optional features should be installed.
+    /// optional features should be installed. The default value is <see langword="null"/>.
     /// </value>
     public OptionalFeatures? OptionalFeatures { get; set; }
 
@@ -38,6 +38,11 @@ public abstract class InstallOptionsBase
     /// <para>
     ///   Setting this property to <see langword="true"/> is only supported when using the
     ///   <see cref="ProvisionedDomainOptions"/> class.
+    /// </para>
+    /// <para>
+    ///   This property is provided here, and not as part of the <see cref="ProvisionedDomainOptions"/>
+    ///   class, because the offlineServicing pass is not processed when using a pre-installed
+    ///   image.
     /// </para>
     /// </remarks>
     public bool JoinDomainOffline { get; set; }

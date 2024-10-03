@@ -8,9 +8,9 @@ namespace Ookii.AnswerFile;
 /// </summary>
 /// <remarks>
 /// <para>
-///   The account data needed to provision the computer can be created using the following
-///   command: <c>djoin.exe /provision /domain domainname /machine machinename /savefile filename</c>.
-///   The contents of the created file should be passed to the constructor of this class.
+///   The account data needed for provisioning can be created using the following command:
+///   <c>djoin.exe /provision /domain domainname /machine machinename /savefile filename</c>. The
+///   contents of the created file should be passed to the constructor of this class.
 /// </para>
 /// <para>
 ///   Joining a domain using provisioning is supported both during the specialize and

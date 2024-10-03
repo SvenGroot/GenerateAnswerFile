@@ -29,7 +29,9 @@ public record class DomainUserGroup
     /// <param name="domainUser">
     /// The <see cref="AnswerFile.DomainUser"/> to add to the group.
     /// </param>
-    /// <param name="group">The group to add the user to.</param>
+    /// <param name="group">
+    /// The group to add the user to. Multiple groups may be separated by semicolons.
+    /// </param>
     /// <remarks>
     /// <para>
     ///   If the <see cref="DomainUser.Domain" qualifyHint="true"/> property of
@@ -71,7 +73,8 @@ public record class DomainUserGroup
     /// The group to which the user will be added.
     /// </summary>
     /// <value>
-    /// The name of a local group on the target computer.
+    /// The name of a local group on the target computer, or multiple group names separated by
+    /// semicolons.
     /// </value>
     public string Group { get; }
 

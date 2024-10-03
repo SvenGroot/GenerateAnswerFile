@@ -23,13 +23,17 @@ public class ExistingPartitionOptions : TargetedInstallOptionsBase
     /// Gets or sets the ID of the partition to install to.
     /// </summary>
     /// <value>
-    /// The one-based partition ID.
+    /// The one-based partition ID. The default value is zero.
     /// </value>
     /// <remarks>
     /// <para>
     ///   If the disk uses a default UEFI partition layout, Windows should be installed to
     ///   partition 3. For the default BIOS partition layout, Windows should be installed to
     ///   partition 2.
+    /// </para>
+    /// <para>
+    ///   Since the default value of this property is zero, you must change it in order to generate
+    ///   a valid answer file.
     /// </para>
     /// </remarks>
     [JsonPropertyName("TargetPartitionId")]
