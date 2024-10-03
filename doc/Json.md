@@ -47,15 +47,15 @@ this:
 ```
 
 The above file would generate an answer file that installs Windows using the default UEFI partition
-layout, activates it uses the specified product key, and creates a local user with the specified
+layout, activates it using the specified product key, and creates a local user with the specified
 password.
 
 > [!WARNING]
 > Passwords in the JSON files are always in plain text, so do not store an Answer File Generator
 > JSON file in an unsecure location.
 
-A [JSON schema](json/schema.json) is provided that provides documentation, and validation and
-auto-completion (when using a supported editor such as Visual Studio Code)
+A [JSON schema](json/schema.json) is provided that provides documentation, as well as validation and
+auto-completion (when using an editor such as Visual Studio Code).
 
 A few other JSON samples are provided:
 
@@ -74,4 +74,4 @@ A few other JSON samples are provided:
 - [preinstalled.json](json/preinstalled.json): this file does not specify install options, so it's
   suitable for an already deployed image such as those created using sysprep or DISM tools. It also
   demonstrates a number of other options, including joining a domain, adding domain users to local
-  groups, automatic logon, and first-logon commands and scripts.
+  groups, automatic log-on, and first-log-on commands and scripts.

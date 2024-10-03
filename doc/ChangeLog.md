@@ -2,22 +2,22 @@
 
 ## Answer File Generator 2.0 (TBD)
 
-- The [`-DomainAccount`][] argument allows you to specify users from different domains than the one
-  you're joining.
-- The [`-LocalAccount`][] and [`-DomainAccount`][] allow you to customize which groups the account
-  is added to.
-- You can join a domain using provisioning with the [`-JoinDomainProvisioningFile`][] argument, and
-  do it during the offlineServicing pass with the [`-JoinDomainOffline`][] argument.
+- The [`-DomainAccount`][] argument now allows you to specify users from different domains than the
+  one you're joining.
+- The [`-LocalAccount`][] and [`-DomainAccount`][] arguments now allow you to customize which groups
+  the account is added to.
+- You can join a domain using provisioning with the new [`-JoinDomainProvisioningFile`][] argument,
+  and do it during the offlineServicing pass with the new [`-JoinDomainOffline`][] argument.
 - The `-CmdKeyUser` and `-CmdKeyPassword` arguments have been removed; this was a bad security
   practice that I don't wish to promote. You can still get identical behavior using the
   [`-FirstLogonCommand`][] argument if desired.
 - You can specify options using a [custom JSON file format](Json.md), as an alternative to using
   command line arguments.
-- If no output file argument is provided, the answer file is now written to the console.
+- If no output file name is provided, the answer file is now written to the console.
+- The `-SetupScript` argument has been renamed to [`-FirstLogonScript`][], for consistency with the
+  [`-FirstLogonCommand`][] argument. A `-SetupScript` alias is provided for compatibility.
 - The Answer File Generator is now available in standalone single-file versions, that do not require
   you to install the .Net Runtime.
-- The `-SetupScript` argument has been renamed to [`-FirstLogonScript`][] for consistency with the
-  [`-FirstLogonCommand`][] argument. A `-SetupScript` alias is provided for compatibility.
 - There are some breaking changes to the [Ookii.AnswerFile library](Library.md#breaking-changes).
 
 ## Answer File Generator 1.1 (2023-10-10)
