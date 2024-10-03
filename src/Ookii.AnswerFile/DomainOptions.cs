@@ -100,7 +100,7 @@ public class DomainOptions : DomainOptionsBase
     /// <see cref="ProvisionedDomainOptions"/> class can be used to join a domain during the
     /// offlineServicing pass.
     /// </exception>
-    public override void WriteDomainElements(Generator generator, bool offlineServicing)
+    public override void WriteDomainElements(AnswerFileGenerator generator, bool offlineServicing)
     {
         ArgumentNullException.ThrowIfNull(generator);
         if (offlineServicing)

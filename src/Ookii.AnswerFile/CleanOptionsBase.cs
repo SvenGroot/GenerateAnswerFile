@@ -114,7 +114,7 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// Writes the disk configuration for this installation method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
-    protected override void WriteDiskConfiguration(Generator generator)
+    protected override void WriteDiskConfiguration(AnswerFileGenerator generator)
     {
         var partitions = _partitions?.Count > 0 ? _partitions : GetDefaultPartitions();
 

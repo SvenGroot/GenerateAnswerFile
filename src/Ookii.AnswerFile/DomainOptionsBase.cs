@@ -75,5 +75,5 @@ public abstract class DomainOptionsBase
     /// <exception cref="NotSupportedException">
     /// The derived class does not support generating options for the specified pass.
     /// </exception>
-    public abstract void WriteDomainElements(Generator generator, bool offlineServicing);
+    public abstract void WriteDomainElements(AnswerFileGenerator generator, bool offlineServicing);
 }

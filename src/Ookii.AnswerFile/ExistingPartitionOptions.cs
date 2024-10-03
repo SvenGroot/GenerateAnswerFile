@@ -51,7 +51,7 @@ public class ExistingPartitionOptions : TargetedInstallOptionsBase
     /// Writes the disk configuration for this installation method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
-    protected override void WriteDiskConfiguration(Generator generator)
+    protected override void WriteDiskConfiguration(AnswerFileGenerator generator)
     {
         using var modifyPartitions = generator.Writer.WriteAutoCloseElement("ModifyPartitions");
         generator.WriteModifyPartition(1, PartitionId, "NTFS", "Windows", 'C');

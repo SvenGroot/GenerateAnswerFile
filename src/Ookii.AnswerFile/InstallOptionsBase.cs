@@ -32,7 +32,7 @@ public abstract class InstallOptionsBase
     /// </value>
     /// <remarks>
     /// <para>
-    ///   This property is ignored if the <see cref="GeneratorOptions.JoinDomain" qualifyHint="true"/>
+    ///   This property is ignored if the <see cref="AnswerFileOptions.JoinDomain" qualifyHint="true"/>
     ///   property is <see langword="null"/>.
     /// </para>
     /// <para>
@@ -57,9 +57,9 @@ public abstract class InstallOptionsBase
     ///   windowsPE pass.
     /// </para>
     /// </remarks>
-    protected abstract void WriteInstallElements(Generator generator);
+    protected abstract void WriteInstallElements(AnswerFileGenerator generator);
 
-    internal void GenerateWindowsPePass(Generator generator)
+    internal void GenerateWindowsPePass(AnswerFileGenerator generator)
     {
         using var pass = generator.WritePassStart("windowsPE");
         generator.WriteInternationalCore(true);
@@ -84,7 +84,7 @@ public abstract class InstallOptionsBase
         });
     }
 
-    internal void GenerateServicingPass(Generator generator)
+    internal void GenerateServicingPass(AnswerFileGenerator generator)
     {
         OptionalFeatures?.GenerateServicingPass(generator);
     }

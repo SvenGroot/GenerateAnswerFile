@@ -54,7 +54,7 @@ public class ProvisionedDomainOptions : DomainOptionsBase
     /// <exception cref="ArgumentNullException">
     /// <paramref name="generator"/> is <see langword="null"/>.
     /// </exception>
-    public override void WriteDomainElements(Generator generator, bool offlineServicing)
+    public override void WriteDomainElements(AnswerFileGenerator generator, bool offlineServicing)
     {
         ArgumentNullException.ThrowIfNull(generator);
         string elementName = offlineServicing ? "OfflineIdentification" : "Identification";

@@ -23,7 +23,7 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// <remarks>
     /// <para>
     ///   A WIM or ESD image file can contain multiple images, typically used for different SKUs
-    ///   such as Home or Professional. Normally, the <see cref="GeneratorOptions.ProductKey" qualifyHint="true"/>
+    ///   such as Home or Professional. Normally, the <see cref="AnswerFileOptions.ProductKey" qualifyHint="true"/>
     ///   property is used to determine which image to install. However, for editions that are not
     ///   necessarily activated using a product key (such as those using volume licensing), you can
     ///   use the image index to select which edition to install.
@@ -50,7 +50,7 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// <remarks>
     /// <inheritdoc/>
     /// </remarks>
-    protected override void WriteInstallElements(Generator generator)
+    protected override void WriteInstallElements(AnswerFileGenerator generator)
     {
         using (var imageInstall = generator.Writer.WriteAutoCloseElement("ImageInstall"))
         using (var osImage = generator.Writer.WriteAutoCloseElement("OSImage"))
@@ -95,5 +95,5 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
-    protected abstract void WriteDiskConfiguration(Generator generator);
+    protected abstract void WriteDiskConfiguration(AnswerFileGenerator generator);
 }

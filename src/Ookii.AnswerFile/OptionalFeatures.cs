@@ -44,7 +44,7 @@ public class OptionalFeatures
         set => _features = value;
     }
 
-    internal void GenerateServicingPass(Generator generator)
+    internal void GenerateServicingPass(AnswerFileGenerator generator)
     {
         using var servicing = generator.Writer.WriteAutoCloseElement("servicing");
         using var package = generator.Writer.WriteAutoCloseElement("package", new KeyValueList { { "action", "configure" } });
@@ -53,7 +53,7 @@ public class OptionalFeatures
             { "name", "Microsoft-Windows-Foundation-Package" },
             { "version", WindowsVersion },
             { "processorArchitecture", generator.Options.ProcessorArchitecture },
-            { "publicKeyToken", Generator.PublicKeyToken },
+            { "publicKeyToken", AnswerFileGenerator.PublicKeyToken },
             { "language", "" },
         });
 

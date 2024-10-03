@@ -11,13 +11,13 @@ namespace Ookii.AnswerFile;
 /// </summary>
 /// <remarks>
 /// <para>
-///   Create an instance of the <see cref="GeneratorOptions"/> class with the answer file options
-///   you wish to use, and call the <see cref="Generate(string, GeneratorOptions)"/> method or
+///   Create an instance of the <see cref="AnswerFileOptions"/> class with the answer file options
+///   you wish to use, and call the <see cref="Generate(string, AnswerFileOptions)"/> method or
 ///   one of its overloads to generate an answer file with those options.
 /// </para>
 /// </remarks>
 /// <threadsafety instance="false" static="true"/>
-public class Generator
+public class AnswerFileGenerator
 {
     internal const string PublicKeyToken = "31bf3856ad364e35";
 
@@ -28,7 +28,7 @@ public class Generator
         Encoding = new UTF8Encoding(false),
     };
 
-    private Generator(XmlWriter writer, GeneratorOptions options)
+    private AnswerFileGenerator(XmlWriter writer, AnswerFileOptions options)
     {
         ArgumentNullException.ThrowIfNull(writer);
         ArgumentNullException.ThrowIfNull(options);
@@ -40,9 +40,9 @@ public class Generator
     /// Gets the options used for this generator.
     /// </summary>
     /// <value>
-    /// An instance of the <see cref="GeneratorOptions"/> class.
+    /// An instance of the <see cref="AnswerFileOptions"/> class.
     /// </value>
-    public GeneratorOptions Options { get; }
+    public AnswerFileOptions Options { get; }
 
     /// <summary>
     /// Gets the <see cref="XmlWriter"/> that output is written to.
@@ -61,9 +61,9 @@ public class Generator
     /// <exception cref="ArgumentNullException">
     /// <paramref name="writer"/> or <paramref name="options"/> is <see langword="null"/>.
     /// </exception>
-    public static void Generate(XmlWriter writer, GeneratorOptions options)
+    public static void Generate(XmlWriter writer, AnswerFileOptions options)
     {
-        var generator = new Generator(writer, options);
+        var generator = new AnswerFileGenerator(writer, options);
         generator.Generate();
     }
 
@@ -75,7 +75,7 @@ public class Generator
     /// <exception cref="ArgumentNullException">
     /// <paramref name="outputPath"/> or <paramref name="options"/> is <see langword="null"/>.
     /// </exception>
-    public static void Generate(string outputPath, GeneratorOptions options)
+    public static void Generate(string outputPath, AnswerFileOptions options)
     {
         using var writer = XmlWriter.Create(outputPath, XmlSettings);
         Generate(writer, options);
@@ -90,7 +90,7 @@ public class Generator
     /// <exception cref="ArgumentNullException">
     /// <paramref name="writer"/> or <paramref name="options"/> is <see langword="null"/>.
     /// </exception>
-    public static void Generate(TextWriter writer, GeneratorOptions options)
+    public static void Generate(TextWriter writer, AnswerFileOptions options)
     {
         using var xmlWriter = XmlWriter.Create(writer, XmlSettings);
         Generate(xmlWriter, options);

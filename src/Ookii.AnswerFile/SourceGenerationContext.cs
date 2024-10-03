@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Ookii.AnswerFile;
 
-[JsonSerializable(typeof(GeneratorOptions))]
+[JsonSerializable(typeof(AnswerFileOptions))]
 [JsonSourceGenerationOptions(
     AllowTrailingCommas = true,
     PropertyNameCaseInsensitive = true,

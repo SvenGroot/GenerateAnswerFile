@@ -20,14 +20,14 @@ static class Program
                 return 1;
             }
 
-            var (arguments, generatorOptions) = options.Value;
+            var (arguments, answerFileOptions) = options.Value;
             if (arguments.OutputFile != null)
             {
-                Generator.Generate(arguments.OutputFile.FullName, generatorOptions);
+                AnswerFileGenerator.Generate(arguments.OutputFile.FullName, answerFileOptions);
             }
             else
             {
-                Generator.Generate(Console.Out, generatorOptions);
+                AnswerFileGenerator.Generate(Console.Out, answerFileOptions);
             }
         }
         catch (Exception ex) when (debug)
@@ -57,7 +57,7 @@ static class Program
         return 0;
     }
 
-    private static (BaseArguments Arguments, GeneratorOptions Options)? GetOptions()
+    private static (BaseArguments Arguments, AnswerFileOptions Options)? GetOptions()
     {
         var jsonOptions = GetJsonOptions();
         if (jsonOptions != null)
@@ -88,7 +88,7 @@ static class Program
         return (arguments, arguments.ToOptions());
     }
 
-    private static (BaseArguments? Arguments, GeneratorOptions Options)? GetJsonOptions()
+    private static (BaseArguments? Arguments, AnswerFileOptions Options)? GetJsonOptions()
     {
         if (!Console.IsInputRedirected)
         {
@@ -101,7 +101,7 @@ static class Program
             return null;
         }
 
-        var options = GeneratorOptions.FromJson(json);
+        var options = AnswerFileOptions.FromJson(json);
         if (options == null)
         {
             return null;

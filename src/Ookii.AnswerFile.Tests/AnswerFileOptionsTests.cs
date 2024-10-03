@@ -4,13 +4,13 @@ using System.Text.Json;
 namespace Ookii.AnswerFile.Tests;
 
 [TestClass]
-public class GeneratorOptionsTests : FileTestsBase
+public class AnswerFileOptionsTests : FileTestsBase
 {
     [TestMethod]
     public void TestJsonSerializationPreInstalled()
     {
         var (actualPath, expectedPath) = GetPaths(".json");
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             AutoLogon = new AutoLogonOptions(new DomainUser("domain", "user"), "password"),
             JoinDomain = new DomainOptions("domain", new DomainCredential(new DomainUser("domain", "user"), "password"))
@@ -39,7 +39,7 @@ public class GeneratorOptionsTests : FileTestsBase
         var json = options.ToJson();
         File.WriteAllText(actualPath, json);
         CheckFilesEqual(expectedPath, actualPath);
-        var deserialized = GeneratorOptions.FromJson(json);
+        var deserialized = AnswerFileOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNull(deserialized.InstallOptions);
         Assert.IsNotNull(deserialized.AutoLogon);
@@ -61,7 +61,7 @@ public class GeneratorOptionsTests : FileTestsBase
     public void TestJsonSerializationEfi()
     {
         var (actualPath, expectedPath) = GetPaths(".json");
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new CleanEfiOptions()
             {
@@ -84,7 +84,7 @@ public class GeneratorOptionsTests : FileTestsBase
         var json = options.ToJson();
         File.WriteAllText(actualPath, json);
         CheckFilesEqual(expectedPath, actualPath);
-        var deserialized = GeneratorOptions.FromJson(json);
+        var deserialized = AnswerFileOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
         var install = (CleanEfiOptions)deserialized.InstallOptions;
@@ -100,7 +100,7 @@ public class GeneratorOptionsTests : FileTestsBase
     public void TestJsonSerializationBios()
     {
         var (actualPath, expectedPath) = GetPaths(".json");
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new CleanBiosOptions()
             {
@@ -122,7 +122,7 @@ public class GeneratorOptionsTests : FileTestsBase
         var json = options.ToJson();
         File.WriteAllText(actualPath, json);
         CheckFilesEqual(expectedPath, actualPath);
-        var deserialized = GeneratorOptions.FromJson(json);
+        var deserialized = AnswerFileOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
         var install = (CleanBiosOptions)deserialized.InstallOptions;
@@ -138,7 +138,7 @@ public class GeneratorOptionsTests : FileTestsBase
     public void TestJsonSerializationExisting()
     {
         var (actualPath, expectedPath) = GetPaths(".json");
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new ExistingPartitionOptions()
             {
@@ -155,7 +155,7 @@ public class GeneratorOptionsTests : FileTestsBase
         var json = options.ToJson();
         File.WriteAllText(actualPath, json);
         CheckFilesEqual(expectedPath, actualPath);
-        var deserialized = GeneratorOptions.FromJson(json);
+        var deserialized = AnswerFileOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
         var install = (ExistingPartitionOptions)deserialized.InstallOptions;
@@ -171,7 +171,7 @@ public class GeneratorOptionsTests : FileTestsBase
     public void TestJsonSerializationManual()
     {
         var (actualPath, expectedPath) = GetPaths(".json");
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new ManualInstallOptions()
             {
@@ -185,7 +185,7 @@ public class GeneratorOptionsTests : FileTestsBase
         var json = options.ToJson();
         File.WriteAllText(actualPath, json);
         CheckFilesEqual(expectedPath, actualPath);
-        var deserialized = GeneratorOptions.FromJson(json);
+        var deserialized = AnswerFileOptions.FromJson(json);
         Assert.IsNotNull(deserialized);
         Assert.IsNotNull(deserialized.InstallOptions);
         var install = (ManualInstallOptions)deserialized.InstallOptions;

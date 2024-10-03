@@ -279,9 +279,9 @@ partial class Arguments : BaseArguments
 
 #endregion
 
-    public GeneratorOptions ToOptions()
+    public AnswerFileOptions ToOptions()
     {
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = ToInstallOptions(),
             JoinDomain = ToDomainOptions(),

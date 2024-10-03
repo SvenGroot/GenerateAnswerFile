@@ -7,10 +7,10 @@ namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides options for generating an unattended Windows installation answer file using the
-/// <see cref="Generator"/> class.
+/// <see cref="AnswerFileGenerator"/> class.
 /// </summary>
 /// <threadsafety instance="false" static="true"/>
-public class GeneratorOptions
+public class AnswerFileOptions
 {
     private Collection<LocalCredential>? _localAccounts;
     private Collection<string>? _firstLogonCommands;
@@ -265,25 +265,25 @@ public class GeneratorOptions
     }
 
     /// <summary>
-    /// Creates an instance of the <see cref="GeneratorOptions"/> class based on the specified JSON
+    /// Creates an instance of the <see cref="AnswerFileOptions"/> class based on the specified JSON
     /// value.
     /// </summary>
     /// <param name="json">The JSON value.</param>
     /// <returns>
-    /// An instance of the <see cref="GeneratorOptions"/> class, or <see langword="null"/> if
+    /// An instance of the <see cref="AnswerFileOptions"/> class, or <see langword="null"/> if
     /// <paramref name="json"/> is a single <see langword="null"/> value.
     /// </returns>
     /// <exception cref="JsonException">
     /// <paramref name="json"/> is not a valid JSON representation of the
-    /// <see cref="GeneratorOptions"/> class.
+    /// <see cref="AnswerFileOptions"/> class.
     /// </exception>
-    public static GeneratorOptions? FromJson(ReadOnlySpan<char> json)
-        => JsonSerializer.Deserialize(json, SourceGenerationContext.Default.GeneratorOptions);
+    public static AnswerFileOptions? FromJson(ReadOnlySpan<char> json)
+        => JsonSerializer.Deserialize(json, SourceGenerationContext.Default.AnswerFileOptions);
 
     /// <summary>
     /// Serializes the current instance to a JSON string.
     /// </summary>
     /// <returns>A JSON representation of the current instance.</returns>
     public string ToJson()
-        => JsonSerializer.Serialize(this, typeof(GeneratorOptions), SourceGenerationContext.Default);
+        => JsonSerializer.Serialize(this, typeof(AnswerFileOptions), SourceGenerationContext.Default);
 }
