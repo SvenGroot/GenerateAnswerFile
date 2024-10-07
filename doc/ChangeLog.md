@@ -1,6 +1,6 @@
 # What's new in Answer File Generator
 
-## Answer File Generator 2.0 (TBD)
+## Answer File Generator 2.0 (2024-10-07)
 
 - The [`-DomainAccount`][] argument now allows you to specify users from different domains than the
   one you're joining.

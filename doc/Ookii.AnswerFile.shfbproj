@@ -61,7 +61,7 @@
     <RootNamespaceContainer>False</RootNamespaceContainer>
     <NamespaceGrouping>False</NamespaceGrouping>
     <MaximumGroupParts>2</MaximumGroupParts>
-    <Preliminary>True</Preliminary>
+    <Preliminary>False</Preliminary>
     <CopyrightHref>https://github.com/SvenGroot/GenerateAnswerFile</CopyrightHref>
     <CopyrightText>Copyright %28c%29 Sven Groot %28Ookii.org%29</CopyrightText>
     <SdkLinkTarget>Blank</SdkLinkTarget>
