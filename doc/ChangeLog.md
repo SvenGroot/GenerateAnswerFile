@@ -47,8 +47,8 @@
 [`-DomainAccount`]: CommandLine.md#-domainaccount
 [`-FirstLogonCommand`]: CommandLine.md#-firstlogoncommand
 [`-JoinDomain`]: CommandLine.md#-joindomain
-[`-JoinDomainOffline`]: doc/CommandLine.md#-joindomainoffline
-[`-JoinDomainProvisioningFile`]: doc/CommandLine.md#-joindomainprovisioningfile
+[`-JoinDomainOffline`]: CommandLine.md#-joindomainoffline
+[`-JoinDomainProvisioningFile`]: CommandLine.md#-joindomainprovisioningfile
 [`-JoinDomainUser`]: CommandLine.md#-joindomainuser
 [`-LocalAccount`]: CommandLine.md#-localaccount
 [`-Partition`]: CommandLine.md#-partition
