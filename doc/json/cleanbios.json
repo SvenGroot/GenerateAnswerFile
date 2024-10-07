@@ -1,0 +1,10 @@
+{
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+    "InstallOptions": {
+        "$type": "CleanBios",
+        "ImageIndex": 1
+    },
+    "DisplayResolution": "1920,1080",
+    "Language": "en-US",
+    "ProcessorArchitecture": "x86"
+}

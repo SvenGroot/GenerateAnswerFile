@@ -118,9 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InvalidLocalCredential" xml:space="preserve">
-    <value>Format is not 'user,password'.</value>
+    <value>Invalid credential value, expected format 'user,password'.</value>
   </data>
   <data name="UnknownTargetPartition" xml:space="preserve">
-    <value>Could not determine the partition to install to.</value>
+    <value>The partition to install to could not be determined.</value>
+  </data>
+  <data name="InvalidResolution" xml:space="preserve">
+    <value>Invalid resolution value, expected format 'width,height'.</value>
+  </data>
+  <data name="UnsupportedDomainOptionsPass" xml:space="preserve">
+    <value>You cannot use credentials to join a domain during the offlineServicing pass.</value>
+  </data>
+  <data name="DomainAccountWithoutDomain" xml:space="preserve">
+    <value>All domain accounts to add to a local group must use the format 'domain\user' or 'group:domain\user' when using provisioning to join a domain.</value>
   </data>
 </root>

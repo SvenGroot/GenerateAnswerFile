@@ -4,39 +4,38 @@ using System.Runtime.CompilerServices;
 namespace Ookii.AnswerFile.Tests;
 
 [TestClass]
-public class GeneratorTests
+public class AnswerFileGeneratorTests : FileTestsBase
 {
-    [TestInitialize]
-    public void Initialize()
-    {
-        Directory.CreateDirectory(Path.Join(Path.GetDirectoryName(typeof(GeneratorTests).Assembly.Location), "actual"));
-    }
-
     [TestMethod]
     public void TestGeneratePreInstalled()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             JoinDomain = new DomainOptions("somedomain",
                 new DomainCredential(new DomainUser("somedomain", "domainuser"), "DomainPassword"))
             {
                 OUPath = "OU=SomeOU,DC=somedomain",
-                DomainAccounts = { "domainuser2" }
+                DomainAccounts = { new(new("domainuser2")), new(new("somedomain2", "domainuser4")),
+                    new(new("somedomain", "domainuser3")), new(new("somedomain2", "domainuser5"), "Users") }
             },
             AutoLogon = new AutoLogonOptions(new DomainUser("somedomain", "domainuser2"), "DomainPassword2")
             {
                 Count = 9999,
             },
-            LocalAccounts = { new LocalCredential("MyAccount", "Password") },
+            LocalAccounts =
+            { 
+                new LocalCredential("MyAccount", "Password"),
+                new LocalCredential("MyAccount2", "Password2", "Users")
+            },
             FirstLogonCommands = { "command1.exe", "command2.exe foo" },
-            SetupScripts = { "\\\\machine\\shared\\script.ps1 -Arg" },
+            FirstLogonScripts = { "\\\\machine\\shared\\script.ps1 -Arg" },
             ComputerName = "test-machine",
             EnableCloud = false,
-            DisplayResolution = new Size(1280, 1024)
+            DisplayResolution = new(1280, 1024)
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -44,7 +43,7 @@ public class GeneratorTests
     public void TestGenerateCleanEfi()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new CleanEfiOptions()
             {
@@ -53,6 +52,7 @@ public class GeneratorTests
                     Features = { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }
                 }
             },
+            JoinDomain = new ProvisionedDomainOptions("base64-data-goes-here"),
             EnableRemoteDesktop = true,
             EnableServerManager = false,
             LocalAccounts = { new LocalCredential("MyUser", "Password") },
@@ -60,7 +60,7 @@ public class GeneratorTests
             ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE"
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -68,7 +68,7 @@ public class GeneratorTests
     public void TestGenerateCleanEfiCustomPartitions()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new CleanEfiOptions()
             {
@@ -85,7 +85,7 @@ public class GeneratorTests
             ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE"
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -93,7 +93,7 @@ public class GeneratorTests
     public void TestGenerateCleanEfiCustomTargetPartition()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new CleanEfiOptions()
             {
@@ -111,7 +111,7 @@ public class GeneratorTests
             ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE"
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -119,20 +119,22 @@ public class GeneratorTests
     public void TestGenerateCleanBios()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new CleanBiosOptions()
             {
                 DiskId = 1,
                 ImageIndex = 2,
+                JoinDomainOffline = true,
             },
+            JoinDomain = new ProvisionedDomainOptions("base64-data-goes-here"),
             EnableDefender = false,
             LocalAccounts = { new LocalCredential("MyUser", "Password") },
             ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
             ProcessorArchitecture = "x86"
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -140,7 +142,7 @@ public class GeneratorTests
     public void TestGenerateCleanBiosCustomPartitions()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new CleanBiosOptions()
             {
@@ -151,13 +153,14 @@ public class GeneratorTests
                     new Partition() { Type = PartitionType.Normal, Label = "Windows", Size = BinarySize.FromGibi(64) },
                     new Partition() { Type = PartitionType.Normal, Label = "Data", FileSystem = "FAT32" },
                 },
+                JoinDomainOffline = true, // This should be ignored
             },
             LocalAccounts = { new LocalCredential("MyUser", "Password") },
             ProductKey = "ABCDE-12345-ABCDE-12345-ABCDE",
             ProcessorArchitecture = "x86"
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -165,7 +168,7 @@ public class GeneratorTests
     public void TestGenerateCleanBiosExtendedPartition()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new CleanBiosOptions()
             {
@@ -183,7 +186,7 @@ public class GeneratorTests
             ProcessorArchitecture = "x86"
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -191,7 +194,7 @@ public class GeneratorTests
     public void TestGenerateExistingPartition()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new ExistingPartitionOptions()
             {
@@ -202,7 +205,7 @@ public class GeneratorTests
             TimeZone = "UTC"
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -210,12 +213,12 @@ public class GeneratorTests
     public void TestGenerateManual()
     {
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = new ManualInstallOptions(),
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
 
@@ -225,7 +228,7 @@ public class GeneratorTests
         // Make sure account screens are hidden in OOBE if joining a domain while not creating
         // local accounts.
         var (actualPath, expectedPath) = GetPaths();
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             JoinDomain = new DomainOptions("somedomain",
                 new DomainCredential(new DomainUser("somedomain", "domainuser"), "DomainPassword"))
@@ -235,22 +238,7 @@ public class GeneratorTests
             ComputerName = "test-machine",
         };
 
-        Generator.Generate(actualPath, options);
+        AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
-    }
-
-
-    private static void CheckFilesEqual(string expectedPath, string actualPath)
-    {
-        var expected = File.ReadAllText(expectedPath);
-        var actual = File.ReadAllText(actualPath);
-        Assert.AreEqual(expected, actual);
-    }
-
-    private static (string, string) GetPaths([CallerMemberName] string name = null!)
-    {
-        var basePath = Path.GetDirectoryName(typeof(GeneratorTests).Assembly.Location);
-        var file = name + ".xml";
-        return (Path.Join(basePath, "actual", file), Path.Join(basePath, "expected", file));
     }
 }

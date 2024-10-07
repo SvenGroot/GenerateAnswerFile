@@ -4,7 +4,7 @@ namespace Ookii.AnswerFile;
 
 static class XmlWriterExtensions
 {
-    public static AutoCloseElement WriteAutoCloseElement(this XmlWriter writer, string name, object? attributes = null)
+    public static AutoCloseElement WriteAutoCloseElement(this XmlWriter writer, string name, KeyValueList? attributes = null)
     {
         writer.WriteStartElement(name);
         if (attributes != null)
@@ -15,30 +15,20 @@ static class XmlWriterExtensions
         return new AutoCloseElement(writer);
     }
 
-    public static void WriteAttributes(this XmlWriter writer, object attributes)
+    public static void WriteAttributes(this XmlWriter writer, KeyValueList attributes)
     {
-        foreach (var property in attributes.GetType().GetProperties())
+        foreach (var item in attributes)
         {
-            var value = property.GetValue(attributes);
+            var value = item.Value;
             if (value != null)
             {
-                var (prefix, name) = property.Name.SplitOnce('_');
-                string? valueString;
-                if (property.PropertyType == typeof(bool) || property.PropertyType == typeof(bool?))
-                {
-                    valueString = ((bool)value ? "true" : "false");
-                }
-                else
-                {
-                    valueString = value.ToString();
-                }
-
-                writer.WriteAttributeString(prefix, name, null, valueString);
+                var (prefix, name) = item.Key.SplitOnce(':');
+                writer.WriteAttributeString(prefix, name, null, GetValueString(value));
             }
         }
     }
 
-    public static void WriteEmptyElement(this XmlWriter writer, string name, object? attributes = null)
+    public static void WriteEmptyElement(this XmlWriter writer, string name, KeyValueList? attributes = null)
     {
         writer.WriteStartElement(name);
         if (attributes != null)
@@ -49,38 +39,41 @@ static class XmlWriterExtensions
         writer.WriteEndElement();
     }
 
-    public static void WriteElements(this XmlWriter writer, object elements)
+    public static void WriteElements(this XmlWriter writer, KeyValueList elements)
     {
-        foreach (var property in elements.GetType().GetProperties())
+        foreach (var item in elements)
         {
-            var value = property.GetValue(elements);
+            var value = item.Value;
             if (value != null)
             {
-                if (property.Name == "_attributes")
+                if (item.Value is KeyValueList childElements)
                 {
-                    writer.WriteAttributes(value);
-                }
-                else if (property.PropertyType.Name.StartsWith("<>"))
-                {
-                    writer.WriteStartElement(property.Name);
-                    writer.WriteElements(value);
-                    writer.WriteEndElement();
-                }
-                else
-                {
-                    string? valueString;
-                    if (property.PropertyType == typeof(bool) || property.PropertyType == typeof(bool?))
+                    if (item.Key == "_attributes")
                     {
-                        valueString = ((bool)value ? "true" : "false");
+                        writer.WriteAttributes(childElements);
                     }
                     else
                     {
-                        valueString = value.ToString();
+                        writer.WriteStartElement(item.Key);
+                        writer.WriteElements(childElements);
+                        writer.WriteEndElement();
                     }
-
-                    writer.WriteElementString(property.Name, valueString);
+                }
+                else
+                {
+                    writer.WriteElementString(item.Key, GetValueString(value));
                 }
             }
         }
+    }
+
+    private static string? GetValueString(object value)
+    {
+        if (value.GetType() == typeof(bool) || value.GetType() == typeof(bool?))
+        {
+            return ((bool)value ? "true" : "false");
+        }
+
+        return value.ToString();
     }
 }

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+  "InstallOptions": {
+    "$type": "CleanBios",
+    "Partitions": [
+      {
+        "Type": "System",
+        "Label": "System",
+        "Size": "128 GiB"
+      },
+      {
+        "Type": "Normal",
+        "Label": "Windows"
+      }
+    ],
+    "TargetPartitionId": 5,
+    "DiskId": 3,
+    "ImageIndex": 2,
+    "OptionalFeatures": {
+      "WindowsVersion": "10.0.22000.1",
+      "Features": [
+        "Microsoft-Windows-Subsystem-Linux",
+        "VirtualMachinePlatform"
+      ]
+    },
+    "JoinDomainOffline": false
+  },
+  "EnableDefender": true,
+  "EnableCloud": true,
+  "EnableRemoteDesktop": false,
+  "EnableServerManager": true,
+  "LocalAccounts": [],
+  "Language": "en-US",
+  "ProcessorArchitecture": "amd64",
+  "TimeZone": "Pacific Standard Time",
+  "FirstLogonCommands": [],
+  "FirstLogonScripts": []
+}

@@ -14,7 +14,7 @@ available through this tool. Customizations supported by the Answer File Generat
 - The installation method, partition layout, and target disk and partition.
 - Enabling optional features during installation.
 - Creation of local user accounts.
-- Joining a domain and adding domain accounts to the local Administrators group.
+- Joining a domain, and adding domain accounts to a local security group.
 - Configuring automatic log-on.
 - The product key, computer name, language/culture, and time zone.
 - Display resolution.

@@ -70,7 +70,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The number of times the user specified by -AutoLogonCount will be automatically logged on..
+        ///   Looks up a localized string similar to The number of times the user specified by -AutoLogonUser will be automatically logged on..
         /// </summary>
         internal static string AutoLogonCountDescription {
             get {
@@ -79,7 +79,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password of the user specified by -AutoLogonCount..
+        ///   Looks up a localized string similar to The password of the user specified by -AutoLogonUser..
         /// </summary>
         internal static string AutoLogonPasswordDescription {
             get {
@@ -93,15 +93,6 @@ namespace GenerateAnswerFile.Properties {
         internal static string AutoLogonUserDescription {
             get {
                 return ResourceManager.GetString("AutoLogonUserDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Automatic logon options:.
-        /// </summary>
-        internal static string CategoryAutoLogon {
-            get {
-                return ResourceManager.GetString("CategoryAutoLogon", resourceCulture);
             }
         }
         
@@ -138,24 +129,6 @@ namespace GenerateAnswerFile.Properties {
         internal static string CategoryUserAccounts {
             get {
                 return ResourceManager.GetString("CategoryUserAccounts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The password of the user specified by -CmdKeyUser..
-        /// </summary>
-        internal static string CmdKeyPasswordDescription {
-            get {
-                return ResourceManager.GetString("CmdKeyPasswordDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The name of a user used to access all network resources, in &apos;domain\user&apos; format. If present, the cmdkey.exe application will be used at first logon to save this user&apos;s credentials for all network paths.
-        /// </summary>
-        internal static string CmdKeyUserDescription {
-            get {
-                return ResourceManager.GetString("CmdKeyUserDescription", resourceCulture);
             }
         }
         
@@ -205,11 +178,20 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of a domain account to add to the local administrators group. Must be in the domain you&apos;re joining. Can have multiple values..
+        ///   Looks up a localized string similar to The name of a domain account to add to a local group, using the format &apos;group:domain\user&apos;, &apos;domain\user&apos;, &apos;group:user&apos; or &apos;user&apos;. If no group is specified, the user is added to the local Administrators group. You can specify multiple groups by separating them with semicolons. If no domain is specified, the user must be in the domain you&apos;re joining. Can have multiple values..
         /// </summary>
         internal static string DomainAccountsDescription {
             get {
                 return ResourceManager.GetString("DomainAccountsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Group:][Domain\]User.
+        /// </summary>
+        internal static string DomainUserGroupValueDescription {
+            get {
+                return ResourceManager.GetString("DomainUserGroupValueDescription", resourceCulture);
             }
         }
         
@@ -241,11 +223,20 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. Commands are executed before the scripts specified by -SetupScript..
+        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. Commands are executed before the scripts specified by -FirstLogonScript..
         /// </summary>
         internal static string FirstLogonCommandsDescription {
             get {
                 return ResourceManager.GetString("FirstLogonCommandsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand..
+        /// </summary>
+        internal static string FirstLogonScriptsDescription {
+            get {
+                return ResourceManager.GetString("FirstLogonScriptsDescription", resourceCulture);
             }
         }
         
@@ -304,11 +295,29 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Join the domain during the offlineServicing pass of Windows setup, rather than the specialize pass..
+        /// </summary>
+        internal static string JoinDomainOfflineDescription {
+            get {
+                return ResourceManager.GetString("JoinDomainOfflineDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password of the user specified by -JoinDomainUser. Will be stored in plain text..
         /// </summary>
         internal static string JoinDomainPasswordDescription {
             get {
                 return ResourceManager.GetString("JoinDomainPasswordDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The path to a file containing provisioned account data to join the domain. This file can be created using the command &apos;djoin.exe /provision /domain domainname /machine machinename /savefile filename&apos;..
+        /// </summary>
+        internal static string JoinDomainProvisioningFileDescription {
+            get {
+                return ResourceManager.GetString("JoinDomainProvisioningFileDescription", resourceCulture);
             }
         }
         
@@ -322,6 +331,15 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JSON input was found; additional arguments are available if JSON input is not provided. For more information, see: https://github.com/SvenGroot/GenerateAnswerFile.
+        /// </summary>
+        internal static string JsonUsageFooter {
+            get {
+                return ResourceManager.GetString("JsonUsageFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The language used for the UI language, and the input, system and user locales..
         /// </summary>
         internal static string LanguageDescription {
@@ -331,7 +349,9 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A local account to create, using the format &apos;name,password&apos;. Can have multiple values. If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended..
+        ///   Looks up a localized string similar to A local account to create, using the format &apos;group:name,password&apos; or &apos;name,password&apos;. Can have multiple values. If no group is specified, the user will be added to the Administrators group. You can specify multiple groups by separating them with semicolons.
+        ///
+        ///If no local accounts are created, the user will be asked to create one during OOBE, making setup not fully unattended..
         /// </summary>
         internal static string LocalAccountsDescription {
             get {
@@ -340,7 +360,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name,Password.
+        ///   Looks up a localized string similar to [Group:]Name,Password.
         /// </summary>
         internal static string LocalCredentialValueDescription {
             get {
@@ -394,7 +414,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The path and file name to write the answer file to..
+        ///   Looks up a localized string similar to The path and file name to write the answer file to. If not specified, the generated answer file is written to the console..
         /// </summary>
         internal static string OutputFileDescription {
             get {
@@ -452,11 +472,20 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand..
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be used together with one of: {1}..
         /// </summary>
-        internal static string SetupScriptsDescription {
+        internal static string RequiresAnyOtherErrorFormat {
             get {
-                return ResourceManager.GetString("SetupScriptsDescription", resourceCulture);
+                return ResourceManager.GetString("RequiresAnyOtherErrorFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must be used with one of: {0}..
+        /// </summary>
+        internal static string RequiresAnyOtherUsageHelpFormat {
+            get {
+                return ResourceManager.GetString("RequiresAnyOtherUsageHelpFormat", resourceCulture);
             }
         }
         
@@ -470,7 +499,9 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For more information, as well as usage examples, run &apos;{0} -OnlineHelp&apos;, or see: https://github.com/SvenGroot/GenerateAnswerFile.
+        ///   Looks up a localized string similar to Options can also be specified by piping a JSON file to the standard input. In this case, only the -OutputFile argument can be used.
+        ///
+        ///For more information, as well as usage examples, run &apos;{0} -OnlineHelp&apos;, or see: https://github.com/SvenGroot/GenerateAnswerFile.
         /// </summary>
         internal static string UsageHelpFooterFormat {
             get {

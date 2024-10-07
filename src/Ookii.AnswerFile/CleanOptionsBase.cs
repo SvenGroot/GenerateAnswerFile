@@ -1,5 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Ookii.AnswerFile;
 
@@ -20,7 +21,8 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// <remarks>
     /// <para>
     ///   If this property is an empty list, the default layout returned by the
-    ///   <see cref="GetDefaultPartitions"/> method will be used, which depends on the system type.
+    ///   <see cref="GetDefaultPartitions"/> method will be used, which depends on the system type
+    ///   (UEFI or BIOS).
     /// </para>
     /// </remarks>
     public Collection<Partition> Partitions
@@ -36,6 +38,7 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// The one-based ID of the partition to install to, or <see langword="null"/> to install to
     /// the first primary non-utility partition. The default value is <see langword="null"/>.
     /// </value>
+    [JsonPropertyName("TargetPartitionId")]
     public int? CustomTargetPartitionId { get; set; }
 
     /// <summary>
@@ -111,7 +114,7 @@ public abstract class CleanOptionsBase : TargetedInstallOptionsBase
     /// Writes the disk configuration for this installation method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
-    protected override void WriteDiskConfiguration(Generator generator)
+    protected override void WriteDiskConfiguration(AnswerFileGenerator generator)
     {
         var partitions = _partitions?.Count > 0 ? _partitions : GetDefaultPartitions();
 

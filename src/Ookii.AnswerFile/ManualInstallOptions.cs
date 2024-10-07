@@ -14,7 +14,7 @@ public class ManualInstallOptions : InstallOptionsBase
     /// This method does nothing for this installation method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
-    protected override void WriteInstallElements(Generator generator)
+    protected override void WriteInstallElements(AnswerFileGenerator generator)
     {
         // Intentionally blank.
     }

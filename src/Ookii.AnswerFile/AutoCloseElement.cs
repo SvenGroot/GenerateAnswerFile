@@ -13,6 +13,13 @@ class AutoCloseElement : IDisposable
 
     public void Dispose()
     {
-        _writer.WriteEndElement();
+        try
+        {
+            _writer.WriteEndElement();
+        }
+        catch
+        {
+            // Ignore exceptions, as this can hide other exceptions.
+        }
     }
 }

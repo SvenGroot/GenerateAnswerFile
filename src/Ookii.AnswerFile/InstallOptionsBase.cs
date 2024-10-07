@@ -17,9 +17,35 @@ public abstract class InstallOptionsBase
     /// </summary>
     /// <value>
     /// An instance of the <see cref="OptionalFeatures"/> class, or <see langword="null"/> if no
-    /// optional features should be installed.
+    /// optional features should be installed. The default value is <see langword="null"/>.
     /// </value>
     public OptionalFeatures? OptionalFeatures { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value which indicates whether to join the domain during the offlineServicing
+    /// pass.
+    /// </summary>
+    /// <value>
+    /// <see langword="true"/> if the domain should be joined during the offlineServicing pass;
+    /// <see langword="false"/> if it should be joined during the specialize pass. The default
+    /// value is <see langword="false"/>.
+    /// </value>
+    /// <remarks>
+    /// <para>
+    ///   This property is ignored if the <see cref="AnswerFileOptions.JoinDomain" qualifyHint="true"/>
+    ///   property is <see langword="null"/>.
+    /// </para>
+    /// <para>
+    ///   Setting this property to <see langword="true"/> is only supported when using the
+    ///   <see cref="ProvisionedDomainOptions"/> class.
+    /// </para>
+    /// <para>
+    ///   This property is provided here, and not as part of the <see cref="ProvisionedDomainOptions"/>
+    ///   class, because the offlineServicing pass is not processed when using a pre-installed
+    ///   image.
+    /// </para>
+    /// </remarks>
+    public bool JoinDomainOffline { get; set; }
 
     /// <summary>
     /// When implemented in a derived class, writes options specific to the install method.
@@ -31,32 +57,34 @@ public abstract class InstallOptionsBase
     ///   windowsPE pass.
     /// </para>
     /// </remarks>
-    protected abstract void WriteInstallElements(Generator generator);
+    protected abstract void WriteInstallElements(AnswerFileGenerator generator);
 
-    internal void GenerateWindowsPePass(Generator generator)
+    internal void GenerateWindowsPePass(AnswerFileGenerator generator)
     {
         using var pass = generator.WritePassStart("windowsPE");
         generator.WriteInternationalCore(true);
         using var setup = generator.WriteComponentStart("Microsoft-Windows-Setup");
         WriteInstallElements(generator);
 
-        generator.Writer.WriteElements(new
+        generator.Writer.WriteElements(new KeyValueList
         {
-            UserData = new
+            { "UserData", new KeyValueList
             {
-                AcceptEula = "true",
-                FullName = "",
-                Organization = "",
+                { "AcceptEula", "true" },
+                { "FullName", "" },
+                { "Organization", "" },
                 // This one chooses the edition
-                ProductKey = generator.Options.ProductKey == null ? null : new
+                { "ProductKey", generator.Options.ProductKey == null ? null : new KeyValueList
                 {
-                    Key = generator.Options.ProductKey,
+                    { "Key", generator.Options.ProductKey },
                 }
+                }
+            }
             }
         });
     }
 
-    internal void GenerateServicingPass(Generator generator)
+    internal void GenerateServicingPass(AnswerFileGenerator generator)
     {
         OptionalFeatures?.GenerateServicingPass(generator);
     }

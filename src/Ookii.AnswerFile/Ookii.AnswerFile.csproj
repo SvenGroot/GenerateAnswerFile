@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/SvenGroot/GenerateAnswerFile</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>unattended answer windows unattend unattend.xml autounattend autounattend.xml install installation</PackageTags>
-    <PackageReleaseNotes>For details, see https://www.ookii.org/Link/GenerateAnswerFileVersionHistory</PackageReleaseNotes>
+    <PackageReleaseNotes>This version contains some breaking changes compared to version 1.x. For details, see https://www.ookii.org/Link/GenerateAnswerFileVersionHistory</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
@@ -21,6 +21,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
@@ -28,7 +29,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="Ookii.BinarySize" Version="1.1.0" />
   </ItemGroup>
 

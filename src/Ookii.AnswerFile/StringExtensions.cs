@@ -27,6 +27,22 @@ static class StringExtensions
         return (value[0..index], value[(index + 1)..]);
     }
 
+    public static SplitResult SplitOnce(this ReadOnlySpan<char> value, char separator)
+    {
+        var index = value.IndexOf(separator);
+        if (index < 0)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            HasValue = true,
+            Left = value[0..index],
+            Right = value[(index + 1)..]
+        };
+    }
+
     public static SplitResult SplitOnceLast(this ReadOnlySpan<char> value, char separator)
     {
         var index = value.LastIndexOf(separator);

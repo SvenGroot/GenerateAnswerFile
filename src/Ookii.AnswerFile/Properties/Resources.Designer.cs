@@ -61,6 +61,15 @@ namespace Ookii.AnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must specify a domain for all domain users to add to a local group when using provisioning to join a domain..
+        /// </summary>
+        internal static string DomainAccountWithoutDomain {
+            get {
+                return ResourceManager.GetString("DomainAccountWithoutDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Format is not &apos;user,password&apos;..
         /// </summary>
         internal static string InvalidLocalCredential {
@@ -70,11 +79,29 @@ namespace Ookii.AnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid resolution value, expected format &apos;width,height&apos;..
+        /// </summary>
+        internal static string InvalidResolution {
+            get {
+                return ResourceManager.GetString("InvalidResolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not determine the partition to install to..
         /// </summary>
         internal static string UnknownTargetPartition {
             get {
                 return ResourceManager.GetString("UnknownTargetPartition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot use credentials to join a domain during the offlineServicing pass..
+        /// </summary>
+        internal static string UnsupportedDomainOptionsPass {
+            get {
+                return ResourceManager.GetString("UnsupportedDomainOptionsPass", resourceCulture);
             }
         }
     }

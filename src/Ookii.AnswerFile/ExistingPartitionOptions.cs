@@ -1,4 +1,6 @@
-﻿namespace Ookii.AnswerFile;
+﻿using System.Text.Json.Serialization;
+
+namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides options for installing to an existing partition.
@@ -21,7 +23,7 @@ public class ExistingPartitionOptions : TargetedInstallOptionsBase
     /// Gets or sets the ID of the partition to install to.
     /// </summary>
     /// <value>
-    /// The one-based partition ID.
+    /// The one-based partition ID. The default value is zero.
     /// </value>
     /// <remarks>
     /// <para>
@@ -29,7 +31,12 @@ public class ExistingPartitionOptions : TargetedInstallOptionsBase
     ///   partition 3. For the default BIOS partition layout, Windows should be installed to
     ///   partition 2.
     /// </para>
+    /// <para>
+    ///   Since the default value of this property is zero, you must change it in order to generate
+    ///   a valid answer file.
+    /// </para>
     /// </remarks>
+    [JsonPropertyName("TargetPartitionId")]
     public int PartitionId { get; set; }
 
     /// <summary>
@@ -44,7 +51,7 @@ public class ExistingPartitionOptions : TargetedInstallOptionsBase
     /// Writes the disk configuration for this installation method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
-    protected override void WriteDiskConfiguration(Generator generator)
+    protected override void WriteDiskConfiguration(AnswerFileGenerator generator)
     {
         using var modifyPartitions = generator.Writer.WriteAutoCloseElement("ModifyPartitions");
         generator.WriteModifyPartition(1, PartitionId, "NTFS", "Windows", 'C');

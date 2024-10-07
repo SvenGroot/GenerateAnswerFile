@@ -1,0 +1,39 @@
+{
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+    "InstallOptions": {
+        "$type": "CleanEfi",
+        "Partitions": [
+            {
+                "Type": "System",
+                "Label": "System",
+                "Size": "100MB"
+            },
+            {
+                "Type": "Msr",
+                "Size": "128MB"
+            },
+            {
+                "Type": "Normal",
+                "Label": "Windows",
+                "Size": "256GB"
+            },
+            {
+                "Type": "Normal",
+                "Label": "Data",
+                "Size": null
+            }
+        ],
+        "DiskId": 2,
+        "OptionalFeatures": {
+            "WindowsVersion": "10.0.22631.1",
+            "Features": [
+                "Microsoft-Windows-Subsystem-Linux",
+                "VirtualMachinePlatform"
+            ]
+        }
+    },
+    "Language": "en-US",
+    "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
+    "ProcessorArchitecture": "amd64",
+    "TimeZone": "W. Europe Standard Time"
+}

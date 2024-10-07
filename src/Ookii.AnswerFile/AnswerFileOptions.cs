@@ -1,18 +1,35 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides options for generating an unattended Windows installation answer file using the
-/// <see cref="Generator"/> class.
+/// <see cref="AnswerFileGenerator"/> class.
 /// </summary>
 /// <threadsafety instance="false" static="true"/>
-public class GeneratorOptions
+public class AnswerFileOptions
 {
     private Collection<LocalCredential>? _localAccounts;
     private Collection<string>? _firstLogonCommands;
-    private Collection<string>? _setupScripts;
+    private Collection<string>? _firstLogonScripts;
+
+#pragma warning disable CA1822 // Mark members as static
+
+    /// <summary>
+    /// Gets the schema that can be used for validation of the JSON representation of this object.
+    /// </summary>
+    /// <value>
+    /// The JSON schema URL.
+    /// </value>
+    // This must be the first property and must not be static, so ToJson will insert the $schema
+    // property into the output.
+    [JsonPropertyName("$schema")]
+    public string JsonSchema => "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0";
+
+#pragma warning restore CA1822 // Mark members as static
 
     /// <summary>
     /// Gets or sets the installation method to use, along with the options for that method.
@@ -30,8 +47,9 @@ public class GeneratorOptions
     /// Gets or sets options for joining a domain.
     /// </summary>
     /// <value>
-    /// An instance of the <see cref="DomainOptions"/> class, or <see langword="null"/> to not join
-    /// a domain. The default value is <see langword="null"/>.
+    /// An instance of the <see cref="DomainOptions"/> class, the <see cref="ProvisionedDomainOptions"/>
+    /// class, or <see langword="null"/> to not join a domain. The default value is
+    /// <see langword="null"/>.
     /// </value>
     /// <remarks>
     /// <note type="security">
@@ -39,13 +57,14 @@ public class GeneratorOptions
     ///   file. Do not store answer files with sensitive passwords in public locations.
     /// </note>
     /// </remarks>
-    public DomainOptions? JoinDomain { get; set; }
+    public DomainOptionsBase? JoinDomain { get; set; }
 
     /// <summary>
     /// Gets or sets the computer name of the system.
     /// </summary>
     /// <value>
-    /// The computer name, or <see langword="null"/> to let Windows pick a computer name.
+    /// The computer name, or <see langword="null"/> to let Windows pick a computer name. The
+    /// default value is <see langword="null"/>.
     /// </value>
     public string? ComputerName { get; set; }
 
@@ -94,8 +113,8 @@ public class GeneratorOptions
     public bool EnableRemoteDesktop { get; set; }
 
     /// <summary>
-    /// Gets or sets a value which indicates whether server manager will be launched on logon on
-    /// Windows Server.
+    /// Gets or sets a value which indicates whether server manager will be launched when logging
+    /// in on Windows Server.
     /// </summary>
     /// <value>
     /// <see langword="true"/> to enable server manager; otherwise, <see langword="false"/>. the
@@ -109,16 +128,12 @@ public class GeneratorOptions
     public bool EnableServerManager { get; set; } = true;
 
     /// <summary>
-    /// Gets or sets a collection of local administrator accounts to create.
+    /// Gets or sets a collection of local accounts to create.
     /// </summary>
     /// <value>
     /// A collection of local user accounts.
     /// </value>
     /// <remarks>
-    /// <para>
-    ///   All accounts specified by this property will be created as members of the local
-    ///   Administrators group.
-    /// </para>
     /// <note type="security">
     ///   The passwords for the local accounts are stored using base64 encoding in the answer file;
     ///   they are not encrypted. Do not store answer files with sensitive passwords in public
@@ -138,38 +153,23 @@ public class GeneratorOptions
     /// An instance of the <see cref="AutoLogonOptions"/> class, or <see langword="null"/> to not
     /// use automatic log-on. The default value is <see langword="null"/>.
     /// </value>
-    public AutoLogonOptions? AutoLogon { get; set; }
-
-    /// <summary>
-    /// Gets or sets the credentials of an account that will be used to access all network
-    /// locations.
-    /// </summary>
-    /// <value>
-    /// A instance of the <see cref="DomainCredential"/> class, or <see langword="null"/> to not
-    /// set up a cmdkey user. The default value is <see langword="null"/>.
-    /// </value>
     /// <remarks>
-    /// <para>
-    ///   Setting this property to a value other than <see langword="null"/> will add a first log-on
-    ///   command to the answer file that uses 'cmdkey.exe' to use the specified account for all
-    ///   network destinations. Using this is not very secure and should only be done in test
-    ///   environments.
-    /// </para>
     /// <note type="security">
-    ///   The password of this account is stored in plain text in the answer file. Do not store
-    ///   answer files with sensitive passwords in public locations.
+    ///   The password of the account used to log on automatically is stored using base64 encoding
+    ///   in the answer file; it is not encrypted. Do not store answer files with sensitive
+    ///   passwords in public locations.
     /// </note>
     /// </remarks>
-    public DomainCredential? CmdKeyAccount { get; set; }
+    public AutoLogonOptions? AutoLogon { get; set; }
 
     /// <summary>
     /// Gets or sets the display resolution.
     /// </summary>
     /// <value>
-    /// A <see cref="Size"/> value with the resolution, or <see langword="null"/> to let Windows
-    /// determine the resolution. The default value is <see langword="null"/>.
+    /// A <see cref="Resolution"/> value, or <see langword="null"/> to let Windows determine the
+    /// resolution. The default value is <see langword="null"/>.
     /// </value>
-    public Size? DisplayResolution { get; set; }
+    public Resolution? DisplayResolution { get; set; }
 
     /// <summary>
     /// Gets or sets the language used for the UI and culture settings.
@@ -211,7 +211,7 @@ public class GeneratorOptions
     public string ProcessorArchitecture { get; set; } = "amd64";
 
     /// <summary>
-    /// Gets or sets the time zone.
+    /// Gets or sets the system time zone.
     /// </summary>
     /// <value>
     /// The standard name of a time zone. The default value is "Pacific Standard Time".
@@ -229,13 +229,13 @@ public class GeneratorOptions
     /// </value>
     /// <remarks>
     /// <para>
-    ///   These commands will run before any scripts specified by the <see cref="SetupScripts"/>
+    ///   These commands will run before any scripts specified by the <see cref="FirstLogonScripts"/>
     ///   property.
     /// </para>
     /// </remarks>
     public Collection<string> FirstLogonCommands
     {
-        get => _firstLogonCommands ??= new();
+        get => _firstLogonCommands ??= [];
         set => _firstLogonCommands = value;
     }
 
@@ -248,13 +248,42 @@ public class GeneratorOptions
     /// </value>
     /// <remarks>
     /// <para>
-    ///   These scripts will run after any commands specified by the <see cref="FirstLogonCommands"/>
+    ///   The scripts specified by this property will be executed by invoking Windows PowerShell
+    ///   using <c>PowerShell.exe -ExecutionPolicy Bypass</c>. This is provided for convenience,
+    ///   and there is no difference between this property and using the <see cref="FirstLogonCommands"/>
+    ///   property to explicitly invoke PowerShell.
+    /// </para>
+    /// <para>
+    ///   The scripts will run after any commands specified by the <see cref="FirstLogonCommands"/>
     ///   property.
     /// </para>
     /// </remarks>
-    public Collection<string> SetupScripts
+    public Collection<string> FirstLogonScripts
     {
-        get => _setupScripts ??= new();
-        set => _setupScripts = value;
+        get => _firstLogonScripts ??= [];
+        set => _firstLogonScripts = value;
     }
+
+    /// <summary>
+    /// Creates an instance of the <see cref="AnswerFileOptions"/> class based on the specified JSON
+    /// value.
+    /// </summary>
+    /// <param name="json">The JSON value.</param>
+    /// <returns>
+    /// An instance of the <see cref="AnswerFileOptions"/> class, or <see langword="null"/> if
+    /// <paramref name="json"/> is a single <see langword="null"/> value.
+    /// </returns>
+    /// <exception cref="JsonException">
+    /// <paramref name="json"/> is not a valid JSON representation of the
+    /// <see cref="AnswerFileOptions"/> class.
+    /// </exception>
+    public static AnswerFileOptions? FromJson(ReadOnlySpan<char> json)
+        => JsonSerializer.Deserialize(json, SourceGenerationContext.Default.AnswerFileOptions);
+
+    /// <summary>
+    /// Serializes the current instance to a JSON string.
+    /// </summary>
+    /// <returns>A JSON representation of the current instance.</returns>
+    public string ToJson()
+        => JsonSerializer.Serialize(this, typeof(AnswerFileOptions), SourceGenerationContext.Default);
 }

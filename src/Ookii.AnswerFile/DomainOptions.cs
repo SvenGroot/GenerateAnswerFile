@@ -10,12 +10,15 @@ namespace Ookii.AnswerFile;
 ///   The password of the account used to join the domain is stored in plain text in the answer
 ///   file. Do not store answer files with sensitive passwords in public locations.
 /// </note>
+/// <para>
+///   This class cannot be used if the <see cref="InstallOptionsBase.JoinDomainOffline" qualifyHint="true"/>
+///   property is <see langword="true"/>. To join a domain during the offlineServicing pass, you
+///   must use the <see cref="ProvisionedDomainOptions"/> class instead.
+/// </para>
 /// </remarks>
 /// <threadsafety instance="false" static="true"/>
-public class DomainOptions
+public class DomainOptions : DomainOptionsBase
 {
-    private Collection<string>? _domainAccounts;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainOptions"/> class.
     /// </summary>
@@ -60,25 +63,67 @@ public class DomainOptions
     /// Gets the path of the Organizational Unit that the computer account should be added to.
     /// </summary>
     /// <value>
-    /// The organizational unit path, or <see langword="null"/> to not join a specific OU. The
+    /// The organizational unit path, or <see langword="null"/> to join the domain's default OU. The
     /// default value is <see langword="null"/>.
     /// </value>
     public string? OUPath { get; set; }
 
     /// <summary>
-    /// Gets a list of domain accounts that should be added to the local administrators group.
+    /// Gets the name of the domain to use for an account in the
+    /// <see cref="DomainOptionsBase.DomainAccounts" qualifyHInt="true"/> property where the
+    /// <see cref="DomainUser.Domain" qualifyHint="true"/> property is <see langword="null"/>.
     /// </summary>
     /// <value>
-    /// A collection of the accounts.
+    /// The value of the <see cref="Domain"/> property.
     /// </value>
+    public override string DefaultDomainAccountDomain => Domain;
+
+    /// <summary>
+    /// Writes options to join the domain.
+    /// </summary>
+    /// <param name="generator">The generator creating the answer file.</param>
+    /// <param name="offlineServicing">
+    /// <see langword="true"/> if the options are for the offlineServicing pass;
+    /// <see langword="false"/> if they are for the specialize pass.
+    /// </param>
     /// <remarks>
     /// <para>
-    ///   These accounts must be in the domain specified by the <see cref="Domain"/> property.
+    ///   This method is called when generating the Microsoft-Windows-JoinDomain component of the
+    ///   specialize or offlineServicing pass.
     /// </para>
     /// </remarks>
-    public Collection<string> DomainAccounts
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="generator"/> is <see langword="null"/>.
+    /// </exception>
+    /// <exception cref="NotSupportedException">
+    /// <paramref name="offlineServicing"/> is <see langword="true"/>. Only the
+    /// <see cref="ProvisionedDomainOptions"/> class can be used to join a domain during the
+    /// offlineServicing pass.
+    /// </exception>
+    public override void WriteDomainElements(AnswerFileGenerator generator, bool offlineServicing)
     {
-        get => _domainAccounts ??= new();
-        set => _domainAccounts = value;
+        ArgumentNullException.ThrowIfNull(generator);
+        if (offlineServicing)
+        {
+            throw new NotSupportedException(Properties.Resources.UnsupportedDomainOptionsPass);
+        }
+
+        generator.Writer.WriteElements(new KeyValueList
+            {
+                { "Identification", new KeyValueList
+                {
+                    { "UnsecureJoin", false },
+                    { "Credentials", new KeyValueList
+                    {
+                        { "Domain", Credential.UserAccount.Domain ?? Domain },
+                        { "Password", Credential.Password },
+                        { "Username", Credential.UserAccount.UserName }
+                    }
+                    },
+                    { "JoinDomain", Domain },
+                    { "MachineObjectOU", OUPath },
+                }
+                }
+            });
     }
 }

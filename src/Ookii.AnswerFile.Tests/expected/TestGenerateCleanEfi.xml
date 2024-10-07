@@ -82,6 +82,13 @@
       <UILanguage>en-US</UILanguage>
       <UserLocale>en-US</UserLocale>
     </component>
+    <component name="Microsoft-Windows-UnattendedJoin" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <Identification>
+        <Provisioning>
+          <AccountData>base64-data-goes-here</AccountData>
+        </Provisioning>
+      </Identification>
+    </component>
     <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
       <ProductKey>ABCDE-12345-ABCDE-12345-ABCDE</ProductKey>
     </component>

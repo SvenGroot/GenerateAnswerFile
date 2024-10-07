@@ -1,0 +1,17 @@
+{
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+    "InstallOptions": {
+        "$type": "Manual",
+        "OptionalFeatures": {
+            "WindowsVersion": "10.0.22000.1",
+            "Features": [
+                "Microsoft-Windows-Subsystem-Linux",
+                "VirtualMachinePlatform"
+            ]
+        }
+    },
+    "Language": "en-US",
+    "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
+    "ProcessorArchitecture": "amd64",
+    "TimeZone": "Pacific Standard Time"
+}

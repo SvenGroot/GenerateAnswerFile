@@ -1,0 +1,49 @@
+{
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+    "JoinDomain": {
+        "$type": "Credential",
+        "Domain": "mydomain",
+        "Credential": {
+            "UserAccount": "mydomain\\user",
+            "Password": "password"
+        },
+        "OUPath": "OU=Computers",
+        "DomainAccounts": [
+            {
+                "DomainUser": "user",
+                "Group": "Administrators"
+            },
+            {
+                "DomainUser": "otherdomain\\user2",
+                "Group": "Users;Hyper-V Administrators"
+            }
+        ]
+    },
+    "ComputerName": "TestComputer",
+    "EnableRemoteDesktop": true,
+    "EnableServerManager": false,
+    "LocalAccounts": [
+        {
+            "UserName": "localuser",
+            "Password": "password"
+        }
+    ],
+    "AutoLogon": {
+        "Credential": {
+            "UserAccount": "domain\\user",
+            "Password": "password"
+        },
+        "Count": 1
+    },
+    "DisplayResolution": "1280,1024",
+    "Language": "en-US",
+    "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
+    "ProcessorArchitecture": "amd64",
+    "TimeZone": "Pacific Standard Time",
+    "FirstLogonCommands": [
+        "\\\\server\\share\\script.cmd"
+    ],
+    "FirstLogonScripts": [
+        "\\\\server\\share\\script.ps1 -SomeParameter"
+    ]
+}

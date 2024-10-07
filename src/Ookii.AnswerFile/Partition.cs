@@ -13,7 +13,8 @@ public class Partition : ISpanParsable<Partition>
     /// Gets the type of the partition.
     /// </summary>
     /// <value>
-    /// One of the values of the <see cref="PartitionType"/> enumeration.
+    /// One of the values of the <see cref="PartitionType"/> enumeration. The default value is
+    /// <see cref="PartitionType.Normal" qualifyHint="true"/>.
     /// </value>
     public PartitionType Type { get; set; }
 
@@ -21,7 +22,8 @@ public class Partition : ISpanParsable<Partition>
     /// Gets the label of the partition.
     /// </summary>
     /// <value>
-    /// The label, or <see langword="null"/> to not use a label.
+    /// The label, or <see langword="null"/> to not use a label. The default value is
+    /// <see langword="null"/>.
     /// </value>
     public string? Label { get; set; }
 
@@ -43,7 +45,8 @@ public class Partition : ISpanParsable<Partition>
     /// </summary>
     /// <value>
     /// The name of a supported file system, such as "FAT32" or "NTFS", or <see langword="null"/> to
-    /// use the default format for the <see cref="Type"/>.
+    /// use the default format for the <see cref="Type"/>. The default value is
+    /// <see langword="null"/>.
     /// </value>
     public string? FileSystem { get; set; }
 

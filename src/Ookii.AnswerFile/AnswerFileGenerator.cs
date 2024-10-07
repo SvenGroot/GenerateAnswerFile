@@ -11,13 +11,13 @@ namespace Ookii.AnswerFile;
 /// </summary>
 /// <remarks>
 /// <para>
-///   Create an instance of the <see cref="GeneratorOptions"/> class with the answer file options
-///   you wish to use, and call the <see cref="Generate(string, GeneratorOptions)"/> method or
+///   Create an instance of the <see cref="AnswerFileOptions"/> class with the answer file options
+///   you wish to use, and call the <see cref="Generate(string, AnswerFileOptions)"/> method or
 ///   one of its overloads to generate an answer file with those options.
 /// </para>
 /// </remarks>
 /// <threadsafety instance="false" static="true"/>
-public class Generator
+public class AnswerFileGenerator
 {
     internal const string PublicKeyToken = "31bf3856ad364e35";
 
@@ -28,7 +28,7 @@ public class Generator
         Encoding = new UTF8Encoding(false),
     };
 
-    private Generator(XmlWriter writer, GeneratorOptions options)
+    private AnswerFileGenerator(XmlWriter writer, AnswerFileOptions options)
     {
         ArgumentNullException.ThrowIfNull(writer);
         ArgumentNullException.ThrowIfNull(options);
@@ -40,9 +40,9 @@ public class Generator
     /// Gets the options used for this generator.
     /// </summary>
     /// <value>
-    /// An instance of the <see cref="GeneratorOptions"/> class.
+    /// An instance of the <see cref="AnswerFileOptions"/> class.
     /// </value>
-    public GeneratorOptions Options { get; }
+    public AnswerFileOptions Options { get; }
 
     /// <summary>
     /// Gets the <see cref="XmlWriter"/> that output is written to.
@@ -53,7 +53,7 @@ public class Generator
     public XmlWriter Writer { get; }
 
     /// <summary>
-    /// Generates an unattended installation answer file and writes it to the specified
+    /// Generates an unattended installation answer file, and writes it to the specified
     /// <see cref="XmlWriter"/>.
     /// </summary>
     /// <param name="writer">The <see cref="XmlWriter"/> to write to.</param>
@@ -61,28 +61,28 @@ public class Generator
     /// <exception cref="ArgumentNullException">
     /// <paramref name="writer"/> or <paramref name="options"/> is <see langword="null"/>.
     /// </exception>
-    public static void Generate(XmlWriter writer, GeneratorOptions options)
+    public static void Generate(XmlWriter writer, AnswerFileOptions options)
     {
-        var generator = new Generator(writer, options);
+        var generator = new AnswerFileGenerator(writer, options);
         generator.Generate();
     }
 
     /// <summary>
-    /// Generates an unattended installation answer file and writes it to the specified file.
+    /// Generates an unattended installation answer file, and writes it to the specified file.
     /// </summary>
     /// <param name="outputPath">The path of the file to write to.</param>
     /// <param name="options">The options for the unattended installation.</param>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="outputPath"/> or <paramref name="options"/> is <see langword="null"/>.
     /// </exception>
-    public static void Generate(string outputPath, GeneratorOptions options)
+    public static void Generate(string outputPath, AnswerFileOptions options)
     {
         using var writer = XmlWriter.Create(outputPath, XmlSettings);
         Generate(writer, options);
     }
 
     /// <summary>
-    /// Generates an unattended installation answer file and writes it to the specified
+    /// Generates an unattended installation answer file, and writes it to the specified
     /// <see cref="TextWriter"/>.
     /// </summary>
     /// <param name="writer">The <see cref="TextWriter"/> to write to.</param>
@@ -90,7 +90,7 @@ public class Generator
     /// <exception cref="ArgumentNullException">
     /// <paramref name="writer"/> or <paramref name="options"/> is <see langword="null"/>.
     /// </exception>
-    public static void Generate(TextWriter writer, GeneratorOptions options)
+    public static void Generate(TextWriter writer, AnswerFileOptions options)
     {
         using var xmlWriter = XmlWriter.Create(writer, XmlSettings);
         Generate(xmlWriter, options);
@@ -99,10 +99,10 @@ public class Generator
     private void Generate()
     {
         Writer.WriteStartElement("unattend", "urn:schemas-microsoft-com:unattend");
-        Writer.WriteAttributes(new
+        Writer.WriteAttributes(new KeyValueList
         {
-            xmlns_wcm = "http://schemas.microsoft.com/WMIConfig/2002/State",
-            xmlns_xsi = "http://www.w3.org/2001/XMLSchema-instance"
+            { "xmlns:wcm", "http://schemas.microsoft.com/WMIConfig/2002/State" },
+            { "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" }
         });
         GenerateServicing();
         GenerateWindowsPePass();
@@ -113,7 +113,16 @@ public class Generator
 
     private void GenerateServicing()
     {
-        Options.InstallOptions?.GenerateServicingPass(this);
+        if (Options.InstallOptions != null)
+        {
+            Options.InstallOptions.GenerateServicingPass(this);
+            if (Options.InstallOptions.JoinDomainOffline && Options.JoinDomain != null)
+            {
+                using var pass = Writer.WriteAutoCloseElement("offlineServicing");
+                using var join = WriteComponentStart("Microsoft-Windows-UnattendedJoin");
+                Options.JoinDomain.WriteDomainElements(this, true);
+            }
+        }
     }
 
     private void GenerateWindowsPePass()
@@ -125,24 +134,10 @@ public class Generator
     {
         using var pass = WritePassStart("specialize");
         WriteInternationalCore();
-        if (Options.JoinDomain != null)
+        if (Options.JoinDomain != null && Options.InstallOptions?.JoinDomainOffline != true)
         {
             using var join = WriteComponentStart("Microsoft-Windows-UnattendedJoin");
-            Writer.WriteElements(new
-            {
-                Identification = new
-                {
-                    UnsecureJoin = false,
-                    Credentials = new
-                    {
-                        Options.JoinDomain.Credential.UserAccount.Domain,
-                        Options.JoinDomain.Credential.Password,
-                        Username = Options.JoinDomain.Credential.UserAccount.UserName
-                    },
-                    JoinDomain = Options.JoinDomain.Domain,
-                    MachineObjectOU = Options.JoinDomain.OUPath,
-                }
-            });
+            Options.JoinDomain.WriteDomainElements(this, false);
         }
 
         if (Options.ComputerName != null || Options.ProductKey != null)
@@ -174,21 +169,24 @@ public class Generator
             }
 
             using var firewall = WriteComponentStart("Networking-MPSSVC-Svc");
-            Writer.WriteElements(new
+            Writer.WriteElements(new KeyValueList
             {
-                FirewallGroups = new
+                { "FirewallGroups", new KeyValueList
                 {
-                    FirewallGroup = new
+                    { "FirewallGroup", new KeyValueList
                     {
-                        _attributes = new
+                        { "_attributes", new KeyValueList
                         {
-                            wcm_action = "add",
-                            wcm_keyValue = "rd1"
+                            { "wcm:action", "add" },
+                            { "wcm:keyValue", "rd1" }
+                        }
                         },
-                        Active = true,
-                        Group = "Remote Desktop",
-                        Profile = "all"
+                        { "Active", true },
+                        { "Group", "Remote Desktop" },
+                        { "Profile", "all" }
                     }
+                    }
+                }
                 }
             });
         }
@@ -220,20 +218,22 @@ public class Generator
                 using var localAccounts = Writer.WriteAutoCloseElement("LocalAccounts");
                 foreach (var account in Options.LocalAccounts)
                 {
-                    Writer.WriteElements(new
+                    Writer.WriteElements(new KeyValueList
                     {
-                        LocalAccount = new
+                        { "LocalAccount", new KeyValueList
                         {
-                            _attributes = new { wcm_action = "add" },
-                            Password = new
+                            { "_attributes", new KeyValueList { { "wcm:action", "add" } } },
+                            { "Password", new KeyValueList
                             {
-                                Value = Convert.ToBase64String(Encoding.Unicode.GetBytes(account.Password + "Password")),
-                                PlainText = false,
+                                { "Value", Convert.ToBase64String(Encoding.Unicode.GetBytes(account.Password + "Password")) },
+                                { "PlainText", false },
+                            }
                             },
-                            Description = account.UserName,
-                            DisplayName = account.UserName,
-                            Group = "Administrators",
-                            Name = account.UserName,
+                            { "Description", account.UserName },
+                            { "DisplayName", account.UserName },
+                            { "Group", account.Group },
+                            { "Name", account.UserName },
+                        }
                         }
                     });
                 }
@@ -242,35 +242,61 @@ public class Generator
             if (Options.JoinDomain?.DomainAccounts.Count > 0)
             {
                 using var domainAccounts = Writer.WriteAutoCloseElement("DomainAccounts");
-                using var domainAccountList = Writer.WriteAutoCloseElement("DomainAccountList", new { wcm_action = "add" });
-                foreach (var account in Options.JoinDomain.DomainAccounts)
+                string? lastDomain = null;
+                var accounts = Options.JoinDomain.DomainAccounts
+                    .Select(u => u.DomainUser.Domain == null
+                        ? new DomainUserGroup(
+                            new DomainUser(Options.JoinDomain.DefaultDomainAccountDomain, u.DomainUser.UserName), u.Group)
+                        : u)
+                    .OrderBy(u => u.DomainUser.Domain);
+
+                foreach (var account in accounts)
                 {
-                    Writer.WriteElements(new
+                    if (account.DomainUser.Domain != lastDomain)
                     {
-                        DomainAccount = new
+                        if (lastDomain != null)
                         {
-                            _attributes = new { wcm_action = "add" },
-                            Name = account,
-                            Group = "Administrators",
+                            Writer.WriteElementString("Domain", lastDomain);
+                            Writer.WriteEndElement(); // DomainAccountList
+                        }
+
+                        Writer.WriteStartElement("DomainAccountList");
+                        Writer.WriteAttributeString("wcm", "action", null, "add");
+                        lastDomain = account.DomainUser.Domain;
+                    }
+
+                    Writer.WriteElements(new KeyValueList
+                    {
+                        { "DomainAccount", new KeyValueList
+                        {
+                            { "_attributes", new KeyValueList { { "wcm:action", "add" } } },
+                            { "Name",account.DomainUser.UserName},
+                            { "Group", account.Group},
+                        }
                         }
                     });
                 }
 
-                Writer.WriteElementString("Domain", Options.JoinDomain.Domain);
+                if (lastDomain != null)
+                {
+                    Writer.WriteElementString("Domain", lastDomain);
+                    Writer.WriteEndElement(); // DomainAccountList
+                }
             }
         }
 
         bool hideAccountScreens = Options.JoinDomain != null || Options.LocalAccounts.Count != 0;
-        Writer.WriteElements(new
+        Writer.WriteElements(new KeyValueList
         {
-            OOBE = new
+            { "OOBE", new KeyValueList
             {
-                ProtectYourPC = 1,
-                HideEULAPage = true,
-                HideLocalAccountScreen = hideAccountScreens,
-                HideOEMRegistrationScreen = true,
-                HideOnlineAccountScreens = hideAccountScreens,
-                HideWirelessSetupInOOBE = hideAccountScreens
+                { "ProtectYourPC", 1 },
+                { "HideEULAPage", true },
+                { "HideLocalAccountScreen", hideAccountScreens },
+                { "HideOEMRegistrationScreen", true },
+                { "HideOnlineAccountScreens", hideAccountScreens },
+                { "HideWirelessSetupInOOBE", hideAccountScreens }
+            }
             }
         });
 
@@ -286,19 +312,21 @@ public class Generator
                 --count;
             }
 
-            Writer.WriteElements(new
+            Writer.WriteElements(new KeyValueList
             {
-                AutoLogon = new
+                { "AutoLogon", new KeyValueList
                 {
-                    Enabled = true,
-                    LogonCount = count,
-                    Options.AutoLogon.Credential.UserAccount.Domain,
-                    Username = Options.AutoLogon.Credential.UserAccount.UserName,
-                    Password = new
+                    { "Enabled", true },
+                    { "LogonCount", count },
+                    { "Domain", Options.AutoLogon.Credential.UserAccount.Domain },
+                    { "Username", Options.AutoLogon.Credential.UserAccount.UserName },
+                    { "Password", new KeyValueList
                     {
-                        Value = Convert.ToBase64String(Encoding.Unicode.GetBytes(Options.AutoLogon.Credential.Password + "Password")),
-                        PlainText = false
+                        { "Value", Convert.ToBase64String(Encoding.Unicode.GetBytes(Options.AutoLogon.Credential.Password + "Password")) },
+                        { "PlainText", false }
                     }
+                    }
+                }
                 }
             });
         }
@@ -314,33 +342,28 @@ public class Generator
                 ++order;
             }
 
-            if (Options.CmdKeyAccount is DomainCredential cmdKeyOptions)
-            {
-                WriteSynchronousCommand($"cmdkey.exe /add:* /user:{cmdKeyOptions.UserAccount} /pass:{cmdKeyOptions.Password}", "CmdKey", order);
-                ++order;
-            }
-
             foreach (var command in Options.FirstLogonCommands)
             {
                 WriteSynchronousCommand(command, "Custom command", order);
                 ++order;
             }
 
-            foreach (var script in Options.SetupScripts)
+            foreach (var script in Options.FirstLogonScripts)
             {
                 WriteSynchronousCommand($"PowerShell.exe -ExecutionPolicy Bypass {script}", "Setup script", order);
                 ++order;
             }
         }
 
-        if (Options.DisplayResolution is Size resolution)
+        if (Options.DisplayResolution is Resolution resolution)
         {
-            Writer.WriteElements(new
+            Writer.WriteElements(new KeyValueList
             {
-                Display = new
+                { "Display", new KeyValueList
                 {
-                    HorizontalResolution = resolution.Width,
-                    VerticalResolution = resolution.Height,
+                    { "HorizontalResolution", resolution.Width },
+                    { "VerticalResolution", resolution.Height },
+                }
                 }
             });
         }
@@ -348,19 +371,19 @@ public class Generator
 
     internal AutoCloseElement WriteComponentStart(string name)
     {
-        return Writer.WriteAutoCloseElement("component", new
+        return Writer.WriteAutoCloseElement("component", new KeyValueList
         {
-            name,
-            processorArchitecture = Options.ProcessorArchitecture,
-            publicKeyToken = PublicKeyToken,
-            language = "neutral",
-            versionScope = "nonSxS",
+            { "name", name },
+            { "processorArchitecture", Options.ProcessorArchitecture },
+            { "publicKeyToken", PublicKeyToken },
+            { "language", "neutral" },
+            { "versionScope", "nonSxS" },
         });
     }
 
     internal AutoCloseElement WritePassStart(string pass)
     {
-        return Writer.WriteAutoCloseElement("settings", new { pass });
+        return Writer.WriteAutoCloseElement("settings", new KeyValueList { { "pass", pass } });
     }
 
     internal void WriteInternationalCore(bool winPe = false)
@@ -372,73 +395,77 @@ public class Generator
         }
 
         using var component = WriteComponentStart(name);
-        Writer.WriteElements(new
+        Writer.WriteElements(new KeyValueList
         {
-            InputLocale = Options.Language,
-            SystemLocale = Options.Language,
-            UILanguage = Options.Language,
-            UserLocale = Options.Language
+            { "InputLocale", Options.Language },
+            { "SystemLocale", Options.Language },
+            { "UILanguage", Options.Language },
+            { "UserLocale", Options.Language },
         });
     }
 
     internal void WriteCreatePartition(int order, string type, int? size = null)
     {
-        Writer.WriteElements(new
+        Writer.WriteElements(new KeyValueList
         {
-            CreatePartition = new
+            { "CreatePartition", new KeyValueList
             {
-                _attributes = new { wcm_action = "add" },
-                Order = order,
-                Size = size,
-                Type = type,
-                Extend = size.HasValue ? (bool?)null : true,
+                { "_attributes", new KeyValueList { { "wcm:action", "add" } } },
+                { "Order", order },
+                { "Size", size },
+                { "Type", type },
+                { "Extend", size.HasValue ? (bool?)null : true },
+            }
             }
         });
     }
 
     internal void WriteModifyPartition(int order, int partitionId, string? format = null, string? label = null, char? letter = null, bool? extend = null, bool? active = null, string? typeId = null)
     {
-        Writer.WriteElements(new
+        Writer.WriteElements(new KeyValueList
         {
-            ModifyPartition = new
+            { "ModifyPartition", new KeyValueList
             {
-                _attributes = new { wcm_action = "add" },
-                Order = order,
-                PartitionId = partitionId,
-                Format = format,
-                Label = label,
-                Letter = letter,
-                Extend = extend,
-                Active = active,
-                TypeID = typeId,
+                { "_attributes", new KeyValueList { { "wcm:action", "add" } } },
+                { "Order", order },
+                { "PartitionId", partitionId },
+                { "Format", format },
+                { "Label", label },
+                { "Letter", letter },
+                { "Extend", extend },
+                { "Active", active },
+                { "TypeID", typeId },
+            }
             }
         });
     }
 
     private void WriteRunSynchronousCommand(string path, string description, int order)
     {
-        Writer.WriteElements(new
+        Writer.WriteElements(new KeyValueList
         {
-            RunSynchronousCommand = new
+            { "RunSynchronousCommand", new KeyValueList
             {
-                _attributes = new { wcm_action = "add" },
-                Order = order,
-                Description = description,
-                Path = path,
+                { "_attributes", new KeyValueList { { "wcm:action", "add" } } },
+                { "Order", order },
+                { "Description", description },
+                { "Path", path },
+            }
             }
         });
     }
 
     private void WriteSynchronousCommand(string commandLine, string description, int order)
     {
-        Writer.WriteElements(new
+        Writer.WriteElements(new KeyValueList
         {
-            SynchronousCommand = new
+            { "SynchronousCommand", new KeyValueList
             {
-                _attributes = new { wcm_action = "add" },
-                Order = order,
-                Description = description,
-                CommandLine = commandLine,
+                { "_attributes", new KeyValueList { { "wcm:action", "add" } } },
+                { "Order", order },
+                { "Description", description },
+                { "CommandLine", commandLine },
+            }
             }
         });
     }

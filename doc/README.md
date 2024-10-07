@@ -7,4 +7,5 @@ This folder contains documentation for the Windows Answer File Generator.
 - [Usage documentation](../README.md)
 - [What's new in Answer File Generator](ChangeLog.md)
 - [Command line arguments](CommandLine.md)
+- [Using JSON to provide options](Json.md)
 - [Ookii.AnswerFile library](Library.md)

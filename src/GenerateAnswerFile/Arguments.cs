@@ -2,7 +2,6 @@
 using Ookii.CommandLine;
 using Ookii.CommandLine.Conversion;
 using Ookii.CommandLine.Validation;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -10,15 +9,8 @@ using System.Globalization;
 namespace GenerateAnswerFile;
 
 [GeneratedParser]
-[ResourceDescription(nameof(Properties.Resources.ApplicationDescription))]
-partial class Arguments
+partial class Arguments : BaseArguments
 {
-    [CommandLineArgument(IsPositional = true)]
-    [ResourceDescription(nameof(Properties.Resources.OutputFileDescription))]
-    [ResourceValueDescription(nameof(Properties.Resources.PathValueDescription))]
-    [Alias("o")]
-    public required FileInfo OutputFile { get; set; }
-
     #region Installation options
 
     [CommandLineArgument("Feature")]
@@ -97,30 +89,9 @@ partial class Arguments
     public LocalCredential[]? LocalAccounts { get; set; }
 
     [CommandLineArgument]
-    [ResourceDescription(nameof(Properties.Resources.CmdKeyUserDescription))]
-    [ResourceValueDescription(nameof(Properties.Resources.DomainUserValueDescription))]
-    [ArgumentCategory(ArgumentCategory.UserAccounts)]
-    [Alias("cku")]
-    [Requires(nameof(CmdKeyPassword))]
-    [ValidateNotWhiteSpace]
-    public DomainUser? CmdKeyUser { get; set; }
-
-    [CommandLineArgument]
-    [ResourceDescription(nameof(Properties.Resources.CmdKeyPasswordDescription))]
-    [ArgumentCategory(ArgumentCategory.UserAccounts)]
-    [Alias("ckp")]
-    [Requires(nameof(CmdKeyUser))]
-    [ValidateNotWhiteSpace]
-    public string? CmdKeyPassword { get; set; }
-
-    #endregion
-
-    #region AutoLogon options
-
-    [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonUserDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.OptionalDomainUserValueDescription))]
-    [ArgumentCategory(ArgumentCategory.AutoLogon)]
+    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alu")]
     [Requires(nameof(AutoLogonPassword))]
     [ValidateNotWhiteSpace]
@@ -128,7 +99,7 @@ partial class Arguments
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonPasswordDescription))]
-    [ArgumentCategory(ArgumentCategory.AutoLogon)]
+    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alp")]
     [Requires(nameof(AutoLogonUser))]
     [ValidateNotWhiteSpace]
@@ -136,7 +107,7 @@ partial class Arguments
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonCountDescription))]
-    [ArgumentCategory(ArgumentCategory.AutoLogon)]
+    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alc")]
     [Requires(nameof(AutoLogonUser))]
     [ValidateRange(1, null)]
@@ -179,14 +150,31 @@ partial class Arguments
     [ValidateNotWhiteSpace]
     public string? OUPath { get; set; }
 
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.JoinDomainProvisioningFileDescription))]
+    [ArgumentCategory(ArgumentCategory.Domain)]
+    [ResourceValueDescription(nameof(Properties.Resources.PathValueDescription))]
+    [Prohibits(nameof(JoinDomain))]
+    [Alias("jdpf")]
+    public FileInfo? JoinDomainProvisioningFile { get; set; }
+
+    [CommandLineArgument]
+    [ResourceDescription(nameof(Properties.Resources.JoinDomainOfflineDescription))]
+    [ArgumentCategory(ArgumentCategory.Domain)]
+    [Requires(nameof(JoinDomainProvisioningFile))]
+    [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanBios, InstallMethod.CleanEfi, InstallMethod.Manual)]
+    [Alias("jdo")]
+    public bool JoinDomainOffline { get; set; }
+
     [CommandLineArgument("DomainAccount")]
     [ResourceDescription(nameof(Properties.Resources.DomainAccountsDescription))]
+    [ResourceValueDescription(nameof(Properties.Resources.DomainUserGroupValueDescription))]
     [ArgumentCategory(ArgumentCategory.Domain)]
     [Alias("da")]
-    [Requires(nameof(JoinDomain))]
+    [RequiresAnyOther(nameof(JoinDomain), nameof(JoinDomainProvisioningFile))]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]
-    public string[]? DomainAccounts { get; set; }
+    public DomainUserGroup[]? DomainAccounts { get; set; }
 
     #endregion
 
@@ -225,13 +213,14 @@ partial class Arguments
     [MultiValueSeparator]
     public string[]? FirstLogonCommands { get; set; }
 
-    [CommandLineArgument("SetupScript")]
-    [ResourceDescription(nameof(Properties.Resources.SetupScriptsDescription))]
+    [CommandLineArgument("FirstLogonScript")]
+    [ResourceDescription(nameof(Properties.Resources.FirstLogonScriptsDescription))]
     [ArgumentCategory(ArgumentCategory.Other)]
+    [Alias("SetupScript")]
     [Alias("s")]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]
-    public string[]? SetupScripts { get; set; }
+    public string[]? FirstLogonScripts { get; set; }
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.EnableRemoteDesktopDescriptoin))]
@@ -243,8 +232,7 @@ partial class Arguments
     [ResourceDescription(nameof(Properties.Resources.DisplayResolutionDescription))]
     [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("res")]
-    [ArgumentConverter(typeof(WrappedDefaultTypeConverter<Size>))]
-    public Size? DisplayResolution { get; set; }
+    public Resolution? DisplayResolution { get; set; }
 
     [CommandLineArgument]
     [ResourceDescription(nameof(Properties.Resources.LanguageDescription))]
@@ -266,39 +254,6 @@ partial class Arguments
     [ValidateNotWhiteSpace]
     public string TimeZone { get; set; } = "Pacific Standard Time";
 
-    // Shows detailed information if an exception occurs.
-    [CommandLineArgument(IsHidden = true)]
-    public bool Debug { get; set; }
-
-    [CommandLineArgument]
-    [Alias("oh")]
-    [Alias("??")]
-    [ResourceDescription(nameof(Properties.Resources.OnlineHelpDescription))]
-    public static CancelMode OnlineHelp(CommandLineParser parser)
-    {
-        try
-        {
-            var info = new ProcessStartInfo(Properties.Resources.OnlineHelpUrl)
-            {
-                UseShellExecute = true,
-            };
-
-            Process.Start(info);
-        }
-        catch (Exception ex)
-        {
-            if ((bool?)parser.GetArgument(nameof(Debug))!.Value ?? false)
-            {
-                Console.Error.WriteLine(ex.ToString());
-            }
-
-            Console.WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpFooterFormat,
-                CommandLineParser.GetExecutableName()));
-        }
-
-        return CancelMode.Abort;
-    }
-
 #if DEBUG
 
     // This argument is used to generate the bulk of CommandLine.md. It has no real value otherwise,
@@ -308,11 +263,15 @@ partial class Arguments
     [CommandLineArgument(IsHidden = true)]
     public static CancelMode MarkdownHelp(CommandLineParser parser)
     {
-        var writer = ((CustomUsageWriter)parser.Options.UsageWriter);
-        writer.Markdown = true;
-        writer.IncludeApplicationDescription = false;
-        writer.UseAbbreviatedSyntax = false;
-        parser.HelpRequested = true;
+        using var writer = new LineWrappingTextWriter(Console.Out, 100, false);
+        var usageWriter = new CustomUsageWriter(writer)
+        {
+            Markdown = true,
+            IncludeApplicationDescription = false,
+            UseAbbreviatedSyntax = false,
+        };
+
+        usageWriter.WriteParserUsage(parser);
         return CancelMode.Abort;
     }
 
@@ -320,9 +279,9 @@ partial class Arguments
 
 #endregion
 
-    public GeneratorOptions ToOptions()
+    public AnswerFileOptions ToOptions()
     {
-        var options = new GeneratorOptions()
+        var options = new AnswerFileOptions()
         {
             InstallOptions = ToInstallOptions(),
             JoinDomain = ToDomainOptions(),
@@ -332,7 +291,6 @@ partial class Arguments
             EnableRemoteDesktop = EnableRemoteDesktop,
             EnableServerManager = !DisableServerManager,
             AutoLogon = ToAutoLogonOptions(),
-            CmdKeyAccount = ToCmdKeyOptions(),
             DisplayResolution = DisplayResolution,
             Language = Language,
             ProductKey = ProductKey,
@@ -350,9 +308,9 @@ partial class Arguments
             options.FirstLogonCommands.AddRange(FirstLogonCommands);
         }
 
-        if (SetupScripts != null)
+        if (FirstLogonScripts != null)
         {
-            options.SetupScripts.AddRange(SetupScripts);
+            options.FirstLogonScripts.AddRange(FirstLogonScripts);
         }
 
         return options;
@@ -384,10 +342,14 @@ partial class Arguments
             _ => null,
         };
 
-        if (options != null && Features?.Length > 0)
+        if (options != null)
         {
-            options.OptionalFeatures = new OptionalFeatures(WindowsVersion!);
-            options.OptionalFeatures.Features.AddRange(Features);
+            options.JoinDomainOffline = JoinDomainOffline;
+            if (Features?.Length > 0)
+            {
+                options.OptionalFeatures = new OptionalFeatures(WindowsVersion!);
+                options.OptionalFeatures.Features.AddRange(Features);
+            }
         }
 
         if (options is CleanOptionsBase cleanOptions && Partitions?.Length > 0)
@@ -398,23 +360,26 @@ partial class Arguments
         return options;
     }
 
-    private DomainOptions? ToDomainOptions()
+    private DomainOptionsBase? ToDomainOptions()
     {
-        if (JoinDomain == null)
+        DomainOptionsBase? options;
+        if (JoinDomainProvisioningFile != null)
+        {
+            // Files created by djoin.exe have a null character at the end for some reason, which
+            // must be removed because XmlWriter doesn't like it.
+            options = new ProvisionedDomainOptions(File.ReadAllText(JoinDomainProvisioningFile.FullName).Trim('\0'));
+        }
+        else if (JoinDomain != null)
+        {
+            options = new DomainOptions(JoinDomain, new DomainCredential(JoinDomainUser!, JoinDomainPassword!))
+            {
+                OUPath = OUPath,
+            };
+        }
+        else
         {
             return null;
         }
-
-        var user = JoinDomainUser!;
-        if (user.Domain ==  null)
-        {
-            user = new DomainUser(JoinDomain, user.UserName);
-        }
-
-        var options = new DomainOptions(JoinDomain, new DomainCredential(user, JoinDomainPassword!))
-        {
-            OUPath = OUPath,
-        };
 
         if (DomainAccounts != null)
         {
@@ -435,15 +400,5 @@ partial class Arguments
         {
             Count = AutoLogonCount,
         };
-    }
-
-    private DomainCredential? ToCmdKeyOptions()
-    {
-        if (CmdKeyUser == null)
-        {
-            return null;
-        }
-
-        return new DomainCredential(CmdKeyUser, CmdKeyPassword!);
     }
 }

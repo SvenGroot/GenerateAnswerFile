@@ -2,12 +2,20 @@
 using Ookii.CommandLine.Validation;
 using System.Globalization;
 using System.Reflection;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace GenerateAnswerFile;
 
 class CustomUsageWriter : UsageWriter
 {
+    public CustomUsageWriter(LineWrappingTextWriter? writer = null)
+        : base(writer)
+    {
+        UseAbbreviatedSyntax = true;
+        IndentAfterEmptyLine = true;
+    }
+
     public bool Markdown { get; set; }
 
     protected override void WriteParserUsageFooter()
@@ -90,8 +98,8 @@ class CustomUsageWriter : UsageWriter
         WriteLine("## Usage syntax");
         WriteLine();
         WriteLine("<!-- markdownlint-disable MD033 -->");
-        SetIndent(4);
         Write($"<pre>{ExecutableName}");
+        SetIndent(4);
         foreach (var arg in GetArgumentsInUsageOrder())
         {
             WriteLine();
@@ -106,6 +114,7 @@ class CustomUsageWriter : UsageWriter
         }
 
         WriteLine("</pre>");
+        Writer.ResetIndent();
         WriteLine("<!-- markdownlint-enable MD033 -->");
         WriteLine();
     }
@@ -142,22 +151,48 @@ class CustomUsageWriter : UsageWriter
         WriteLine($"### `-{argument.ArgumentName}`");
         WriteLine();
 
-        // Put backticks around install method values.
-        var values = string.Join("|", typeof(InstallMethod).GetEnumNames());
-        var description = Regex.Replace(argument.Description, $@"(?<!')\b({values})\b(?!')", "`$1`").ReplaceLineEndings();
+        var json = JsonDocument.Parse(File.OpenRead("mdhelp.json"));
+        string? description = null;
+        string? additionalDescription = null;
+        if (json.RootElement.TryGetProperty(argument.ArgumentName, out var argumentInfo))
+        {
+            if (argumentInfo.ValueKind == JsonValueKind.Object)
+            {
+                if (argumentInfo.GetProperty("Override").GetBoolean())
+                {
+                    description = argumentInfo.GetProperty("Text").GetString();
+                }
+                else
+                {
+                    additionalDescription = argumentInfo.GetProperty("Text").GetString();
+                }
+            }
+            else
+            {
+                additionalDescription = argumentInfo.GetString();
+            }
+        }
 
-        // Replace single quotes terms with backticks (but avoid changing apostrophes).
-        description = Regex.Replace(description, @"(^|\s)'([^']*)'(\s|$|\.|,|\))", "$1`$2`$3");
+        if (description == null)
+        {
+            // Put backticks around install method values.
+            var values = string.Join("|", typeof(InstallMethod).GetEnumNames());
+            description = Regex.Replace(argument.Description, $@"(?<!')\b({values})\b(?!')", "`$1`").ReplaceLineEndings();
 
-        // Make links for arguments.
-        description = Regex.Replace(description, @"(?<=^|\s)-([A-Z][a-zA-Z]*)(?=\s|$|\.|,|\))",
-            m => $"[`-{m.Groups[1]}`](#-{m.Groups[1].Value.ToLowerInvariant()})");
+            // Replace single quoted terms with backticks (but avoid changing apostrophes).
+            description = Regex.Replace(description, @"(^|\s)'([^']*)'(\s|$|\.|,|\))", "$1`$2`$3");
+
+            // Make links for arguments.
+            description = Regex.Replace(description, @"(?<=^|\s)-([A-Z][a-zA-Z]*)(?=\s|$|\.|,|\))",
+                m => $"[`-{m.Groups[1]}`](#-{m.Groups[1].Value.ToLowerInvariant()})");
+        }
 
         WriteLine(description);
         WriteLine();
         foreach (var validator in argument.Validators)
         {
-            if (validator is not (RequiresAttribute or ValidateInstallMethodAttribute or ValidateEnumValueAttribute))
+            if (validator is not (RequiresAttribute or ProhibitsAttribute or RequiresAnyOtherAttribute or 
+                    ValidateInstallMethodAttribute or ValidateEnumValueAttribute))
             {
                 var help = validator.GetUsageHelp(argument);
                 if (!string.IsNullOrEmpty(help))
@@ -166,6 +201,12 @@ class CustomUsageWriter : UsageWriter
                     WriteLine();
                 }
             }
+        }
+
+        if (additionalDescription != null)
+        {
+            WriteLine(additionalDescription);
+            WriteLine();
         }
 
         // Since GitHub markdown doesn't support tables without header rows, we take a page out of
@@ -194,8 +235,8 @@ class CustomUsageWriter : UsageWriter
         var prefix = Parser.ArgumentNamePrefixes[0];
         if (argument.Aliases.Length > 0)
         {
-            Write($"Aliases: {string.Join(", ", argument.Aliases.Select(a => prefix + a))}");
-            WriteLine();
+            var plural = argument.Aliases.Length > 1 ? "es" : "";
+            WriteLine($"Alias{plural}: {string.Join(", ", argument.Aliases.Select(a => prefix + a))}");
         }
 
         if (argument.IsRequired)
@@ -216,13 +257,28 @@ class CustomUsageWriter : UsageWriter
         var requiresAttribute = argument.Validators.OfType<RequiresAttribute>().FirstOrDefault();
         if (requiresAttribute != null)
         {
-            WriteLine($"Required arguments: {string.Join(", ", requiresAttribute.Arguments.Select(a => prefix + a))}");
+            var plural = requiresAttribute.Arguments.Length > 1 ? "s" : "";
+            WriteLine($"Required argument{plural}: {string.Join(", ", requiresAttribute.Arguments.Select(a => prefix + a))}");
+        }
+
+        var requiresAnyOtherAttribute = argument.Validators.OfType<RequiresAnyOtherAttribute>().FirstOrDefault();
+        if (requiresAnyOtherAttribute != null)
+        {
+            WriteLine($"Requires one of: {string.Join(", ", requiresAnyOtherAttribute.Arguments.Select(a => prefix + a))}");
+        }
+
+        var prohibitsAttribute = argument.Validators.OfType<ProhibitsAttribute>().FirstOrDefault();
+        if (prohibitsAttribute != null)
+        {
+            var plural = prohibitsAttribute.Arguments.Length > 1 ? "s" : "";
+            WriteLine($"Prohibited argument{plural}: {string.Join(", ", prohibitsAttribute.Arguments.Select(a => prefix + a))}");
         }
 
         var installMethodAttribute = argument.Validators.OfType<ValidateInstallMethodAttribute>().FirstOrDefault();
         if (installMethodAttribute != null)
         {
-            WriteLine($"Allowed -Install values: {string.Join(", ", installMethodAttribute.Methods)}");
+            var plural = installMethodAttribute.Methods.Length > 1 ? "s" : "";
+            WriteLine($"Allowed -Install value{plural}: {string.Join(", ", installMethodAttribute.Methods)}");
         }
 
         WriteLine("```");
@@ -240,7 +296,6 @@ class CustomUsageWriter : UsageWriter
         {
             ArgumentCategory.Install => Properties.Resources.CategoryInstall,
             ArgumentCategory.UserAccounts => Properties.Resources.CategoryUserAccounts,
-            ArgumentCategory.AutoLogon => Properties.Resources.CategoryAutoLogon,
             ArgumentCategory.Domain => Properties.Resources.CategoryDomain,
             _ => Properties.Resources.CategoryOther,
         };

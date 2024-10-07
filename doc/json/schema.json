@@ -1,0 +1,615 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "Answer File Generator JSON options.",
+  "type": "object",
+  "description": "Provides options for generating an unattended Windows installation answer file using the Answer File Generator.",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "title": "Schema",
+      "description": "Pointer to the schema against which this document should be validated."
+    },
+    "InstallOptions": {
+      "description": "Options for the installation method. This should be an object with a '$type' property, or null to generate an answer file intended for a preinstalled image. Other available options depend on the value of '$type'.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "properties": {
+            "$type": {
+              "enum": [
+                "CleanEfi",
+                "CleanBios",
+                "ExistingPartition",
+                "Manual"
+              ],
+              "type": "string",
+              "description": "The installation method to use."
+            }
+          },
+          "required": [
+            "$type"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "CleanEfi"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/CleanEfiOptions"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "CleanBios"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/CleanBiosOptions"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "ExistingPartition"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/ExistingPartitionOptions"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "Manual"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/ManualInstallOptions"
+              }
+            }
+          ]    
+        }
+      ]
+    },
+    "JoinDomain": {
+      "description": "Options for joining a domain, or null to not join a domain.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "properties": {
+            "$type": {
+              "enum": [
+                "Credential",
+                "Provisioning"
+              ],
+              "type": "string",
+              "description": "The type of domain join options to use."
+            }
+          },
+          "required": [
+            "$type"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "Credential"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/DomainOptions"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "$type": {
+                    "const": "Provisioning"
+                  }
+                }
+              },
+              "then": {
+                "$ref": "#/definitions/ProvisionedDomainOptions"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ComputerName": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "The computer name of the system, or null to let Windows generate one."
+    },
+    "EnableDefender": {
+      "type": "boolean",
+      "description": "Indicates whether Windows Defender is enabled after installation. The default value is true."
+    },
+    "EnableCloud": {
+      "type": "boolean",
+      "description": "Indicates whether cloud consumer features are enabled after installation. The default value is true. This may have no effect depending on the Windows version and edition being installed."
+    },
+    "EnableRemoteDesktop": {
+      "type": "boolean",
+      "description": "Indicates whether remote desktop accepts incoming connections after installation. The default value is false."
+    },
+    "EnableServerManager": {
+      "type": "boolean",
+      "description": "Indicates whether server manager will be launched on logon on Windows Server. The default value is true. This has no effect on non-Server editions of Windows."
+    },
+    "LocalAccounts": {
+      "type": [ 
+        "null",
+        "array" 
+      ],
+      "description": "A list of local accounts to create.",
+      "items": {
+        "$ref": "#/definitions/LocalCredential"
+      }
+    },
+    "AutoLogon": {
+      "description": "Options for logging on automatically, or null to not log on automatically.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/AutoLogonOptions"
+        }
+      ]
+    },
+    "DisplayResolution": {
+      "description": "The display resolution, in the format 'width,height' (e.g. '1920,1080'), or null to let Windows determine the default resolution.",
+      "type": [
+        "null",
+        "string"
+      ],
+      "pattern": "^\\d+,\\d+$"
+    },
+    "Language": {
+      "type": "string",
+      "description": "The language used for the UI and culture settings. The default value is 'en-US'."
+    },
+    "ProductKey": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "The product key used to determine the edition to install, and to activate Windows. This can be null when using a preinstalled image, or when installing an edition that does not require a product key, such as a volume licensed edition."
+    },
+    "ProcessorArchitecture": {
+      "type": "string",
+      "description": "The processor architecture of the Windows version being installed. Valid values include 'amd64', 'x86', and 'arm64'. The default value is 'amd64'."
+    },
+    "TimeZone": {
+      "type": "string",
+      "description": "The system time zone. Use 'tzutil /l' in a command prompt to list possible time zones. The default value is 'Pacific Standard Time'."
+    },
+    "FirstLogonCommands": {
+      "type": [ 
+        "null",
+        "array" 
+      ],
+      "description": "A list of commands to run during first log-on. These are executed on first log-on before the scripts in FirstLogonScripts.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "FirstLogonScripts": {
+      "type": [ 
+        "null",
+        "array" 
+      ],
+      "description": "A list of PowerShell scripts to run during first log-on. These are executed on first log-on after the commands in FirstLogonCommands.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "definitions": {
+    "InstallOptionsBase": {
+      "type": "object",
+      "description": "Common options for all installation method.",
+      "x-abstract": true,
+      "properties": {
+        "OptionalFeatures": {
+          "description": "Optional features to install, or null to not install any.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/OptionalFeatures"
+            }
+          ]
+        },
+        "JoinDomainOffline": {
+          "type": "boolean",
+          "description": "Indicates whether the domain join should be performed during the offlineServicing pass. The default value is false. This has no effect if JoinDomain is null. Setting this to true is only supported when using provisioning to join the domain."
+        }
+      }
+    },
+    "TargetedInstallOptionsBase": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InstallOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Common options for all installation methods that target a specific disk and partition.",
+          "x-abstract": true,
+          "properties": {
+            "DiskId": {
+              "type": "integer",
+              "description": "The zero-based index of the disk to which Windows will be installed.",
+              "format": "int32",
+              "minimum": 0
+            },
+            "ImageIndex": {
+              "type": "integer",
+              "description": "The index of the image in the WIM file to install. Use this for Windows editions not installed using a product key, such as those that use volume licensing. Use the PowerShell 'Get-WindowsImage' command to list all images in a .wim or .esd file.",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        }
+      ]
+    },
+    "CleanOptionsBase": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/TargetedInstallOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Common options for installation methods that perform a clean installation on a specific disk and partition.",
+          "x-abstract": true,
+          "properties": {
+            "Partitions": {
+              "type": [ 
+                "null",
+                "array" 
+              ],
+              "description": "A list of partitions to create, or null to use the default partition layout for the installation type.",
+              "items": {
+                "$ref": "#/definitions/Partition"
+              }
+            },
+            "TargetPartitionId": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "The one-based index of the partition to install to, or null to install to the first regular data partition.",
+              "format": "int32",
+              "minimum": 1
+            }
+          }
+        }
+      ]
+    },
+    "CleanEfiOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CleanOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for a clean installation on UEFI-based systems.",
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The installation method to use.",
+              "const": "CleanEfi"
+            }
+          }
+        }
+      ]
+    },
+    "CleanBiosOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CleanOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for a clean installation on BIOS-based systems.",
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The installation method to use.",
+              "const": "CleanBios"
+            }
+          }
+        }
+      ]
+    },
+    "ExistingPartitionOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/TargetedInstallOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for installing to an existing partition.",
+          "required": [
+            "TargetPartitionId"
+          ],
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The installation method to use.",
+              "const": "ExistingPartition"
+            },
+            "TargetPartitionId": {
+              "type": "integer",
+              "description": "The one-based index of the partition to install to.",
+              "format": "int32",
+              "minimum": 1
+            }
+          }
+        }
+      ]
+    },
+    "ManualInstallOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InstallOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for an installation where the disk and partition to install to must be manually selected by the user.",
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The installation method to use.",
+              "const": "Manual"
+            }
+          }
+        }
+      ]
+    },
+    "OptionalFeatures": {
+      "type": "object",
+      "description": "Provides options for installing optional features.",
+      "required": [
+        "WindowsVersion"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "WindowsVersion": {
+          "description": "The Windows version being installed. If this value does not match the actual version of Windows being installed, installation will fail.",
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+.\\d+.\\d+$"
+        },
+        "Features": {
+          "type": "array",
+          "description": "A list of optional features to install.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Partition": {
+      "type": "object",
+      "description": "Specifies a partition to be created when using the CleanBiosOptions or CleanEfiOptions class.",
+      "additionalProperties": false,
+      "properties": {
+        "Type": {
+          "description": "The type of the partition. The default value is 'Normal'.",
+          "enum": [
+            "Normal",
+            "System",
+            "Msr",
+            "Utility"
+          ]
+        },
+        "Label": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The label of the partition."
+        },
+        "Size": {
+          "description": "The size of the partition, which can be a value like '100MB', or null to fill the remaining space. Only the last partition may have a null size.",
+          "type": ["string", "null"]
+        },
+        "FileSystem": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The file system to format the partition with, or null to use the default file system for the partition type."
+        }
+      }
+    },
+    "DomainOptionsBase": {
+      "type": "object",
+      "description": "Common options for joining a domain.",
+      "x-abstract": true,
+      "properties": {
+        "DomainAccounts": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "description": "A list of domain accounts that should be added to a local group.",
+              "items": {
+                "$ref": "#/definitions/DomainUserGroup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "DomainOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/DomainOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for joining a domain using credentials.",
+          "required": [
+            "$type",
+            "Domain",
+            "Credential"
+          ],
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The type of domain join options to use.",
+              "const": "Credential"
+            },
+            "Domain": {
+              "type": "string",
+              "description": "The name of the domain to join."
+            },
+            "Credential": {
+              "description": "The credentials of a domain account that has permission to join the domain.",
+              "$ref": "#/definitions/DomainCredential"
+            },
+            "OUPath": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The path of the Organizational Unit that the computer account should be added to, or null to use the domain default."
+            }
+          }
+        }
+      ]
+    },
+    "ProvisionedDomainOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/DomainOptionsBase"
+        },
+        {
+          "type": "object",
+          "description": "Provides options for joining a domain using provisioned account data.",
+          "required": [
+            "$type",
+            "AccountData"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "$type": {
+              "type": "string",
+              "description": "The type of domain join options to use.",
+              "const": "Provisioning"
+            },
+            "AccountData": {
+              "type": "string",
+              "description": "The account data used to join the domain. This is a base64-encoded string returned by the djoin.exe command."
+            }
+          }
+        }
+      ]
+    },
+    "DomainCredential": {
+      "type": "object",
+      "description": "Represents a credential for a domain or local user.",
+      "additionalProperties": false,
+      "required": [
+        "UserAccount",
+        "Password"
+      ],
+      "properties": {
+        "UserAccount": {
+          "type": "string",
+          "description": "The domain or local user account, in the format 'domain\\user' or 'user'."
+        },
+        "Password": {
+          "type": "string",
+          "description": "The password for the account."
+        }
+      }
+    },
+    "DomainUserGroup": {
+      "type": "object",
+      "description": "Represents a domain user and the local group to which they should be added.",
+      "additionalProperties": false,
+      "required": [
+        "DomainUser"
+      ],
+      "properties": {
+        "DomainUser": {
+          "type": "string",
+          "description": "The domain user that is being added to a group, in the format 'domain\\user' or 'user'. If no domain is specified, the user is assumed to be a member of the domain being joined."
+        },
+        "Group": {
+          "type": "string",
+          "description": "The group to which the user will be added. The default value is 'Administrators'."
+        }
+      }
+    },
+    "LocalCredential": {
+      "type": "object",
+      "description": "Provides credentials for a local user account.",
+      "additionalProperties": false,
+      "required": [
+        "UserName",
+        "Password"
+      ],
+      "properties": {
+        "UserName": {
+          "type": "string",
+          "description": "The user name of the account."
+        },
+        "Password": {
+          "type": "string",
+          "description": "The password of the account."
+        },
+        "Group": {
+          "type": "string",
+          "description": "The group to which the user will be added. The default value is 'Administrators'."
+        }
+      }
+    },
+    "AutoLogonOptions": {
+      "type": "object",
+      "description": "Provides options for logging on automatically.",
+      "additionalProperties": false,
+      "required": [
+        "Credential"
+      ],
+      "properties": {
+        "Credential": {
+          "description": "The credentials used to log on automatically.",
+          "$ref": "#/definitions/DomainCredential"
+        },
+        "Count": {
+          "type": "integer",
+          "description": "The number of times automatic log-on will be used. The default value is 1.",
+          "format": "int32",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// Gets or sets the disk to which Windows will be installed.
     /// </summary>
     /// <value>
-    /// The zero-based disk ID.
+    /// The zero-based disk ID. The default value is zero.
     /// </value>
     public int DiskId { get; set; }
 
@@ -23,7 +23,7 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// <remarks>
     /// <para>
     ///   A WIM or ESD image file can contain multiple images, typically used for different SKUs
-    ///   such as Home or Professional. Normally, the <see cref="GeneratorOptions.ProductKey" qualifyHint="true"/>
+    ///   such as Home or Professional. Normally, the <see cref="AnswerFileOptions.ProductKey" qualifyHint="true"/>
     ///   property is used to determine which image to install. However, for editions that are not
     ///   necessarily activated using a product key (such as those using volume licensing), you can
     ///   use the image index to select which edition to install.
@@ -50,39 +50,42 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// <remarks>
     /// <inheritdoc/>
     /// </remarks>
-    protected override void WriteInstallElements(Generator generator)
+    protected override void WriteInstallElements(AnswerFileGenerator generator)
     {
         using (var imageInstall = generator.Writer.WriteAutoCloseElement("ImageInstall"))
         using (var osImage = generator.Writer.WriteAutoCloseElement("OSImage"))
         {
             if (ImageIndex != 0)
             {
-                generator.Writer.WriteElements(new
+                generator.Writer.WriteElements(new KeyValueList
                 {
-                    InstallFrom = new
+                    { "InstallFrom", new KeyValueList
                     {
-                        MetaData = new
+                        { "MetaData", new KeyValueList
                         {
-                            _attributes = new { wcm_action = "add" },
-                            Key = "/IMAGE/INDEX",
-                            Value = ImageIndex
+                            { "_attributes", new KeyValueList { { "wcm:action", "add" } } },
+                            { "Key", "/IMAGE/INDEX" },
+                            { "Value", ImageIndex },
                         }
+                        }
+                    }
                     }
                 });
             }
 
-            generator.Writer.WriteElements(new
+            generator.Writer.WriteElements(new KeyValueList
             {
-                InstallTo = new
+                { "InstallTo", new KeyValueList
                 {
-                    DiskID = DiskId,
-                    PartitionID = TargetPartitionId
+                    { "DiskID", DiskId },
+                    { "PartitionID", TargetPartitionId },
+                }
                 }
             });
         }
 
         using var diskConfiguration = generator.Writer.WriteAutoCloseElement("DiskConfiguration");
-        using var disk = generator.Writer.WriteAutoCloseElement("Disk", new { wcm_action = "add" });
+        using var disk = generator.Writer.WriteAutoCloseElement("Disk", new KeyValueList { { "wcm:action", "add" } });
         generator.Writer.WriteElementString("DiskID", DiskId.ToString());
         WriteDiskConfiguration(generator);
     }
@@ -92,5 +95,5 @@ public abstract class TargetedInstallOptionsBase : InstallOptionsBase
     /// method.
     /// </summary>
     /// <param name="generator">The generator creating the answer file.</param>
-    protected abstract void WriteDiskConfiguration(Generator generator);
+    protected abstract void WriteDiskConfiguration(AnswerFileGenerator generator);
 }

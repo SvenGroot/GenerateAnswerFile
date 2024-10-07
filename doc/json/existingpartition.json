@@ -1,0 +1,18 @@
+{
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+    "InstallOptions": {
+        "$type": "ExistingPartition",
+        "TargetPartitionId": 5,
+        "DiskId": 3,
+        "OptionalFeatures": {
+            "WindowsVersion": "10.0.22631.1",
+            "Features": [
+                "Microsoft-Hyper-V-All"
+            ]
+        }
+    },
+    "Language": "en-US",
+    "ProductKey": "ABCDE-12345-ABCDE-12345-ABCDE",
+    "ProcessorArchitecture": "amd64",
+    "TimeZone": "Pacific Standard Time"
+}

@@ -44,22 +44,25 @@ public class OptionalFeatures
         set => _features = value;
     }
 
-    internal void GenerateServicingPass(Generator generator)
+    internal void GenerateServicingPass(AnswerFileGenerator generator)
     {
         using var servicing = generator.Writer.WriteAutoCloseElement("servicing");
-        using var package = generator.Writer.WriteAutoCloseElement("package", new { action = "configure" });
-        generator.Writer.WriteEmptyElement("assemblyIdentity", new
+        using var package = generator.Writer.WriteAutoCloseElement("package", new KeyValueList { { "action", "configure" } });
+        generator.Writer.WriteEmptyElement("assemblyIdentity", new KeyValueList
         {
-            name = "Microsoft-Windows-Foundation-Package",
-            version = WindowsVersion,
-            processorArchitecture = generator.Options.ProcessorArchitecture,
-            publicKeyToken = Generator.PublicKeyToken,
-            language = ""
+            { "name", "Microsoft-Windows-Foundation-Package" },
+            { "version", WindowsVersion },
+            { "processorArchitecture", generator.Options.ProcessorArchitecture },
+            { "publicKeyToken", AnswerFileGenerator.PublicKeyToken },
+            { "language", "" },
         });
 
         foreach (var component in Features)
         {
-            generator.Writer.WriteEmptyElement("selection", new { name = component, state = "true" });
+            generator.Writer.WriteEmptyElement("selection", new KeyValueList { 
+                { "name", component },
+                { "state", "true" },
+            });
         }
     }
 }

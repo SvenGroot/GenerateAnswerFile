@@ -1,0 +1,64 @@
+{
+  "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+  "JoinDomain": {
+    "$type": "Credential",
+    "Domain": "domain",
+    "Credential": {
+      "UserAccount": "domain\\user",
+      "Password": "password"
+    },
+    "OUPath": "OU=Computers",
+    "DefaultDomainAccountDomain": "domain",
+    "DomainAccounts": [
+      {
+        "DomainUser": "user",
+        "Group": "Administrators"
+      },
+      {
+        "DomainUser": "domain\\user2",
+        "Group": "Users"
+      }
+    ]
+  },
+  "ComputerName": "TestComputer",
+  "EnableDefender": false,
+  "EnableCloud": true,
+  "EnableRemoteDesktop": false,
+  "EnableServerManager": true,
+  "LocalAccounts": [
+    {
+      "UserName": "localuser",
+      "Password": "password",
+      "Group": "Administrators"
+    },
+    {
+      "UserName": "localuser2",
+      "Password": "password2",
+      "Group": "Administrators"
+    },
+    {
+      "UserName": "localuser3",
+      "Password": "password3",
+      "Group": "Users"
+    }
+  ],
+  "AutoLogon": {
+    "Credential": {
+      "UserAccount": "domain\\user",
+      "Password": "password"
+    },
+    "Count": 1
+  },
+  "DisplayResolution": "1280,1024",
+  "Language": "en-US",
+  "ProcessorArchitecture": "amd64",
+  "TimeZone": "Pacific Standard Time",
+  "FirstLogonCommands": [
+    "Hello",
+    "Bye"
+  ],
+  "FirstLogonScripts": [
+    "Foo",
+    "Bar"
+  ]
+}
