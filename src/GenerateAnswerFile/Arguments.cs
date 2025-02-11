@@ -13,9 +13,8 @@ partial class Arguments : BaseArguments
 {
     #region Installation options
 
-    [CommandLineArgument("Feature")]
+    [CommandLineArgument("Feature", Category = ArgumentCategory.Install)]
     [ResourceDescription(nameof(Properties.Resources.FeaturesDescription))]
-    [ArgumentCategory(ArgumentCategory.Install)]
     [Alias("c")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanBios, InstallMethod.CleanEfi, InstallMethod.Manual)]
     [Requires(nameof(WindowsVersion))]
@@ -23,91 +22,79 @@ partial class Arguments : BaseArguments
     [MultiValueSeparator]
     public string[]? Features { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Install)]
     [ResourceDescription(nameof(Properties.Resources.InstallDescription))]
-    [ArgumentCategory(ArgumentCategory.Install)]
     [Alias("i")]
     [ValidateEnumValue]
     public InstallMethod Install { get; set; } = InstallMethod.PreInstalled;
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Install)]
     [ResourceDescription(nameof(Properties.Resources.InstallToDiskDescription))]
-    [ArgumentCategory(ArgumentCategory.Install)]
     [Alias("disk")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanEfi, InstallMethod.CleanBios)]
     [ValidateRange(0, null)]
     public int InstallToDisk { get; set; } = 0;
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Install)]
     [ResourceDescription(nameof(Properties.Resources.InstallToPartitionDescription))]
-    [ArgumentCategory(ArgumentCategory.Install)]
     [Alias("part")]
     [ValidateInstallMethod(InstallMethod.CleanEfi, InstallMethod.CleanBios, InstallMethod.ExistingPartition)]
     [ValidateRange(1, null)]
     public int? InstallToPartition { get; set; }
 
-    [CommandLineArgument("Partition")]
+    [CommandLineArgument("Partition", Category = ArgumentCategory.Install)]
     [ResourceDescription(nameof(Properties.Resources.PartitionsDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.PartitionsValueDescription))]
-    [ArgumentCategory(ArgumentCategory.Install)]
     [Alias("p")]
     [ValidateInstallMethod(InstallMethod.CleanEfi, InstallMethod.CleanBios)]
     [MultiValueSeparator]
     public Partition[]? Partitions { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Install)]
     [ResourceDescription(nameof(Properties.Resources.ImageIndexDescription))]
-    [ArgumentCategory(ArgumentCategory.Install)]
     [Alias("wim")]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanEfi, InstallMethod.CleanBios)]
     public int ImageIndex { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Install)]
     [ResourceDescription(nameof(Properties.Resources.ProductKeyDescription))]
-    [ArgumentCategory(ArgumentCategory.Install)]
     [Alias("key")]
     [ValidateNotWhiteSpace]
     public string? ProductKey { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Install)]
     [ResourceDescription(nameof(Properties.Resources.WindowsVersionDescription))]
-    [ArgumentCategory(ArgumentCategory.Install)]
     [Alias("v")]
     public Version? WindowsVersion { get; set; }
-
 
     #endregion
 
     #region User account options
 
-    [CommandLineArgument("LocalAccount")]
+    [CommandLineArgument("LocalAccount", Category = ArgumentCategory.UserAccounts)]
     [ResourceDescription(nameof(Properties.Resources.LocalAccountsDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.LocalCredentialValueDescription))]
-    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("a")]
     [MultiValueSeparator]
     public LocalCredential[]? LocalAccounts { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.UserAccounts)]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonUserDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.OptionalDomainUserValueDescription))]
-    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alu")]
     [Requires(nameof(AutoLogonPassword))]
     [ValidateNotWhiteSpace]
     public DomainUser? AutoLogonUser { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.UserAccounts)]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonPasswordDescription))]
-    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alp")]
     [Requires(nameof(AutoLogonUser))]
     [ValidateNotWhiteSpace]
     public string? AutoLogonPassword { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.UserAccounts)]
     [ResourceDescription(nameof(Properties.Resources.AutoLogonCountDescription))]
-    [ArgumentCategory(ArgumentCategory.UserAccounts)]
     [Alias("alc")]
     [Requires(nameof(AutoLogonUser))]
     [ValidateRange(1, null)]
@@ -117,59 +104,52 @@ partial class Arguments : BaseArguments
 
     #region Domain options
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Domain)]
     [ResourceDescription(nameof(Properties.Resources.JoinDomainDescription))]
-    [ArgumentCategory(ArgumentCategory.Domain)]
     [Requires(nameof(JoinDomainUser), nameof(JoinDomainPassword))]
     [Alias("jd")]
     [ValidateNotWhiteSpace]
     public string? JoinDomain { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Domain)]
     [ResourceDescription(nameof(Properties.Resources.JoinDomainUserDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.OptionalDomainUserValueDescription))]
-    [ArgumentCategory(ArgumentCategory.Domain)]
     [Alias("jdu")]
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
     public DomainUser? JoinDomainUser { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Domain)]
     [ResourceDescription(nameof(Properties.Resources.JoinDomainPasswordDescription))]
-    [ArgumentCategory(ArgumentCategory.Domain)]
     [Alias("jdp")]
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
     public string? JoinDomainPassword { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Domain)]
     [ResourceDescription(nameof(Properties.Resources.OUPathDescription))]
-    [ArgumentCategory(ArgumentCategory.Domain)]
     [Alias("ou")]
     [Requires(nameof(JoinDomain))]
     [ValidateNotWhiteSpace]
     public string? OUPath { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Domain)]
     [ResourceDescription(nameof(Properties.Resources.JoinDomainProvisioningFileDescription))]
-    [ArgumentCategory(ArgumentCategory.Domain)]
     [ResourceValueDescription(nameof(Properties.Resources.PathValueDescription))]
     [Prohibits(nameof(JoinDomain))]
     [Alias("jdpf")]
     public FileInfo? JoinDomainProvisioningFile { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Domain)]
     [ResourceDescription(nameof(Properties.Resources.JoinDomainOfflineDescription))]
-    [ArgumentCategory(ArgumentCategory.Domain)]
     [Requires(nameof(JoinDomainProvisioningFile))]
     [ValidateInstallMethod(InstallMethod.ExistingPartition, InstallMethod.CleanBios, InstallMethod.CleanEfi, InstallMethod.Manual)]
     [Alias("jdo")]
     public bool JoinDomainOffline { get; set; }
 
-    [CommandLineArgument("DomainAccount")]
+    [CommandLineArgument("DomainAccount", Category = ArgumentCategory.Domain)]
     [ResourceDescription(nameof(Properties.Resources.DomainAccountsDescription))]
     [ResourceValueDescription(nameof(Properties.Resources.DomainUserGroupValueDescription))]
-    [ArgumentCategory(ArgumentCategory.Domain)]
     [Alias("da")]
     [RequiresAnyOther(nameof(JoinDomain), nameof(JoinDomainProvisioningFile))]
     [ValidateNotWhiteSpace]
@@ -180,77 +160,66 @@ partial class Arguments : BaseArguments
 
     #region Other options
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.ComputerNameDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("n")]
     [ValidateNotWhiteSpace]
     public string? ComputerName { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.DisableDefenderDesciption))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("d")]
     public bool DisableDefender { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.DisableCloudDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("dc")]
     public bool DisableCloud { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.DisableServerManagerDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("dsm")]
     public bool DisableServerManager { get; set; }
 
-    [CommandLineArgument("FirstLogonCommand")]
+    [CommandLineArgument("FirstLogonCommand", Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.FirstLogonCommandsDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("cmd")]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]
     public string[]? FirstLogonCommands { get; set; }
 
-    [CommandLineArgument("FirstLogonScript")]
+    [CommandLineArgument("FirstLogonScript", Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.FirstLogonScriptsDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("SetupScript")]
     [Alias("s")]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]
     public string[]? FirstLogonScripts { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.EnableRemoteDesktopDescriptoin))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("rdp")]
     public bool EnableRemoteDesktop { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.DisplayResolutionDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("res")]
     public Resolution? DisplayResolution { get; set; }
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.LanguageDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("lang")]
     [ValidateNotWhiteSpace]
     public string Language { get; set; } = "en-US";
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.ProcessorArchitectureDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [Alias("arch")]
     [ValidateNotWhiteSpace]
     public string ProcessorArchitecture { get; set; } = "amd64";
 
-    [CommandLineArgument]
+    [CommandLineArgument(Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.TimeZoneDescription))]
-    [ArgumentCategory(ArgumentCategory.Other)]
     [ValidateNotWhiteSpace]
     public string TimeZone { get; set; } = "Pacific Standard Time";
 
@@ -277,7 +246,7 @@ partial class Arguments : BaseArguments
 
 #endif
 
-#endregion
+    #endregion
 
     public AnswerFileOptions ToOptions()
     {
