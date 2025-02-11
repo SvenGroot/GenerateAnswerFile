@@ -1,8 +1,6 @@
 ﻿using Ookii.CommandLine;
 using Ookii.CommandLine.Validation;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices.Swift;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -262,6 +260,8 @@ class CustomUsageWriter : UsageWriter
         WriteLine("```");
         WriteLine();
 
-#endif
     }
+
+#endif
+
 }
