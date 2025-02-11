@@ -61,7 +61,7 @@ namespace Ookii.AnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must specify a domain for all domain users to add to a local group when using provisioning to join a domain..
+        ///   Looks up a localized string similar to All domain accounts to add to a local group must use the format &apos;domain\user&apos; or &apos;group:domain\user&apos; when using provisioning to join a domain..
         /// </summary>
         internal static string DomainAccountWithoutDomain {
             get {
@@ -70,7 +70,7 @@ namespace Ookii.AnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Format is not &apos;user,password&apos;..
+        ///   Looks up a localized string similar to Invalid credential value, expected format &apos;user,password&apos;..
         /// </summary>
         internal static string InvalidLocalCredential {
             get {
@@ -88,7 +88,7 @@ namespace Ookii.AnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not determine the partition to install to..
+        ///   Looks up a localized string similar to The partition to install to could not be determined..
         /// </summary>
         internal static string UnknownTargetPartition {
             get {
