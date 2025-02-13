@@ -212,7 +212,7 @@ class CustomUsageWriter : UsageWriter
         if (argument.Aliases.Length > 0)
         {
             var plural = argument.Aliases.Length > 1 ? "es" : "";
-            WriteLine($"Alias{plural}: {string.Join(", ", argument.Aliases.Select(a => prefix + a))}");
+            WriteLine($"Alias{plural}: {string.Join(", ", argument.Aliases.Select(a => prefix + a.Alias))}");
         }
 
         if (argument.IsRequired)
