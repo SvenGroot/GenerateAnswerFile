@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Ookii.AnswerFile;
 
@@ -10,13 +12,12 @@ namespace Ookii.AnswerFile;
 /// <see cref="AnswerFileGenerator"/> class.
 /// </summary>
 /// <threadsafety instance="false" static="true"/>
-public class AnswerFileOptions
+public partial class AnswerFileOptions
 {
+    private string? _computerName;
     private Collection<LocalCredential>? _localAccounts;
     private Collection<string>? _firstLogonCommands;
     private Collection<string>? _firstLogonScripts;
-
-#pragma warning disable CA1822 // Mark members as static
 
     /// <summary>
     /// Gets the schema that can be used for validation of the JSON representation of this object.
@@ -28,8 +29,6 @@ public class AnswerFileOptions
     // property into the output.
     [JsonPropertyName("$schema")]
     public string JsonSchema => "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0";
-
-#pragma warning restore CA1822 // Mark members as static
 
     /// <summary>
     /// Gets or sets the installation method to use, along with the options for that method.
@@ -66,7 +65,31 @@ public class AnswerFileOptions
     /// The computer name, or <see langword="null"/> to let Windows pick a computer name. The
     /// default value is <see langword="null"/>.
     /// </value>
-    public string? ComputerName { get; set; }
+    /// <remarks>
+    /// <para>
+    ///   If this property is set to a value containing the # character, each # will be replaced
+    ///   with a random digit between 0 and 9. For example, the value "PC-###" will be replaced with
+    ///   "PC-123" (or any other random number).
+    /// </para>
+    /// <note type="note">
+    ///   While random numbers can be used to generate a distinct computer name, it is not
+    ///   necessarily guaranteed to be a unique name on the network.
+    /// </note>
+    /// </remarks>
+    public string? ComputerName
+    {
+        get => _computerName;
+        set
+        {
+            if (value != null)
+            {
+                // Replace # with random digits.
+                value = RandomNumberRegex().Replace(value, m => Random.Shared.Next().ToString(m.Value).Substring(0, m.Length));
+            }
+
+            _computerName = value;
+        }
+    }
 
     /// <summary>
     /// Gets or sets a value which indicates whether Windows Defender is enabled after installation.
@@ -286,4 +309,10 @@ public class AnswerFileOptions
     /// <returns>A JSON representation of the current instance.</returns>
     public string ToJson()
         => JsonSerializer.Serialize(this, typeof(AnswerFileOptions), SourceGenerationContext.Default);
+
+    // This regex is used to replace the # characters in the computer name with random digits.
+    // It processes groups of # in batches of 9, to avoid exceeding the maximum value of an int
+    // for a single random number.
+    [GeneratedRegex("#{1,9}")]
+    private static partial Regex RandomNumberRegex();
 }

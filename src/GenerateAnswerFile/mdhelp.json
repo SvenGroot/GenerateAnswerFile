@@ -3,6 +3,7 @@
     "Override": true,
     "Text": "Displays a help message."
   },
+  "ComputerName": "See [specifying a computer name](../README.md/#specifying-a-computer-name).",
   "Feature": "See [optional features](../README.md#optional-features).",
   "ImageIndex": "See [selecting the edition to install](../README.md#selecting-the-edition-to-install).",
   "Install": "See [installation method](../README.md#installation-method).",

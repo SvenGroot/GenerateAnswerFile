@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Ookii.AnswerFile.Tests;
 
@@ -192,5 +193,26 @@ public class AnswerFileOptionsTests : FileTestsBase
         Assert.IsNotNull(install.OptionalFeatures);
         Assert.AreEqual(new Version(10, 0, 22000, 1), install.OptionalFeatures.WindowsVersion);
         CollectionAssert.AreEqual(new[] { "Microsoft-Windows-Subsystem-Linux", "VirtualMachinePlatform" }, install.OptionalFeatures.Features);
+    }
+
+    [TestMethod]
+    public void TestRandomComputerName()
+    {
+        var options = new AnswerFileOptions()
+        {
+            ComputerName = "test-####",
+        };
+
+        Assert.IsTrue(Regex.IsMatch(options.ComputerName, @"^test-\d{4}$"));
+        options.ComputerName = "foo#bar";
+        Assert.IsTrue(Regex.IsMatch(options.ComputerName, @"^foo\dbar$"));
+        options.ComputerName = "####################";
+        Assert.IsTrue(Regex.IsMatch(options.ComputerName, @"^\d{20}$"));
+        options.ComputerName = "test-###-#####";
+        Assert.IsTrue(Regex.IsMatch(options.ComputerName, @"^test-\d{3}-\d{5}$"));
+
+        var json = "{\"ComputerName\": \"test-####\"}";
+        options = AnswerFileOptions.FromJson(json);
+        Assert.IsTrue(Regex.IsMatch(options!.ComputerName!, @"^test-\d{4}$"));
     }
 }

@@ -88,7 +88,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of a user to automatically log on, in the format &apos;domain\user&apos;, or just &apos;user&apos; for local users. If not specified, automatic logon will not be used..
+        ///   Looks up a localized string similar to The name of a user to automatically log on, in the format &apos;domain\user&apos;, or just &apos;user&apos; for local users. If not specified, automatic log-on will not be used..
         /// </summary>
         internal static string AutoLogonUserDescription {
             get {
@@ -133,7 +133,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The network name for the computer..
+        ///   Looks up a localized string similar to The network name for the computer. If not specified, Windows will generate a default name. Any &apos;#&apos; characters in the name will be replaced with a random digit between 0 and 9. For example, &apos;PC-###&apos; would be replaced with &apos;PC-123&apos; (or some other random number)..
         /// </summary>
         internal static string ComputerNameDescription {
             get {
@@ -223,7 +223,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. Commands are executed before the scripts specified by -FirstLogonScript..
+        ///   Looks up a localized string similar to A command to run during first logon. Can have multiple values. All commands are executed before the scripts specified by -FirstLogonScript, in the order specified..
         /// </summary>
         internal static string FirstLogonCommandsDescription {
             get {
@@ -232,7 +232,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first logon. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand..
+        ///   Looks up a localized string similar to The full path of a Windows PowerShell script to run during first log-on, plus arguments. Can have multiple values. Scripts are executed after the commands specified by -FirstLogonCommand, in the order specified..
         /// </summary>
         internal static string FirstLogonScriptsDescription {
             get {
@@ -277,7 +277,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Need at least one method..
+        ///   Looks up a localized string similar to At least one installation method must be provided..
         /// </summary>
         internal static string InvalidMethodCount {
             get {
@@ -304,7 +304,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password of the user specified by -JoinDomainUser. Will be stored in plain text..
+        ///   Looks up a localized string similar to The password of the user specified by -JoinDomainUser. This will be stored in plain text in the answer file..
         /// </summary>
         internal static string JoinDomainPasswordDescription {
             get {
@@ -331,7 +331,7 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to JSON input was found; additional arguments are available if JSON input is not provided. For more information, see: https://github.com/SvenGroot/GenerateAnswerFile.
+        ///   Looks up a localized string similar to JSON input was found; additional command line arguments are available if JSON input is not provided. For more information, see: https://github.com/SvenGroot/GenerateAnswerFile.
         /// </summary>
         internal static string JsonUsageFooter {
             get {
