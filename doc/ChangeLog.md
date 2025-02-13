@@ -1,5 +1,11 @@
 # What's new in Answer File Generator
 
+## Answer File Generator 2.1 (TBD)
+
+- You can now [generate computer names containing a random number](../README.md#specifying-a-computer-name),
+  by using the `#` character in the name you provide.
+- Improved error messages for certain kinds of invalid JSON input.
+
 ## Answer File Generator 2.0 (2024-10-07)
 
 - The [`-DomainAccount`][] argument now allows you to specify users from different domains than the
