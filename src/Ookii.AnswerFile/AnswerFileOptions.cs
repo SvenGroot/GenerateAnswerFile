@@ -84,7 +84,8 @@ public partial class AnswerFileOptions
             if (value != null)
             {
                 // Replace # with random digits.
-                value = RandomNumberRegex().Replace(value, m => Random.Shared.Next().ToString(m.Value).Substring(0, m.Length));
+                value = RandomNumberRegex().Replace(value,
+                    m => Random.Shared.Next().ToString(new string('0', m.Length)).Substring(0, m.Length));
             }
 
             _computerName = value;
