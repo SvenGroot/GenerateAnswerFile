@@ -6,7 +6,7 @@ namespace GenerateAnswerFile;
 // Basically RequiresAny, but applied to an argument rather than a class.
 internal class RequiresAnyOtherAttribute : ArgumentValidationWithHelpAttribute
 {
-    public RequiresAnyOtherAttribute(params string[] arguments) 
+    public RequiresAnyOtherAttribute(params string[] arguments)
     {
         Arguments = arguments;
     }

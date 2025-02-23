@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using System.Text.Json;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Ookii.AnswerFile.Tests;
 

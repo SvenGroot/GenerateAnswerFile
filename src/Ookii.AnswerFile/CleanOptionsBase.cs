@@ -1,5 +1,4 @@
-﻿using System.CodeDom.Compiler;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Ookii.AnswerFile;

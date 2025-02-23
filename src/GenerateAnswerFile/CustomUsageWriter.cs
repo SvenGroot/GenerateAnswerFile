@@ -97,9 +97,9 @@ class CustomUsageWriter : UsageWriter
     protected override void WriteArgumentName(string argumentName, string prefix)
     {
         if (!Markdown)
-        { 
+        {
             base.WriteArgumentName(argumentName, prefix);
-            return; 
+            return;
         }
 
         Write($"<a href=\"#-{argumentName.ToLowerInvariant()}\">{prefix}{argumentName}</a>");
@@ -167,7 +167,7 @@ class CustomUsageWriter : UsageWriter
         WriteLine();
         foreach (var validator in argument.Validators)
         {
-            if (validator is not (RequiresAttribute or ProhibitsAttribute or RequiresAnyOtherAttribute or 
+            if (validator is not (RequiresAttribute or ProhibitsAttribute or RequiresAnyOtherAttribute or
                     ValidateInstallMethodAttribute or ValidateEnumValueAttribute))
             {
                 var help = validator.GetUsageHelp(argument);

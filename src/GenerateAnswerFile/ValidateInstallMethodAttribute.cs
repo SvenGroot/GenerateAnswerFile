@@ -10,7 +10,7 @@ class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
     private readonly InstallMethod[] _methods;
 
     public ValidateInstallMethodAttribute(params InstallMethod[] methods)
-    { 
+    {
         if (methods.Length == 0)
         {
             throw new ArgumentException(Properties.Resources.InvalidMethodCount, nameof(methods));

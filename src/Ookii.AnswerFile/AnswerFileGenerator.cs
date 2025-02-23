@@ -1,7 +1,4 @@
-﻿using System.Data.Common;
-using System.Drawing;
-using System.Reflection;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
 
 namespace Ookii.AnswerFile;
@@ -21,7 +18,7 @@ public class AnswerFileGenerator
 {
     internal const string PublicKeyToken = "31bf3856ad364e35";
 
-    private static readonly XmlWriterSettings XmlSettings = new()
+    private static readonly XmlWriterSettings _xmlSettings = new()
     {
         Indent = true,
         NamespaceHandling = NamespaceHandling.OmitDuplicates,
@@ -77,7 +74,7 @@ public class AnswerFileGenerator
     /// </exception>
     public static void Generate(string outputPath, AnswerFileOptions options)
     {
-        using var writer = XmlWriter.Create(outputPath, XmlSettings);
+        using var writer = XmlWriter.Create(outputPath, _xmlSettings);
         Generate(writer, options);
     }
 
@@ -92,7 +89,7 @@ public class AnswerFileGenerator
     /// </exception>
     public static void Generate(TextWriter writer, AnswerFileOptions options)
     {
-        using var xmlWriter = XmlWriter.Create(writer, XmlSettings);
+        using var xmlWriter = XmlWriter.Create(writer, _xmlSettings);
         Generate(xmlWriter, options);
     }
 
@@ -334,7 +331,7 @@ public class AnswerFileGenerator
         using (var firstLogon = Writer.WriteAutoCloseElement("FirstLogonCommands"))
         {
             int order = 1;
-            
+
             // Work around the LogonCount issue if the count is 1 (see above).
             if (Options.AutoLogon?.Count == 1)
             {

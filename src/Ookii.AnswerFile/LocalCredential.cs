@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Ookii.AnswerFile;
+﻿namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides credentials for a local user account.

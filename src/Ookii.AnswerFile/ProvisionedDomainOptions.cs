@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Net;
-
-namespace Ookii.AnswerFile;
+﻿namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides options for joining a domain using a provisioned computer account.

@@ -1,6 +1,3 @@
-using System.Drawing;
-using System.Runtime.CompilerServices;
-
 namespace Ookii.AnswerFile.Tests;
 
 [TestClass]
@@ -24,7 +21,7 @@ public class AnswerFileGeneratorTests : FileTestsBase
                 Count = 9999,
             },
             LocalAccounts =
-            { 
+            {
                 new LocalCredential("MyAccount", "Password"),
                 new LocalCredential("MyAccount2", "Password2", "Users")
             },

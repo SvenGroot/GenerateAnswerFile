@@ -1,10 +1,6 @@
 ﻿using Ookii.AnswerFile;
 using Ookii.CommandLine;
-using Ookii.CommandLine.Conversion;
 using Ookii.CommandLine.Validation;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
 
 namespace GenerateAnswerFile;
 
