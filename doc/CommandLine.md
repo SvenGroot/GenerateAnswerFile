@@ -410,7 +410,7 @@ would be replaced with `PC-123` (or some other random number).
 
 Must not be blank.
 
-See [specifying a computer name](../README.md/#specifying-a-computer-name).
+See [specifying a computer name](../README.md#specifying-a-computer-name).
 
 ```yaml
 Value: <String>
