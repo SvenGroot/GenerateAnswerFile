@@ -489,7 +489,7 @@ See [first log-on commands and scripts](../README.md#first-log-on-commands-and-s
 
 ```yaml
 Value: <String> (multiple allowed)
-Aliases: -SetupScript, -s
+Alias: -s
 ```
 
 ### `-Language`

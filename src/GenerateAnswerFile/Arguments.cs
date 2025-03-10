@@ -186,7 +186,7 @@ partial class Arguments : BaseArguments
 
     [CommandLineArgument("FirstLogonScript", Category = ArgumentCategory.Other)]
     [ResourceDescription(nameof(Properties.Resources.FirstLogonScriptsDescription))]
-    [Alias("SetupScript")]
+    [Alias("SetupScript", IsHidden = true)]
     [Alias("s")]
     [ValidateNotWhiteSpace]
     [MultiValueSeparator]

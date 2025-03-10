@@ -209,10 +209,12 @@ class CustomUsageWriter : UsageWriter
 
         WriteLine();
         var prefix = Parser.ArgumentNamePrefixes[0];
-        if (argument.Aliases.Length > 0)
+        var aliases = argument.Aliases.Where(a => !a.IsHidden);
+        var aliasCount = aliases.Count();
+        if (aliasCount > 0)
         {
-            var plural = argument.Aliases.Length > 1 ? "es" : "";
-            WriteLine($"Alias{plural}: {string.Join(", ", argument.Aliases.Select(a => prefix + a.Alias))}");
+            var plural = aliasCount > 1 ? "es" : "";
+            WriteLine($"Alias{plural}: {string.Join(", ", aliases.Select(a => prefix + a.Alias))}");
         }
 
         if (argument.IsRequired)
