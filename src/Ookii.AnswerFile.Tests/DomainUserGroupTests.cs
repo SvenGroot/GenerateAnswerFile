@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace Ookii.AnswerFile.Tests;
+﻿namespace Ookii.AnswerFile.Tests;
 
 [TestClass]
 public class DomainUserGroupTests

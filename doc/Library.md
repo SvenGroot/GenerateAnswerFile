@@ -56,17 +56,17 @@ Version 2.0 of the library has a few breaking changes from version 1.x:
 - The [`DomainOptionsBase.DomainAccounts`][] property has a different type.
 - The `AnswerFileOptions.SetupScripts` property was renamed to [`FirstLogonScripts`][].
 
-[`AnswerFileGenerator.Generate`]: https://www.ookii.org/docs/answerfile-2.0/html/Overload_Ookii_AnswerFile_AnswerFileGenerator_Generate.htm
-[`AnswerFileGenerator`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_AnswerFileGenerator.htm
-[`AnswerFileOptions.DisplayResolution`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_AnswerFileOptions_DisplayResolution.htm
-[`AnswerFileOptions.InstallOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_AnswerFileOptions_InstallOptions.htm
-[`AnswerFileOptions.JoinDomain`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_AnswerFileOptions_JoinDomain.htm
-[`AnswerFileOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_AnswerFileOptions.htm
-[`CleanBiosOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_CleanBiosOptions.htm
-[`CleanEfiOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_CleanEfiOptions.htm
-[`DomainOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_DomainOptions.htm
-[`DomainOptionsBase.DomainAccounts`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_DomainOptionsBase_DomainAccounts.htm
-[`DomainOptionsBase`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_DomainOptionsBase.htm
-[`ExistingPartitionOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_ExistingPartitionOptions.htm
-[`FirstLogonScripts`]: https://www.ookii.org/docs/answerfile-2.0/html/P_Ookii_AnswerFile_AnswerFileOptions_FirstLogonScripts.htm
-[`ManualInstallOptions`]: https://www.ookii.org/docs/answerfile-2.0/html/T_Ookii_AnswerFile_ManualInstallOptions.htm
+[`AnswerFileGenerator.Generate`]: https://www.ookii.org/docs/answerfile-2.1/html/Overload_Ookii_AnswerFile_AnswerFileGenerator_Generate.htm
+[`AnswerFileGenerator`]: https://www.ookii.org/docs/answerfile-2.1/html/T_Ookii_AnswerFile_AnswerFileGenerator.htm
+[`AnswerFileOptions.DisplayResolution`]: https://www.ookii.org/docs/answerfile-2.1/html/P_Ookii_AnswerFile_AnswerFileOptions_DisplayResolution.htm
+[`AnswerFileOptions.InstallOptions`]: https://www.ookii.org/docs/answerfile-2.1/html/P_Ookii_AnswerFile_AnswerFileOptions_InstallOptions.htm
+[`AnswerFileOptions.JoinDomain`]: https://www.ookii.org/docs/answerfile-2.1/html/P_Ookii_AnswerFile_AnswerFileOptions_JoinDomain.htm
+[`AnswerFileOptions`]: https://www.ookii.org/docs/answerfile-2.1/html/T_Ookii_AnswerFile_AnswerFileOptions.htm
+[`CleanBiosOptions`]: https://www.ookii.org/docs/answerfile-2.1/html/T_Ookii_AnswerFile_CleanBiosOptions.htm
+[`CleanEfiOptions`]: https://www.ookii.org/docs/answerfile-2.1/html/T_Ookii_AnswerFile_CleanEfiOptions.htm
+[`DomainOptions`]: https://www.ookii.org/docs/answerfile-2.1/html/T_Ookii_AnswerFile_DomainOptions.htm
+[`DomainOptionsBase.DomainAccounts`]: https://www.ookii.org/docs/answerfile-2.1/html/P_Ookii_AnswerFile_DomainOptionsBase_DomainAccounts.htm
+[`DomainOptionsBase`]: https://www.ookii.org/docs/answerfile-2.1/html/T_Ookii_AnswerFile_DomainOptionsBase.htm
+[`ExistingPartitionOptions`]: https://www.ookii.org/docs/answerfile-2.1/html/T_Ookii_AnswerFile_ExistingPartitionOptions.htm
+[`FirstLogonScripts`]: https://www.ookii.org/docs/answerfile-2.1/html/P_Ookii_AnswerFile_AnswerFileOptions_FirstLogonScripts.htm
+[`ManualInstallOptions`]: https://www.ookii.org/docs/answerfile-2.1/html/T_Ookii_AnswerFile_ManualInstallOptions.htm

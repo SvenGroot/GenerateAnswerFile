@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Ookii.AnswerFile;
+﻿namespace Ookii.AnswerFile;
 
 /// <summary>
 /// Provides options for a clean installation on UEFI-based systems.

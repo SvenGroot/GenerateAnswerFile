@@ -1,7 +1,6 @@
 ﻿using Ookii.CommandLine;
 using Ookii.CommandLine.Validation;
 using System.Globalization;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -34,57 +33,33 @@ class CustomUsageWriter : UsageWriter
         WriteLine(string.Format(CultureInfo.CurrentCulture, Properties.Resources.UsageHelpMoreInfoFormat, ExecutableName));
     }
 
-    protected override void WriteArgumentDescriptions()
+#if DEBUG
+
+    protected override void WriteArgumentDescriptionListHeader()
     {
-        var groups = Parser.Arguments.GroupBy(a => GetCategory(a)).OrderBy(c => c.Key);
-        foreach (var group in groups)
+        if (!Markdown)
         {
-            if (group.Key is ArgumentCategory category)
-            {
-                if (Markdown)
-                {
-                    WriteLine($"## {GetCategoryDescription(category).TrimEnd(':')}");
-                    WriteLine();
-                }
-                else
-                {
-                    Writer.ResetIndent();
-                    WriteColor(UsagePrefixColor);
-                    Write(GetCategoryDescription(category));
-                    ResetColor();
-                    WriteLine();
-                    WriteLine();
-                }
-            }
-            else if (Markdown)
-            {
-                WriteLine("## General options");
-                WriteLine();
-            }
-
-            if (ShouldIndent && !Markdown)
-            {
-                Writer.Indent = ArgumentDescriptionIndent;
-            }
-
-            foreach (var argument in group)
-            {
-                if (!argument.IsHidden)
-                {
-                    if (Markdown)
-                    {
-                        WriteArgumentMarkdown(argument);
-                    }
-                    else
-                    {
-                        WriteArgumentDescription(argument);
-                    }
-                }
-            }
+            base.WriteArgumentDescriptionListHeader();
+            return;
         }
+
+        Writer.ResetIndent();
+        Writer.Indent = 0;
+        WriteLine("## General options");
+        WriteLine();
     }
 
-#if DEBUG
+    protected override void WriteArgumentCategoryHeader(CategoryInfo category)
+    {
+        if (!Markdown)
+        {
+            base.WriteArgumentCategoryHeader(category);
+            return;
+        }
+
+        WriteLine($"## {category.Description.TrimEnd(':')}");
+        WriteLine();
+    }
 
     protected override void WriteParserUsageSyntax()
     {
@@ -122,9 +97,9 @@ class CustomUsageWriter : UsageWriter
     protected override void WriteArgumentName(string argumentName, string prefix)
     {
         if (!Markdown)
-        { 
+        {
             base.WriteArgumentName(argumentName, prefix);
-            return; 
+            return;
         }
 
         Write($"<a href=\"#-{argumentName.ToLowerInvariant()}\">{prefix}{argumentName}</a>");
@@ -141,12 +116,13 @@ class CustomUsageWriter : UsageWriter
         Write($"&lt;{valueDescription}&gt;");
     }
 
-#endif
-
-
-    private void WriteArgumentMarkdown(CommandLineArgument argument)
+    protected override void WriteArgumentDescription(CommandLineArgument argument)
     {
-#if DEBUG
+        if (!Markdown)
+        {
+            base.WriteArgumentDescription(argument);
+            return;
+        }
 
         WriteLine($"### `-{argument.ArgumentName}`");
         WriteLine();
@@ -191,7 +167,7 @@ class CustomUsageWriter : UsageWriter
         WriteLine();
         foreach (var validator in argument.Validators)
         {
-            if (validator is not (RequiresAttribute or ProhibitsAttribute or RequiresAnyOtherAttribute or 
+            if (validator is not (RequiresAttribute or ProhibitsAttribute or RequiresAnyOtherAttribute or
                     ValidateInstallMethodAttribute or ValidateEnumValueAttribute))
             {
                 var help = validator.GetUsageHelp(argument);
@@ -233,10 +209,12 @@ class CustomUsageWriter : UsageWriter
 
         WriteLine();
         var prefix = Parser.ArgumentNamePrefixes[0];
-        if (argument.Aliases.Length > 0)
+        var aliases = argument.Aliases.Where(a => !a.IsHidden);
+        var aliasCount = aliases.Count();
+        if (aliasCount > 0)
         {
-            var plural = argument.Aliases.Length > 1 ? "es" : "";
-            WriteLine($"Alias{plural}: {string.Join(", ", argument.Aliases.Select(a => prefix + a))}");
+            var plural = aliasCount > 1 ? "es" : "";
+            WriteLine($"Alias{plural}: {string.Join(", ", aliases.Select(a => prefix + a.Alias))}");
         }
 
         if (argument.IsRequired)
@@ -284,20 +262,8 @@ class CustomUsageWriter : UsageWriter
         WriteLine("```");
         WriteLine();
 
+    }
+
 #endif
-    }
 
-    private static ArgumentCategory? GetCategory(CommandLineArgument argument)
-        => argument.Member?.GetCustomAttribute<ArgumentCategoryAttribute>()?.Category;
-
-    private static string GetCategoryDescription(ArgumentCategory category)
-    {
-        return category switch
-        {
-            ArgumentCategory.Install => Properties.Resources.CategoryInstall,
-            ArgumentCategory.UserAccounts => Properties.Resources.CategoryUserAccounts,
-            ArgumentCategory.Domain => Properties.Resources.CategoryDomain,
-            _ => Properties.Resources.CategoryOther,
-        };
-    }
 }

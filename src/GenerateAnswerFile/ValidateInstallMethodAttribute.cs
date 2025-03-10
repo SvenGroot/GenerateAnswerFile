@@ -10,7 +10,7 @@ class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
     private readonly InstallMethod[] _methods;
 
     public ValidateInstallMethodAttribute(params InstallMethod[] methods)
-    { 
+    {
         if (methods.Length == 0)
         {
             throw new ArgumentException(Properties.Resources.InvalidMethodCount, nameof(methods));
@@ -21,10 +21,13 @@ class ValidateInstallMethodAttribute : ArgumentValidationWithHelpAttribute
 
     public InstallMethod[] Methods => _methods;
 
-    public override ValidationMode Mode => ValidationMode.AfterParsing;
-
-    public override bool IsValid(CommandLineArgument argument, object? value)
+    public override bool IsValidPostParsing(CommandLineArgument argument)
     {
+        if (!argument.HasValue)
+        {
+            return true;
+        }
+
         var installArg = argument.Parser.GetArgument(nameof(Arguments.Install))!;
         var method = ((InstallMethod?)installArg.Value) ?? InstallMethod.PreInstalled;
         return _methods.Contains(method);

@@ -404,9 +404,13 @@ Required argument: -JoinDomain
 
 ### `-ComputerName`
 
-The network name for the computer. If not specified, Windows will generate a default name.
+The network name for the computer. If not specified, Windows will generate a default name. Any `#`
+characters in the name will be replaced with a random digit between 0 and 9. For example, `PC-###`
+would be replaced with `PC-123` (or some other random number).
 
 Must not be blank.
+
+See [specifying a computer name](../README.md#specifying-a-computer-name).
 
 ```yaml
 Value: <String>
@@ -485,7 +489,7 @@ See [first log-on commands and scripts](../README.md#first-log-on-commands-and-s
 
 ```yaml
 Value: <String> (multiple allowed)
-Aliases: -SetupScript, -s
+Alias: -s
 ```
 
 ### `-Language`

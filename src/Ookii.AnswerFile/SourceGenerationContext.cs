@@ -11,6 +11,8 @@ namespace Ookii.AnswerFile;
     // value of the type.
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     ReadCommentHandling = JsonCommentHandling.Skip,
+    RespectNullableAnnotations = true,
+    RespectRequiredConstructorParameters = true,
     WriteIndented = true)]
 partial class SourceGenerationContext : JsonSerializerContext
 {

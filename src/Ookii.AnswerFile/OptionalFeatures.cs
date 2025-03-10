@@ -59,7 +59,7 @@ public class OptionalFeatures
 
         foreach (var component in Features)
         {
-            generator.Writer.WriteEmptyElement("selection", new KeyValueList { 
+            generator.Writer.WriteEmptyElement("selection", new KeyValueList {
                 { "name", component },
                 { "state", "true" },
             });
