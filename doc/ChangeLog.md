@@ -1,6 +1,6 @@
 # What's new in Answer File Generator
 
-## Answer File Generator 2.1 (TBD)
+## Answer File Generator 2.1 (2025-03-09)
 
 - You can now [generate computer names containing a random number](../README.md#specifying-a-computer-name),
   by using the `#` character in the name you provide.
