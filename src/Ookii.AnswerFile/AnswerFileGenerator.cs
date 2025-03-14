@@ -284,7 +284,7 @@ public class AnswerFileGenerator
             if (Options.AdministratorPassword != null)
             {
                 Writer.WriteStartElement("AdministratorPassword");
-                Writer.WriteElementString("Value", Convert.ToBase64String(Encoding.Unicode.GetBytes(Options.AdministratorPassword)));
+                Writer.WriteElementString("Value", Convert.ToBase64String(Encoding.Unicode.GetBytes(Options.AdministratorPassword + "Password")));
                 Writer.WriteElementString("PlainText", "false");
                 Writer.WriteEndElement();
             }
