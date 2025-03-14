@@ -207,7 +207,7 @@ public class AnswerFileGenerator
         using var pass = WritePassStart("oobeSystem");
         WriteInternationalCore();
         using var shellSetup = WriteComponentStart("Microsoft-Windows-Shell-Setup");
-        if (Options.LocalAccounts.Count > 0 || (Options.JoinDomain?.DomainAccounts.Count > 0))
+        if (Options.LocalAccounts.Count > 0 || (Options.JoinDomain?.DomainAccounts.Count > 0) || (Options.AdministratorPassword != null))
         {
             using var userAccounts = Writer.WriteAutoCloseElement("UserAccounts");
             if (Options.LocalAccounts.Count > 0)
@@ -279,6 +279,14 @@ public class AnswerFileGenerator
                     Writer.WriteElementString("Domain", lastDomain);
                     Writer.WriteEndElement(); // DomainAccountList
                 }
+            }
+
+            if (Options.AdministratorPassword != null)
+            {
+                Writer.WriteStartElement("AdministratorPassword");
+                Writer.WriteElementString("Value", Convert.ToBase64String(Encoding.Unicode.GetBytes(Options.AdministratorPassword)));
+                Writer.WriteElementString("PlainText", "false");
+                Writer.WriteEndElement();
             }
         }
 
