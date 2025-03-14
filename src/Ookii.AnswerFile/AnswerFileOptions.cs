@@ -167,6 +167,25 @@ public partial class AnswerFileOptions
         get => _localAccounts ??= new();
         set => _localAccounts = value;
     }
+    
+    /// <summary>
+    /// Gets or sets the administrator password for the system.
+    /// </summary>
+    /// <value>
+    /// The password for the administrator account, or <see langword="null"/> if no password is to be set.
+    /// The default value is <see langword="null"/>.
+    /// </value>
+    /// <remarks>
+    /// <para>
+    ///   This password will be applied to the default administrator account during the Windows setup.
+    /// </para>
+    /// <note type="security">
+    ///   The password is stored using base64 encoding in the answer file; it is not encrypted.
+    ///   Ensure that answer files containing sensitive information are stored securely and are
+    ///   not exposed to unauthorized parties.
+    /// </note>
+    /// </remarks>
+    public string? AdministratorPassword { get; set; }
 
     /// <summary>
     /// Gets or sets options for logging on automatically.
