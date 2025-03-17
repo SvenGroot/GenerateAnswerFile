@@ -57,6 +57,9 @@
     <Content Include="expected\TestGeneratePreInstalled.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="expected\TestGenerateAdministratorPassword.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="expected\TestJsonSerializationBios.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
