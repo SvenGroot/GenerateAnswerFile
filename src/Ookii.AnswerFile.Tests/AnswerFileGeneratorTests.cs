@@ -238,4 +238,17 @@ public class AnswerFileGeneratorTests : FileTestsBase
         AnswerFileGenerator.Generate(actualPath, options);
         CheckFilesEqual(expectedPath, actualPath);
     }
+    
+    [TestMethod]
+    public void TestGenerateAdministratorPassword()
+    {
+        var (actualPath, expectedPath) = GetPaths();
+        var options = new AnswerFileOptions
+        {
+            AdministratorPassword = "Password123"
+        };
+
+        AnswerFileGenerator.Generate(actualPath, options);
+        CheckFilesEqual(expectedPath, actualPath);
+    }
 }
