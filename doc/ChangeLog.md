@@ -1,5 +1,10 @@
 # What's new in Answer File Generator
 
+## Answer File Generator 2.2 (TBD)
+
+- Add an option to specify a password for the built-in local Administrator account. This account is
+  disabled if no password is provided.
+
 ## Answer File Generator 2.1 (2025-03-09)
 
 - You can now [generate computer names containing a random number](../README.md#specifying-a-computer-name),
