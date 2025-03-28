@@ -26,7 +26,7 @@ public partial class AnswerFileOptions
     // This must be the first property and must not be static, so ToJson will insert the $schema
     // property into the output.
     [JsonPropertyName("$schema")]
-    public string JsonSchema => "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0";
+    public string JsonSchema => "https://www.ookii.org/Link/AnswerFileJsonSchema-2.2";
 
     /// <summary>
     /// Gets or sets the installation method to use, along with the options for that method.

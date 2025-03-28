@@ -29,7 +29,7 @@ this:
 
 ```json
 {
-    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.0",
+    "$schema": "https://www.ookii.org/Link/AnswerFileJsonSchema-2.2",
     "InstallOptions": {
         "$type": "CleanEfi"
     },
