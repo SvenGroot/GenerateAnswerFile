@@ -96,6 +96,13 @@ partial class Arguments : BaseArguments
     [ValidateRange(1, null)]
     public int AutoLogonCount { get; set; } = 1;
 
+    // This argument is deliberately allowed to be an empty string as that enables the account with
+    // no password.
+    [CommandLineArgument(Category = ArgumentCategory.UserAccounts)]
+    [ResourceDescription(nameof(Properties.Resources.AdministratorPasswordDescription))]
+    [Alias("ap")]
+    public string? AdministratorPassword { get; set; }
+
     #endregion
 
     #region Domain options
@@ -261,6 +268,7 @@ partial class Arguments : BaseArguments
             ProductKey = ProductKey,
             ProcessorArchitecture = ProcessorArchitecture,
             TimeZone = TimeZone,
+            AdministratorPassword = AdministratorPassword,
         };
 
         if (LocalAccounts != null)

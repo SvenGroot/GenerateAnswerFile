@@ -167,17 +167,19 @@ public partial class AnswerFileOptions
         get => _localAccounts ??= new();
         set => _localAccounts = value;
     }
-    
+
     /// <summary>
-    /// Gets or sets the administrator password for the system.
+    /// Gets or sets the password for the local Administrator account.
     /// </summary>
     /// <value>
-    /// The password for the administrator account, or <see langword="null"/> if no password is to be set.
-    /// The default value is <see langword="null"/>.
+    /// The password for the administrator account, or <see langword="null"/> to leave the account
+    /// disabled. The default value is <see langword="null"/>.
     /// </value>
     /// <remarks>
     /// <para>
-    ///   This password will be applied to the default administrator account during the Windows setup.
+    ///   This password will be applied to the built-in local Administrator account. If this
+    ///   property is <see langword="null"/>, this account is disabled by default. If this property
+    ///   is set to an empty string, the account will be enabled with no password.
     /// </para>
     /// <note type="security">
     ///   The password is stored using base64 encoding in the answer file; it is not encrypted.
@@ -191,6 +193,7 @@ public partial class AnswerFileOptions
     /// Gets or sets options for logging on automatically.
     /// </summary>
     /// <value>
+    /// An instance of the <see cref="AutoLogonOptions"/> class, or <see langword="null"/> to not
     /// An instance of the <see cref="AutoLogonOptions"/> class, or <see langword="null"/> to not
     /// use automatic log-on. The default value is <see langword="null"/>.
     /// </value>

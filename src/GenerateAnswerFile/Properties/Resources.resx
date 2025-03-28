@@ -288,4 +288,7 @@ For more information, as well as usage examples, run '{0} -OnlineHelp', or see: 
   <data name="JoinDomainOfflineDescription" xml:space="preserve">
     <value>Join the domain during the offlineServicing pass of Windows setup, rather than the specialize pass.</value>
   </data>
+  <data name="AdministratorPasswordDescription" xml:space="preserve">
+    <value>The password to use for the built-in local Administrator account. If not specified, the Administrator account will be disabled by default.</value>
+  </data>
 </root>
