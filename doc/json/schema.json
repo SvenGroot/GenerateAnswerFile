@@ -178,6 +178,13 @@
         }
       ]
     },
+    "AdministratorPassword": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "The password for the built-in local Administrator account, or null to leave the account disabled. Setting this to an empty string will enable the account without a password."
+    },
     "DisplayResolution": {
       "description": "The display resolution, in the format 'width,height' (e.g. '1920,1080'), or null to let Windows determine the default resolution.",
       "type": [

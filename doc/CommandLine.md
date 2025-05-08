@@ -51,6 +51,7 @@ The arguments are split into several categories:
 <!-- markdownlint-disable MD033 -->
 <pre>GenerateAnswerFile
     [[<a href="#-outputfile">-OutputFile</a>] &lt;Path&gt;]
+    [<a href="#-administratorpassword">-AdministratorPassword</a> &lt;String&gt;]
     [<a href="#-autologoncount">-AutoLogonCount</a> &lt;Number&gt;]
     [<a href="#-autologonpassword">-AutoLogonPassword</a> &lt;String&gt;]
     [<a href="#-autologonuser">-AutoLogonUser</a> &lt;[Domain\]User&gt;]
@@ -249,6 +250,16 @@ Alias: -v
 ```
 
 ## User account options
+
+### `-AdministratorPassword`
+
+The password to use for the built-in local Administrator account. If not specified, the
+Administrator account will be disabled by default.
+
+```yaml
+Value: <String>
+Alias: -ap
+```
 
 ### `-AutoLogonCount`
 

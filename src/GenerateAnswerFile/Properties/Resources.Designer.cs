@@ -61,6 +61,15 @@ namespace GenerateAnswerFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password to use for the built-in local Administrator account. If not specified, the Administrator account will be disabled by default..
+        /// </summary>
+        internal static string AdministratorPasswordDescription {
+            get {
+                return ResourceManager.GetString("AdministratorPasswordDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generates answer files (unattend.xml and autounattend.xml) for unattended Windows installation..
         /// </summary>
         internal static string ApplicationDescription {
