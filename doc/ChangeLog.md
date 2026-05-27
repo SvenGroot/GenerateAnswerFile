@@ -1,5 +1,11 @@
 # What's new in Answer File Generator
 
+## Answer File Generator 2.3 (2026-05-27)
+
+- Fix an issue where the password for the built-in local Administrator account was not correctly
+  encoded in the answer file, which prevented OS installation from completing.
+- Updated to .Net 10.
+
 ## Answer File Generator 2.2 (2025-05-08)
 
 - Add an option to specify a password for the built-in local Administrator account. This account is
