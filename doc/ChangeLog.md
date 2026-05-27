@@ -1,6 +1,6 @@
 # What's new in Answer File Generator
 
-## Answer File Generator 2.3 (TBD)
+## Answer File Generator 2.3 (2026-05-27)
 
 - Fix an issue where the password for the built-in local Administrator account was not correctly
   encoded in the answer file, which prevented OS installation from completing.
